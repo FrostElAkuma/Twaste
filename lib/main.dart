@@ -43,9 +43,9 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           //We already defined initial route we do not need the line below
-          home: AddAddressPage(),
-          //initialRoute: RouteHelper.getSplashPage(),
-          //getPages: RouteHelper.routes,
+          //home: AddAddressPage(),
+          initialRoute: RouteHelper.getSplashPage(),
+          getPages: RouteHelper.routes,
         );
       });
     });

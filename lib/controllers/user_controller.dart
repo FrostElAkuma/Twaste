@@ -22,7 +22,7 @@ class UserController extends GetxController implements GetxService {
 
   Future<ResponseModel> getUserInfo() async {
     _isLoading = true;
-    print("I am here");
+    //print("I am here");
     Response response = await userRepo.getUserInfo();
     late ResponseModel responseModel;
     print("this is the response " + response.body.toString());

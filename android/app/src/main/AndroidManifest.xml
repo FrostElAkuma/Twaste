@@ -12,7 +12,7 @@
         android:networkSecurityConfig="@xml/network_security_config"> <!--I added this line and line above it so I can use my local host api on android-->
         <!--Android google maps api key-->
         <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyABY2MyXcI74Osrje2nejugdYPyvH1gBk0"/>
+               android:value="AIzaSyD-qjHDwSanKXTEiua0tHl2fV1dLcKqB-o"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

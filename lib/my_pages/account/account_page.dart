@@ -20,7 +20,7 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
-    print("I am here 2");
+    //print("I am here 2");
     print(_userLoggedIn);
     if (_userLoggedIn) {
       Get.find<UserController>().getUserInfo();

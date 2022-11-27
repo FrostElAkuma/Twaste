@@ -25,6 +25,7 @@ class LocationRepo {
 
   //Post method to send user location data to server
   Future<Response> addAddress(AddressModel addressModel) async {
+    //print("I am here 3");
     return await apiClient.postData(
         MyConstants.ADD_USER_ADDRESS, addressModel.toJson());
   }

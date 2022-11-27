@@ -3,7 +3,7 @@ class MyConstants {
   static const int APP_VERSION = 1;
 
   //10.0.2.2:8000 127.0.0.1:8000 mvs.bslmeiyu.com
-  static const String BASE_URL = "https://fe5e-2-49-194-193.in.ngrok.io";
+  static const String BASE_URL = "https://e07f-2-49-194-193.in.ngrok.io";
   static const String POPULAR_PRODUCT_URI = "/api/v1/products/popular";
   static const String RECOMMENDED_PRODUCT_URI = "/api/v1/products/recommended";
   //static const String DRINKS_URI = "/api/v1/products/drinks";
@@ -25,7 +25,5 @@ class MyConstants {
   static const String CART_LIST = "cart-list";
   static const String CART_HISTORY_LIST = "cart-history-list";
 
-  //Googel api key AIzaSyB8RtmRIWjVyj_Fhjf55fJjGF1V-Wf2OyI
-  //second api key AIzaSyABY2MyXcI74Osrje2nejugdYPyvH1gBk0
-  //third  api key AIzaSyCPw2n9spt7II4lsfSjLJKIVN10OZYTawk
+  //Googel api key AIzaSyD-qjHDwSanKXTEiua0tHl2fV1dLcKqB-o
 }

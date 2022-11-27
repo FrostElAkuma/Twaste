@@ -111,7 +111,7 @@ class LocationController extends GetxController implements GetxService {
       //for debugging purposes
       print("printing address " + _address);
     } else {
-      print("Error getting the google api");
+      print("Error getting the google api " + response.body.toString());
     }
     update();
     return _address;
@@ -147,7 +147,9 @@ class LocationController extends GetxController implements GetxService {
     ResponseModel responseModel;
     if (response.statusCode == 200) {
       //To save them in the memory
+      //print("I am here 4");
       await getAddressList();
+      //print("I am here 6");
       //This message comes from our api
       String message = response.body["message"];
       responseModel = ResponseModel(true, message);
@@ -165,10 +167,12 @@ class LocationController extends GetxController implements GetxService {
   Future<void> getAddressList() async {
     Response response = await locationRepo.getAllAddress();
     if (response.statusCode == 200) {
+      //print("I am here 5");
       //Making sure that they are empty just in case some one changes their account ID
       _addressList = [];
       _allAddressList = [];
       response.body.forEach((address) {
+        print("This is the address that is causing error" + address.toString());
         _addressList.add(AddressModel.fromJson(address));
         _allAddressList.add(AddressModel.fromJson(address));
       });
