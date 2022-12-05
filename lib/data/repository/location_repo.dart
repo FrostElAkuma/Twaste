@@ -20,22 +20,30 @@ class LocationRepo {
 
   //Get method
   String getUserAddress() {
+    print("We are here 1 line 23 in location repo");
     return sharedPreferences.getString(MyConstants.USER_ADDRESS) ?? "";
   }
 
   //Post method to send user location data to server
   Future<Response> addAddress(AddressModel addressModel) async {
-    //print("I am here 3");
+    print("We are here 2 line 28 in location repo");
     return await apiClient.postData(
         MyConstants.ADD_USER_ADDRESS, addressModel.toJson());
   }
 
   Future<Response> getAllAddress() async {
+    print("We are here 3 line 34 in location repo");
     return await apiClient.getData(MyConstants.ADDRESS_LIST_URI);
   }
 
   Future<bool> saveUserAddress(String address) async {
+    print("We are here 4 line 39 in location repo");
     apiClient.updateHeader(sharedPreferences.getString(MyConstants.TOKEN)!);
     return await sharedPreferences.setString(MyConstants.USER_ADDRESS, address);
+  }
+
+  Future<Response> getZone(String lat, String lng) async {
+    print("We are here 5" + lat + " aa " + lng);
+    return await apiClient.getData('${MyConstants.ZONE_URI}?lat=$lat&lng=$lng');
   }
 }

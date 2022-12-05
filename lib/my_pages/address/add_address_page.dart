@@ -11,6 +11,7 @@ import 'package:twaste/controllers/auth_controller.dart';
 import 'package:twaste/controllers/location_controller.dart';
 import 'package:twaste/controllers/user_controller.dart';
 import 'package:twaste/models/address_model.dart';
+import 'package:twaste/my_pages/address/pick_address_map.dart';
 import 'package:twaste/my_widgets/input_field.dart';
 import 'package:twaste/my_widgets/my_text.dart';
 import 'package:twaste/routes/route_helper.dart';
@@ -46,6 +47,14 @@ class _AddAddressPageState extends State<AddAddressPage> {
     }
     //If the user already has an address then the Long and Lat should not be the default ones we set above
     if (Get.find<LocationController>().addressList.isNotEmpty) {
+      //Checking if local storage is empty or not, if it is empty then the user has logged in from a new device (part 4)
+      if (Get.find<LocationController>().getUserAddressFromLocalStorage() ==
+          "") {
+        print("I am here line 53 addAddressPage no local storage");
+        //.last cuz we want last saved address
+        Get.find<LocationController>()
+            .saveUserAddress(Get.find<LocationController>().addressList.last);
+      }
       //Line of code below is  important so .getAddress below gets initialized
       Get.find<LocationController>().getUserAddress();
       _cameraPosition = CameraPosition(
@@ -75,6 +84,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
           _contactPersonNumber.text = '${userController.userModel?.phone}';
           //If user already has a lcoation saved in his account
           if (Get.find<LocationController>().addressList.isNotEmpty) {
+            print("line 86 in addAddresspage !!!!!!!!!!");
             _addressController.text =
                 Get.find<LocationController>().getUserAddress().address;
           }
@@ -84,7 +94,8 @@ class _AddAddressPageState extends State<AddAddressPage> {
               '${locationController.placemark.locality ?? ''}'
               '${locationController.placemark.postalCode ?? ''}'
               '${locationController.placemark.country ?? ''}';
-          print("address in my view is " + _addressController.text);
+          print("line 94 addAddressPage address in my view is " +
+              _addressController.text);
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,6 +114,15 @@ class _AddAddressPageState extends State<AddAddressPage> {
                       GoogleMap(
                           initialCameraPosition: CameraPosition(
                               target: _initialPosition, zoom: 17),
+                          onTap: (argument) {
+                            Get.toNamed(RouteHelper.getPickAddressPage(),
+                                arguments: PickAddressMap(
+                                  fromSignup: false,
+                                  fromAddress: true,
+                                  googleMapController:
+                                      locationController.mapControlelr,
+                                ));
+                          },
                           zoomControlsEnabled: false,
                           compassEnabled: false,
                           indoorViewEnabled: true,

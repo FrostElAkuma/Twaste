@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -24,6 +26,8 @@ class AccountPage extends StatelessWidget {
     print(_userLoggedIn);
     if (_userLoggedIn) {
       Get.find<UserController>().getUserInfo();
+      //I had a bug where the address was empty every time the user logs in. Issue was that I only called getAddressList when the user pressed the save address button
+      Get.find<LocationController>().getAddressList();
     }
 
     //We use Scaffold if we want an app bar
@@ -118,6 +122,9 @@ class AccountPage extends StatelessWidget {
                                 //address
                                 GetBuilder<LocationController>(
                                     builder: (locationController) {
+                                  if (locationController.loading) {
+                                    return CustomLoader();
+                                  }
                                   if (_userLoggedIn &&
                                       locationController.addressList.isEmpty) {
                                     return GestureDetector(

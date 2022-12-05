@@ -64,7 +64,7 @@ class ApiClient extends GetConnect implements GetxService {
 
   //
   Future<Response> postData(String uri, dynamic body) async {
-    print("We are insoide api_client");
+    print("We are inside api_client line 67");
     print(body.toString());
     try {
       //This post method is from getX package. We are not using http client
@@ -72,8 +72,8 @@ class ApiClient extends GetConnect implements GetxService {
       //We sending headers so we tell the server that we are giving it some content and the type is Json. We also the token is important for post methods
       //response so we know what is the response from our server
       Response response = await post(uri, body, headers: _mainHeaders);
-      print("We are insoide api_client");
-      print(response.toString());
+      print("We are inside api_client line 75");
+      print(response.body.toString());
       return response;
     }
     //If something goes wrong we catch it. e stands for error here

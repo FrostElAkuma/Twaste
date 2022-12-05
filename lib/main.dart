@@ -46,6 +46,11 @@ class MyApp extends StatelessWidget {
           //home: AddAddressPage(),
           initialRoute: RouteHelper.getSplashPage(),
           getPages: RouteHelper.routes,
+          theme: ThemeData(
+            //I can defind what color is Primary color
+            primaryColor: Colors.blue,
+            fontFamily: "Lato",
+          ),
         );
       });
     });
