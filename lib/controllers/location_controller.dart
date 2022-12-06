@@ -104,13 +104,14 @@ class LocationController extends GetxController implements GetxService {
         }
 
         //Every time the map is moved we check the zone and disable the button
-        /*ResponseModel _responseModel = await getZone(
+        ResponseModel _responseModel = await getZone(
             position.target.latitude.toString(),
             position.target.longitude.toString(),
             false);
         //Checking the response. If hte button value is false then we are within the service area
-        _buttonDisabled = !_responseModel.isSuccess;*/
-        //_buttonDisabled = false;
+        //I need to uncomment 2 lines below later when i get zones working
+        _buttonDisabled = !_responseModel.isSuccess;
+        _buttonDisabled = false;
         if (_changeAddress) {
           //Grabbing the this String from the google server
           String _address = await getADdressfromGeocode(
@@ -250,7 +251,7 @@ class LocationController extends GetxController implements GetxService {
     update();
   }
 
-  /*Future<ResponseModel> getZone(String lat, String lng, bool markerLoad) async {
+  Future<ResponseModel> getZone(String lat, String lng, bool markerLoad) async {
     late ResponseModel _responseModel;
     //if it is true
     if (markerLoad) {
@@ -262,16 +263,16 @@ class LocationController extends GetxController implements GetxService {
     Response response = await locationRepo.getZone(lat, lng);
     //It is important that when you do a network request that you check the response
     if (response.statusCode == 200) {
-      print("We are here 1" + response.body.toString());
+      print("We are here 1 line 265" + response.body.toString());
       _responseModel = ResponseModel(false, response.statusText!);
       //Simulating if we not in zone
       if (response.body["zone_id"] != 2) {
-        print("We are here 2");
+        print("We are here 2 line 269 location controller");
         _responseModel =
             ResponseModel(false, response.body["zone_id"].toString());
         _inZone = false;
       } else {
-        print("We are here 3");
+        print("We are here 3 line 274 location controller");
         _responseModel =
             ResponseModel(true, response.body["zone_id"].toString());
         _inZone = true;
@@ -285,10 +286,11 @@ class LocationController extends GetxController implements GetxService {
     } else {
       _isLoading = false;
     }
-    print("This is the status code given inside getZone" +
-        response.statusCode.toString());
+    print(
+        "This is the status code given inside getZone line 288 locationController" +
+            response.statusCode.toString());
     update();
 
     return _responseModel;
-  }*/
+  }
 }
