@@ -144,10 +144,7 @@ class _PickAddressMapState extends State<PickAddressMap> {
                             //While it is loading we can't press the button
                             onPressed: (locationcController.buttonDisabled ||
                                     locationcController.loading)
-                                ? () {
-                                    //For debugginh puposes I will remove this later and replace it with just null
-                                    print("Should be null value");
-                                  }
+                                ? null
                                 : () {
                                     //making sure that the user selected something
                                     if (locationcController
@@ -183,6 +180,7 @@ class _PickAddressMapState extends State<PickAddressMap> {
                                         //we usedGet.back() here first but it causes update problems
                                         Get.toNamed(
                                             RouteHelper.getAddressPage());
+                                        //Get.back();
                                       }
                                     }
                                   },

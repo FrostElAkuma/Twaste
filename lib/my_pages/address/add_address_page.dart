@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -28,6 +30,7 @@ class AddAddressPage extends StatefulWidget {
 }
 
 class _AddAddressPageState extends State<AddAddressPage> {
+  bool mapIsTapped = Get.find<LocationController>().updateAddressData;
   TextEditingController _addressController = TextEditingController();
   final TextEditingController _contactPersonName = TextEditingController();
   final TextEditingController _contactPersonNumber = TextEditingController();
@@ -43,6 +46,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
     _isLogged = Get.find<AuthController>().userLoggedIn();
     //if user model is null that means it has not yet been imported from the DB so we get it
     if (_isLogged && Get.find<UserController>().userModel == null) {
+      Get.find<LocationController>().getAddressList();
       Get.find<UserController>().getUserInfo();
     }
     //If the user already has an address then the Long and Lat should not be the default ones we set above
@@ -112,6 +116,9 @@ class _AddAddressPageState extends State<AddAddressPage> {
                   child: Stack(
                     children: [
                       GoogleMap(
+                          gestureRecognizers: Set()
+                            ..add(Factory<PanGestureRecognizer>(
+                                () => PanGestureRecognizer())),
                           initialCameraPosition: CameraPosition(
                               target: _initialPosition, zoom: 17),
                           onTap: (argument) {
@@ -129,11 +136,18 @@ class _AddAddressPageState extends State<AddAddressPage> {
                           mapToolbarEnabled: false,
                           myLocationEnabled: true,
                           onCameraIdle: () {
+                            //This is causing the error where the address change after coming back from pick_address
+                            //It is causing the error because this page is being called more than once ! thus calling update position more than once
+                            //There is a function that keeps updating this page here I need to find it I go sleep now it is 1am
+                            //Fixed the issue next day, simply when we go back to addAddressPage from pickAddressMap we only updatePosition after the camera moves
                             locationController.updatePosition(
-                                _cameraPosition, true);
+                                _cameraPosition, mapIsTapped);
                           },
-                          onCameraMove: ((position) =>
-                              _cameraPosition = position),
+                          onCameraMove: (position) {
+                            _cameraPosition = position;
+                            //This so we only update the position when the camera is moving after we come back from pick_address_map
+                            mapIsTapped = true;
+                          },
                           onMapCreated: (GoogleMapController controller) {
                             locationController.setMapController(controller);
                           }),

@@ -3,7 +3,7 @@ class MyConstants {
   static const int APP_VERSION = 1;
 
   //10.0.2.2:8000 127.0.0.1:8000 mvs.bslmeiyu.com
-  static const String BASE_URL = "https://7feb-2-49-206-217.in.ngrok.io";
+  static const String BASE_URL = "https://8511-2-49-206-217.in.ngrok.io";
   static const String POPULAR_PRODUCT_URI = "/api/v1/products/popular";
   static const String RECOMMENDED_PRODUCT_URI = "/api/v1/products/recommended";
   //static const String DRINKS_URI = "/api/v1/products/drinks";

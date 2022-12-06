@@ -30,7 +30,8 @@ class LocationController extends GetxController implements GetxService {
   bool _inZone = false;
   bool get inZone => _inZone;
   //Showing and hiding the button as the map laods
-  bool _buttonDisabled = true;
+  //The default value should be true but I will put it false until I get teh zoens working
+  bool _buttonDisabled = false;
   bool get buttonDisabled => _buttonDisabled;
 
   Placemark _placemark = Placemark();
@@ -59,7 +60,9 @@ class LocationController extends GetxController implements GetxService {
   GoogleMapController get mapControlelr => _mapController;
 
   bool _updateAddressData = true;
-  bool _changeDdress = true;
+  //I added this
+  bool get updateAddressData => _updateAddressData;
+  bool _changeAddress = true;
 
   Position get position => _position;
   Position get pickPosition => _pickPosition;
@@ -107,8 +110,8 @@ class LocationController extends GetxController implements GetxService {
             false);
         //Checking the response. If hte button value is false then we are within the service area
         _buttonDisabled = !_responseModel.isSuccess;*/
-        _buttonDisabled = false;
-        if (_changeDdress) {
+        //_buttonDisabled = false;
+        if (_changeAddress) {
           //Grabbing the this String from the google server
           String _address = await getADdressfromGeocode(
             LatLng(position.target.latitude, position.target.longitude),
