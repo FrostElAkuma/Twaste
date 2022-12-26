@@ -7,10 +7,12 @@ import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:twaste/data/api/api_checker.dart';
 import 'package:twaste/data/repository/location_repo.dart';
 import 'package:twaste/models/response_model.dart';
 
 import '../models/address_model.dart';
+import 'package:google_maps_webservice/src/places.dart';
 
 class LocationController extends GetxController implements GetxService {
   LocationRepo locationRepo;
@@ -66,6 +68,10 @@ class LocationController extends GetxController implements GetxService {
 
   Position get position => _position;
   Position get pickPosition => _pickPosition;
+
+  //Save the google map suggestions for address
+  //Prediction did not get imported so I had to import it manually
+  List<Prediction> _predictionList = [];
 
   void setMapController(GoogleMapController mapController) {
     _mapController = mapController;
@@ -263,10 +269,11 @@ class LocationController extends GetxController implements GetxService {
     Response response = await locationRepo.getZone(lat, lng);
     //It is important that when you do a network request that you check the response
     if (response.statusCode == 200) {
+      _inZone = true;
       print("We are here 1 line 265" + response.body.toString());
-      _responseModel = ResponseModel(false, response.statusText!);
+      _responseModel = ResponseModel(true, response.body["zone_id"].toString());
       //Simulating if we not in zone
-      if (response.body["zone_id"] != 2) {
+      /*if (response.body["zone_id"] != 2) {
         print("We are here 2 line 269 location controller");
         _responseModel =
             ResponseModel(false, response.body["zone_id"].toString());
@@ -276,7 +283,7 @@ class LocationController extends GetxController implements GetxService {
         _responseModel =
             ResponseModel(true, response.body["zone_id"].toString());
         _inZone = true;
-      }
+      }*/
     } else {
       _inZone = false;
       _responseModel = ResponseModel(false, response.statusText!);
@@ -292,5 +299,25 @@ class LocationController extends GetxController implements GetxService {
     update();
 
     return _responseModel;
+  }
+
+  Future<List<Prediction>> searchLocation(
+      BuildContext context, String text) async {
+    if (text.isNotEmpty) {
+      Response response = await locationRepo.searchLoaction(text);
+      //the OK status comes from google map server
+      if (response.statusCode == 200 && response.body['status'] == 'OK') {
+        //Here we make it empty cuz every time this function is called we need to remove the previous data
+        _predictionList = [];
+        //This also comes from the google maps server
+        //min.38:40 for postman testing
+        response.body['predictions'].forEach((prediction) =>
+            _predictionList.add(Prediction.fromJson(prediction)));
+      } else {
+        //So this will most likely be called when the user won't be logged in
+        ApiChecker.checkApi(response);
+      }
+    }
+    return _predictionList;
   }
 }

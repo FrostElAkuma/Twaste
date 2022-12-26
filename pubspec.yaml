@@ -40,6 +40,10 @@ dependencies:
   google_maps_flutter: ^2.2.1
   geocoding: ^2.0.5
   geolocator: ^9.0.2
+  #this for autofilling in the search location
+  flutter_typeahead: ^4.1.1
+  google_maps_flutter_web: ^0.4.0+3
+  flutter_google_places: ^0.3.0
   
   
   #webview_flutter: ^3.0.4 #hopeless try to fix loading images from api

@@ -46,4 +46,9 @@ class LocationRepo {
     print("We are here 5" + lat + " aa " + lng);
     return await apiClient.getData('${MyConstants.ZONE_URI}?lat=$lat&lng=$lng');
   }
+
+  Future<Response> searchLoaction(String text) async {
+    return await apiClient
+        .getData('${MyConstants.SEARCH_LOCATION_URI}?search_text=$text');
+  }
 }

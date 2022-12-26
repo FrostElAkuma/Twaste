@@ -6,6 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:twaste/base/custom_button.dart';
 import 'package:twaste/controllers/location_controller.dart';
+import 'package:twaste/my_pages/address/widgets_for_address_pages/search_location_dialog_page.dart';
 import 'package:twaste/utils/dimensions.dart';
 
 import '../../routes/route_helper.dart';
@@ -79,6 +80,9 @@ class _PickAddressMapState extends State<PickAddressMap> {
                     Get.find<LocationController>()
                         .updatePosition(_cameraPosition, false);
                   },
+                  onMapCreated: (GoogleMapController mapController) {
+                    _mapController = mapController;
+                  },
                 ),
                 //Loading Icon
                 Center(
@@ -91,42 +95,56 @@ class _PickAddressMapState extends State<PickAddressMap> {
                         )
                       : CircularProgressIndicator(),
                 ),
-                //To show address
+                //The bar showing address
                 Positioned(
                   top: Dimensions.height45,
                   left: Dimensions.width20,
                   right: Dimensions.width20,
-                  child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: Dimensions.width10),
-                    height: (Dimensions.height20 * 2 + Dimensions.height10),
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius:
-                          BorderRadius.circular(Dimensions.radius20 / 2),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.location_on,
-                          size: 25,
-                          color: Colors.yellow,
-                        ),
-                        Expanded(
-                          child: Text(
-                            '${locationcController.pickPlacemark.name ?? ''}',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: Dimensions.font16,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                  //Once this is tapped we will go to a little pop-up / overlay page over this page
+                  child: InkWell(
+                    onTap: () => Get.dialog(
+                        LoactionSearch(mapController: _mapController)),
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: Dimensions.width10),
+                      height: (Dimensions.height20 * 2 + Dimensions.height10),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.radius20 / 2),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            size: 25,
+                            color: Colors.yellow,
                           ),
-                        )
-                      ],
+                          Expanded(
+                            child: Text(
+                              '${locationcController.pickPlacemark.name ?? ''}',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: Dimensions.font16,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          SizedBox(
+                            width: Dimensions.width10,
+                          ),
+                          Icon(
+                            Icons.search,
+                            size: 25,
+                            color: Colors.yellow,
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
+                //The pick Address button
                 Positioned(
                     bottom: Dimensions.height20 * 4,
                     left: Dimensions.width20,
@@ -136,7 +154,7 @@ class _PickAddressMapState extends State<PickAddressMap> {
                             child: CircularProgressIndicator(),
                           )
                         : CustomButton(
-                            buttonText: !locationcController.inZone
+                            buttonText: locationcController.inZone
                                 ? widget.fromAddress
                                     ? 'Pick Address'
                                     : 'Pick Location'

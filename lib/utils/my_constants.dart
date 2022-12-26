@@ -3,7 +3,7 @@ class MyConstants {
   static const int APP_VERSION = 1;
 
   //10.0.2.2:8000 127.0.0.1:8000 mvs.bslmeiyu.com
-  static const String BASE_URL = "https://1ccc-2-49-206-217.ap.ngrok.io";
+  static const String BASE_URL = "https://52af-176-205-72-65.in.ngrok.io";
   static const String POPULAR_PRODUCT_URI = "/api/v1/products/popular";
   static const String RECOMMENDED_PRODUCT_URI = "/api/v1/products/recommended";
   //static const String DRINKS_URI = "/api/v1/products/drinks";
@@ -20,6 +20,9 @@ class MyConstants {
   static const String ADDRESS_LIST_URI = "/api/v1/customer/address/list";
 
   static const String ZONE_URI = "/api/v1/config/get-zone-id";
+
+  static const String SEARCH_LOCATION_URI =
+      "/api/v1/config/place-api-autocomplete";
 
   static const String TOKEN = "";
   static const String PHONE = "";
