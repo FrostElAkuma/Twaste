@@ -51,4 +51,11 @@ class LocationRepo {
     return await apiClient
         .getData('${MyConstants.SEARCH_LOCATION_URI}?search_text=$text');
   }
+
+  //Get reuest
+  Future<Response> setLocation(String placeID) async {
+    //The search api that we are using does not give us the lat and len but gives us an ID, We will use theat ID to get lat and len from google server
+    return await apiClient
+        .getData('${MyConstants.PLACE_DETAILS_URI}?placeid=$placeID');
+  }
 }

@@ -61,7 +61,12 @@ class LoactionSearch extends StatelessWidget {
                 ),
               ),
               //This so we actually select and set the location we want from the search
-              onSuggestionSelected: (suggestion) {},
+              onSuggestionSelected: (Prediction suggestion) {
+                Get.find<LocationController>().setLocation(suggestion.placeId!,
+                    suggestion.description!, mapController);
+                //Usually get,back is used when we are going back from a dialog box to a previous page so this is perfect
+                Get.back();
+              },
               //Suggestions as we type (It talks back to the google server) it will automatically get the text I am typing
               // it was (String pattern) but pattern is given a type automatically so we delted String ?
               suggestionsCallback: (pattern) async {

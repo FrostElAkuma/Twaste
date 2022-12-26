@@ -116,6 +116,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                   child: Stack(
                     children: [
                       GoogleMap(
+                          //This gestureRecognizer for smooth navigating on google maps, I think a youtube comment mentioned this
                           gestureRecognizers: Set()
                             ..add(Factory<PanGestureRecognizer>(
                                 () => PanGestureRecognizer())),
@@ -127,7 +128,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                                   fromSignup: false,
                                   fromAddress: true,
                                   googleMapController:
-                                      locationController.mapControlelr,
+                                      locationController.mapController,
                                 ));
                           },
                           zoomControlsEnabled: false,

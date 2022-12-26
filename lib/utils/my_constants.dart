@@ -2,8 +2,8 @@ class MyConstants {
   static const String APP_NAME = "Twaste";
   static const int APP_VERSION = 1;
 
-  //10.0.2.2:8000 127.0.0.1:8000 mvs.bslmeiyu.com
-  static const String BASE_URL = "https://52af-176-205-72-65.in.ngrok.io";
+  //10.0.2.2:8000 127.0.0.1:8000 mvs.bslmeiyu.com ngrok http 127.0.0.1:8000
+  static const String BASE_URL = "https://a849-176-205-72-65.in.ngrok.io";
   static const String POPULAR_PRODUCT_URI = "/api/v1/products/popular";
   static const String RECOMMENDED_PRODUCT_URI = "/api/v1/products/recommended";
   //static const String DRINKS_URI = "/api/v1/products/drinks";
@@ -23,6 +23,8 @@ class MyConstants {
 
   static const String SEARCH_LOCATION_URI =
       "/api/v1/config/place-api-autocomplete";
+  //End point for when we chose a place from thje search
+  static const String PLACE_DETAILS_URI = '/api/v1/config/place-api-details';
 
   static const String TOKEN = "";
   static const String PHONE = "";

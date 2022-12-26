@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
@@ -59,7 +60,7 @@ class LocationController extends GetxController implements GetxService {
   int get addressTypeIndex => _addressTypeIndex;
 
   late GoogleMapController _mapController;
-  GoogleMapController get mapControlelr => _mapController;
+  GoogleMapController get mapController => _mapController;
 
   bool _updateAddressData = true;
   //I added this
@@ -129,6 +130,10 @@ class LocationController extends GetxController implements GetxService {
               : _pickPlacemark = Placemark(name: _address);
           //Good for debugging
           //print(_placemark.)
+        }
+        //Added this else so after we chose a location from the search and hten move the map the position gets updated when moved
+        else {
+          _changeAddress = true;
         }
       } catch (e) {
         print(e);
@@ -319,5 +324,43 @@ class LocationController extends GetxController implements GetxService {
       }
     }
     return _predictionList;
+  }
+
+  setLocation(
+      String placeId, String address, GoogleMapController mapController) async {
+    //Loading animation will start
+    _loading = true;
+    //Update UI to show the animation
+    update();
+    //This from the plugin that we installed
+    PlacesDetailsResponse detail;
+    Response response = await locationRepo.setLocation(placeId);
+    detail = PlacesDetailsResponse.fromJson(response.body);
+    _pickPosition = Position(
+      latitude: detail.result.geometry!.location.lat,
+      longitude: detail.result.geometry!.location.lng,
+      timestamp: DateTime.now(),
+      accuracy: 1,
+      altitude: 1,
+      heading: 1,
+      speedAccuracy: 1,
+      speed: 1,
+    );
+    _pickPlacemark = Placemark(name: address);
+    _changeAddress = false;
+    if (!mapController.isNull) {
+      mapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+              target: LatLng(
+                detail.result.geometry!.location.lat,
+                detail.result.geometry!.location.lng,
+              ),
+              zoom: 17),
+        ),
+      );
+    }
+    _loading = false;
+    update();
   }
 }
