@@ -338,7 +338,7 @@ class CartPage extends StatelessWidget {
                                     .getUserAddress();
                                 var cart = Get.find<CartController>().getItems;
                                 var user = Get.find<UserController>().userModel;
-                                //This is our place order model
+                                //This is our place order model, some variables are fixed for now
                                 PlaceOrderBody placeOrder = PlaceOrderBody(
                                   cart: cart,
                                   orderAmount: 100.0,
