@@ -17,6 +17,7 @@ import 'package:twaste/routes/route_helper.dart';
 import 'package:twaste/utils/my_constants.dart';
 
 import '../../controllers/recommended_meals_controller.dart';
+import '../../models/place_order_model.dart';
 import '../../utils/dimensions.dart';
 
 class CartPage extends StatelessWidget {
@@ -333,11 +334,27 @@ class CartPage extends StatelessWidget {
                                   .isEmpty) {
                                 Get.toNamed(RouteHelper.getAddressPage());
                               } else {
-                                //Get.offNamed(RouteHelper.getInitial());
-                                //Get.toNamed(RouteHelper.getPaymentPage("100001",Get.find<UserController>().userModel!.id));
+                                var location = Get.find<LocationController>()
+                                    .getUserAddress();
+                                var cart = Get.find<CartController>().getItems;
+                                var user = Get.find<UserController>().userModel;
+                                //This is our place order model
+                                PlaceOrderBody placeOrder = PlaceOrderBody(
+                                  cart: cart,
+                                  orderAmount: 100.0,
+                                  orderNote: "Note about teh food",
+                                  address: location.address,
+                                  latitude: location.latitude,
+                                  longitude: location.longitude,
+                                  contactPersonName: user!.name,
+                                  contactPersonNumber: user.phone,
+                                  scheduleAt: '',
+                                  distance: 10.0,
+                                );
+
                                 //_callBack is a function that we will pass to our controller and then the controller will send us BACK the info that we need
                                 Get.find<OrderController>()
-                                    .placeOrder(_callback);
+                                    .placeOrder(placeOrder, _callback);
                               }
                               cartController.addToHistory();
                             } else {
