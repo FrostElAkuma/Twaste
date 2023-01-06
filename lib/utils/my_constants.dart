@@ -3,7 +3,8 @@ class MyConstants {
   static const int APP_VERSION = 1;
 
   //10.0.2.2:8000 127.0.0.1:8000 mvs.bslmeiyu.com ngrok http 127.0.0.1:8000
-  static const String BASE_URL = "https://a849-176-205-72-65.in.ngrok.io";
+  //Since I am developing on android. When trying on IOS make sure that everything thing is ok. I need to add some specific code for IOS later
+  static const String BASE_URL = "https://5384-176-205-72-65.in.ngrok.io";
   static const String POPULAR_PRODUCT_URI = "/api/v1/products/popular";
   static const String RECOMMENDED_PRODUCT_URI = "/api/v1/products/recommended";
   //static const String DRINKS_URI = "/api/v1/products/drinks";
@@ -25,6 +26,9 @@ class MyConstants {
       "/api/v1/config/place-api-autocomplete";
   //End point for when we chose a place from thje search
   static const String PLACE_DETAILS_URI = '/api/v1/config/place-api-details';
+
+//Orders
+  static const String PLACE_ORDER_URI = '/api/v1/customer/order/place';
 
   static const String TOKEN = "";
   static const String PHONE = "";

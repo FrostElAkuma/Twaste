@@ -7,6 +7,7 @@ import 'package:twaste/controllers/auth_controller.dart';
 import 'package:twaste/controllers/cart_controller.dart';
 import 'package:twaste/controllers/location_controller.dart';
 import 'package:twaste/controllers/meal_controller.dart';
+import 'package:twaste/controllers/user_controller.dart';
 import 'package:twaste/my_pages/home/main_page.dart';
 import 'package:twaste/my_widgets/myIcons.dart';
 import 'package:twaste/my_widgets/my_text.dart';
@@ -335,7 +336,12 @@ class CartPage extends StatelessWidget {
                                     .isEmpty) {
                                   Get.toNamed(RouteHelper.getAddressPage());
                                 } else {
-                                  Get.offNamed(RouteHelper.getInitial());
+                                  //Get.offNamed(RouteHelper.getInitial());
+                                  Get.toNamed(RouteHelper.getPaymentPage(
+                                      "100001",
+                                      Get.find<UserController>()
+                                          .userModel!
+                                          .id));
                                 }
                                 cartController.addToHistory();
                               } else {

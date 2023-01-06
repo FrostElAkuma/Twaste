@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
+import 'package:twaste/models/order_model.dart';
 import 'package:twaste/my_pages/address/add_address_page.dart';
 import 'package:twaste/my_pages/auth/sign_in_page.dart';
 import 'package:twaste/my_pages/home/main_page.dart';
+import 'package:twaste/my_pages/payment/payment_page.dart';
 import 'package:twaste/my_pages/restaurant/meal_page.dart';
 import 'package:twaste/my_pages/restaurant/restaurant_page.dart';
 import 'package:twaste/my_pages/splash/splash_page.dart';
@@ -21,6 +23,9 @@ class RouteHelper {
   static const String addAddress = "/add-address";
   static const String pickAddressMap = "/pick-address";
 
+  static const String payment = '/payment';
+  static const String ordeSuccess = '/order-succesful';
+
   //We use this so we can pass parameters and have different routes
   //When we call this line of code below it will go to the corresponding route in the list routes
   static String getSplashPage() => '$splashPage';
@@ -34,6 +39,10 @@ class RouteHelper {
 
   static String getAddressPage() => '$addAddress';
   static String getPickAddressPage() => '$pickAddressMap';
+
+  static String getPaymentPage(String id, int userId) =>
+      '$payment?id=$id&userId=$userId';
+  static String getOrderSuccessPage() => '$ordeSuccess';
 
   //GetPge is the data type
   static List<GetPage> routes = [
@@ -93,5 +102,15 @@ class RouteHelper {
         return AddAddressPage();
       },
     ),
+    GetPage(
+      name: payment,
+      page: () => PaymentPage(
+        orderModel: OrderModel(
+          id: int.parse(Get.parameters['id']!),
+          userId: int.parse(Get.parameters["userId"]!),
+        ),
+      ),
+    ),
+    //GetPage(name: orderSuccess, page: ()=? OrderrSuccessPage)
   ];
 }

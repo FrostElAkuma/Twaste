@@ -44,8 +44,8 @@ class AddressModel {
     _contactPersonName = json["contact_person_name"] ?? "";
     _contactPersonNumber = json["contact_person_number"] ?? "";
     _address = json["address"];
-    _latitude = json["latitude"];
-    _longitude = json["longitude"];
+    _latitude = json["latitude"] ?? "";
+    _longitude = json["longitude"] ?? "";
   }
 
   //Converting data to json
