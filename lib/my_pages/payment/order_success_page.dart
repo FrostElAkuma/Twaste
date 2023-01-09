@@ -26,13 +26,15 @@ class OrderSuccessPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            //We can also have an Icon instead of an image
+            //Icon(status == 1 ? Icons.check_circle_outline: Icons.warning_amber_outlined, size: Dimensions.height20*5, color: Colors.blue,),
             Image.asset(
                 status == 1
                     ? "assets/images/test2.png"
                     : "assets/images/cat.jpg",
                 width: Dimensions.width20 * 5,
                 height: Dimensions.height20 * 5),
-            SizedBox(height: Dimensions.height45),
+            SizedBox(height: Dimensions.height30),
             Text(
               status == 1
                   ? "You placed the order successfully"
@@ -43,7 +45,7 @@ class OrderSuccessPage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: Dimensions.height20,
-                  vertical: Dimensions.height20),
+                  vertical: Dimensions.height10),
               child: Text(
                 status == 1 ? "Succesful order" : "Failed order",
                 style: TextStyle(
@@ -52,9 +54,9 @@ class OrderSuccessPage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            SizedBox(height: Dimensions.height30),
+            SizedBox(height: Dimensions.height10),
             Padding(
-              padding: EdgeInsets.all(Dimensions.height20),
+              padding: EdgeInsets.all(Dimensions.height10),
               child: CustomButton(
                   buttonText: 'BAck to Home',
                   onPressed: () => Get.offAllNamed(RouteHelper.getInitial())),

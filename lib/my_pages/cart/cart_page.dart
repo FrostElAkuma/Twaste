@@ -388,6 +388,9 @@ class CartPage extends StatelessWidget {
 
   void _callback(bool isSucces, String message, String orderID) {
     if (isSucces) {
+      Get.find<CartController>().clear();
+      Get.find<CartController>().removeCartSharedPreference();
+      Get.find<CartController>().addToHistory();
       Get.toNamed(RouteHelper.getPaymentPage(
           orderID, Get.find<UserController>().userModel!.id));
     } else {
