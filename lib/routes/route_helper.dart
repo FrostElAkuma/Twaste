@@ -11,6 +11,7 @@ import 'package:twaste/my_pages/splash/splash_page.dart';
 import '../my_pages/address/pick_address_map.dart';
 import '../my_pages/cart/cart_page.dart';
 import '../my_pages/home/home_page.dart';
+import '../my_pages/payment/order_success_page.dart';
 
 class RouteHelper {
   static const String splashPage = "/splash-page";
@@ -24,7 +25,7 @@ class RouteHelper {
   static const String pickAddressMap = "/pick-address";
 
   static const String payment = '/payment';
-  static const String ordeSuccess = '/order-succesful';
+  static const String orderSuccess = '/order-succesful';
 
   //We use this so we can pass parameters and have different routes
   //When we call this line of code below it will go to the corresponding route in the list routes
@@ -42,7 +43,8 @@ class RouteHelper {
 
   static String getPaymentPage(String id, int userId) =>
       '$payment?id=$id&userId=$userId';
-  static String getOrderSuccessPage() => '$ordeSuccess';
+  static String getOrderSuccessPage(String orderID, String status) =>
+      '$orderSuccess?id=$orderID&status=$status';
 
   //GetPge is the data type
   static List<GetPage> routes = [
@@ -111,6 +113,13 @@ class RouteHelper {
         ),
       ),
     ),
-    //GetPage(name: orderSuccess, page: ()=? OrderrSuccessPage)
+    GetPage(
+        name: orderSuccess,
+        page: () => OrderSuccessPage(
+              orderID: Get.parameters['id']!,
+              status: Get.parameters["status"].toString().contains("success")
+                  ? 1
+                  : 0,
+            ))
   ];
 }

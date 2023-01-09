@@ -121,11 +121,11 @@ class _PaymentPageState extends State<PaymentPage> {
         _canRedirect = false;
       }
       if (_isSuccess) {
-        //Get.offNamed(RouteHelper.getOrderSuccessRoute(
-        //widget.orderModel.id.toString(), 'success'));
+        Get.offNamed(RouteHelper.getOrderSuccessPage(
+            widget.orderModel.id.toString(), 'success'));
       } else if (_isFailed || _isCancel) {
-        //Get.offNamed(RouteHelper.getOrderSuccessRoute(
-        //widget.orderModel.id.toString(), 'fail'));
+        Get.offNamed(RouteHelper.getOrderSuccessPage(
+            widget.orderModel.id.toString(), 'fail'));
       } else {
         print("Encountered problem");
       }
