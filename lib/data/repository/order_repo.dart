@@ -9,8 +9,13 @@ class OrderRepo {
 
   //We used Getx only for the <Response>
   Future<Response> placeOrder(PlaceOrderBody placeOrder) async {
-    //Note again: postData for posting info and we can only send Json format
+    //Note: postData for posting info and we can only send Json format
     return await apiClient.postData(
         MyConstants.PLACE_ORDER_URI, placeOrder.toJson());
+  }
+
+  //Note again: This is Get method so no need to pass any thing unlike above post method
+  Future<Response> getOrderList() async {
+    return await apiClient.getData(MyConstants.ORDER_LIST_URI);
   }
 }

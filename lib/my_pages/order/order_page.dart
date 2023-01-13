@@ -3,7 +3,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:twaste/controllers/auth_controller.dart';
+import 'package:twaste/my_pages/order/view_order.dart';
 import 'package:twaste/utils/dimensions.dart';
+
+import '../../controllers/order_controller.dart';
 
 class OrderPage extends StatefulWidget {
   const OrderPage({super.key});
@@ -24,7 +27,7 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
     //If he is NOT logged in no need to have the tabcontroller we will just show the sign in to your account page
     if (_isLoggedIn) {
       _tabController = TabController(length: 2, vsync: this);
-      //Get.find<OrderController>().getOrderList();
+      Get.find<OrderController>().getOrderList();
     }
   }
 
@@ -55,6 +58,15 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
               ),
             ],
           ),
+        ),
+        //We had viewport error so we wrapped it inside expanded
+        Expanded(
+          child: TabBarView(controller: _tabController, children: [
+            ViewOrder(isCurrent: true),
+            ViewOrder(
+              isCurrent: false,
+            )
+          ]),
         )
       ]),
     );
