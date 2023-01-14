@@ -42,8 +42,10 @@ class ViewOrder extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("#order ID        " +
-                                      orderList[index].id.toString()),
+                                  Row(children: [
+                                    Text("order ID"),
+                                    Text(orderList[index].id.toString()),
+                                  ]),
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
