@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+import 'package:twaste/base/custom_app_bar.dart';
 import 'package:twaste/controllers/auth_controller.dart';
 import 'package:twaste/my_pages/order/view_order.dart';
 import 'package:twaste/utils/dimensions.dart';
@@ -34,11 +35,8 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "My orders",
-        ),
-        backgroundColor: Colors.blue,
+      appBar: CustomAppBar(
+        title: "My orders",
       ),
       body: Column(children: [
         Container(

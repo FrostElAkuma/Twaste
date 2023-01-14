@@ -1,8 +1,9 @@
-import 'dart:ui';
+//I had imported dart:ui instead of material.dart and it was giving me errors when i tried using the fonts. So make sure to always import the correct package
+import 'package:flutter/material.dart';
 
 import 'package:twaste/utils/dimensions.dart';
 
-final robotoReqqular = TextStyle(
+final robotoRegular = TextStyle(
     fontFamily: 'Roboto',
     fontWeight: FontWeight.w400,
     fontSize: Dimensions.font26);
