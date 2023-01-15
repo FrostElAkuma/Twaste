@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:twaste/base/custom_app_bar.dart';
 import 'package:twaste/base/custom_loader.dart';
 import 'package:twaste/controllers/auth_controller.dart';
 import 'package:twaste/controllers/cart_controller.dart';
@@ -32,15 +33,8 @@ class AccountPage extends StatelessWidget {
 
     //We use Scaffold if we want an app bar
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Center(
-          child: LargeText(
-            text: "profile",
-            size: 24,
-            color: Colors.white,
-          ),
-        ),
+      appBar: CustomAppBar(
+        title: "Profile",
       ),
       //Do not forget we use get builder when we want to use data froma controller
       body: GetBuilder<UserController>(builder: (userController) {

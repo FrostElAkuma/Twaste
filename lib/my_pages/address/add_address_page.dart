@@ -9,6 +9,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:twaste/base/custom_app_bar.dart';
 import 'package:twaste/controllers/auth_controller.dart';
 import 'package:twaste/controllers/location_controller.dart';
 import 'package:twaste/controllers/user_controller.dart';
@@ -77,10 +78,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Address page"),
-        backgroundColor: Colors.blue,
-      ),
+      appBar: CustomAppBar(title: "Adress"),
       body: GetBuilder<UserController>(builder: (userController) {
         if (userController.userModel != null &&
             _contactPersonName.text.isEmpty) {

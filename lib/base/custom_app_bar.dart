@@ -38,5 +38,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   //PreferredSized Widget made me ovveride this
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => Size(500, 50);
+  //Size for the app bar, width and height
+  Size get preferredSize => Size(500, 53);
 }

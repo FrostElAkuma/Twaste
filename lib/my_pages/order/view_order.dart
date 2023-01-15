@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+import 'package:twaste/base/custom_loader.dart';
 import 'package:twaste/utils/dimensions.dart';
 import 'package:twaste/utils/styles.dart';
 
@@ -129,7 +130,7 @@ class ViewOrder extends StatelessWidget {
             ),
           );
         } else {
-          return Text("loading");
+          return CustomLoader();
         }
       }),
     );
