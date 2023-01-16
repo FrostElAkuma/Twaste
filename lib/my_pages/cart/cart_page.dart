@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:twaste/base/common_text_button.dart';
 import 'package:twaste/base/no_data_page.dart';
 import 'package:twaste/base/show_custom_snackBar.dart';
 import 'package:twaste/controllers/auth_controller.dart';
@@ -13,6 +14,7 @@ import 'package:twaste/controllers/user_controller.dart';
 import 'package:twaste/my_pages/home/main_page.dart';
 import 'package:twaste/my_widgets/myIcons.dart';
 import 'package:twaste/my_widgets/my_text.dart';
+import 'package:twaste/my_pages/order/payment_option_button.dart';
 import 'package:twaste/routes/route_helper.dart';
 import 'package:twaste/utils/my_constants.dart';
 
@@ -281,10 +283,11 @@ class CartPage extends StatelessWidget {
       bottomNavigationBar: GetBuilder<CartController>(
         builder: (cartController) {
           return Container(
-            height: Dimensions.bottomHeightBar,
+            //For now added 50 so I don't have any overflow issues
+            height: Dimensions.bottomHeightBar + 50,
             padding: EdgeInsets.only(
-                top: Dimensions.height30,
-                bottom: Dimensions.height30,
+                top: Dimensions.height10,
+                bottom: Dimensions.height10,
                 left: Dimensions.width20,
                 right: Dimensions.width20),
             decoration: BoxDecoration(
@@ -295,90 +298,153 @@ class CartPage extends StatelessWidget {
                   topRight: Radius.circular(Dimensions.radius20 * 2),
                 )),
             child: cartController.getItems.length > 0
-                ? Row(
-                    //comment for formatting purposes
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                ? Column(
                     children: [
-                        //add or remove items
-                        Container(
-                            padding: EdgeInsets.only(
-                                top: Dimensions.height20,
-                                bottom: Dimensions.height20,
-                                left: Dimensions.width20,
-                                right: Dimensions.width20),
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(Dimensions.radius20),
-                              color: Colors.white,
-                            ),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: Dimensions.width10 / 2,
+                      //Inkwell for clickable button
+                      InkWell(
+                        //showModalBottomSheet so when i click the payment options button it gives me that pop up
+                        onTap: () => showModalBottomSheet(
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (_) {
+                              return Column(
+                                children: [
+                                  //And Expanded Widget needs to be insode column otherwise we get an overflow error
+                                  Expanded(
+                                    //This so it can be scrolable and it needs to be wraped inside an expanded widget
+                                    child: SingleChildScrollView(
+                                      child: Container(
+                                        height: Dimensions.height10 * 50,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(
+                                                Dimensions.radius20),
+                                            topRight: Radius.circular(
+                                                Dimensions.radius20),
+                                          ),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              height: Dimensions.height10 * 50,
+                                              //Padding so the buttons do not take the whole sapce
+                                              padding: EdgeInsets.only(
+                                                left: Dimensions.width20,
+                                                right: Dimensions.width20,
+                                                top: Dimensions.height20,
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  PaymentOptionButton(
+                                                    icon: Icons.money,
+                                                    index: 0,
+                                                    subTitle:
+                                                        'you pay on delivery',
+                                                    title: 'Cash on delivery',
+                                                  ),
+                                                  SizedBox(
+                                                    height: Dimensions.height10,
+                                                  ),
+                                                  PaymentOptionButton(
+                                                    icon: Icons.credit_card,
+                                                    index: 1,
+                                                    subTitle:
+                                                        'Visa or Master Cards',
+                                                    title: 'Digital Payments',
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }),
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          child: CommonTextButton(text: "Payment Options"),
+                        ),
+                      ),
+                      SizedBox(
+                        height: Dimensions.height10,
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            //add or remove items
+                            Container(
+                                padding: EdgeInsets.only(
+                                    top: Dimensions.height20,
+                                    bottom: Dimensions.height20,
+                                    left: Dimensions.width20,
+                                    right: Dimensions.width20),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.radius20),
+                                  color: Colors.white,
                                 ),
-                                LargeText(
-                                    text:
-                                        "\$ ${cartController.totalAmount.toString()}"),
-                                SizedBox(
-                                  width: Dimensions.width10 / 2,
-                                ),
-                              ],
-                            )),
-                        //Checkout button
-                        GestureDetector(
-                          onTap: () {
-                            //Checking if user has logged in or not
-                            if (Get.find<AuthController>().userLoggedIn()) {
-                              if (Get.find<LocationController>()
-                                  .addressList
-                                  .isEmpty) {
-                                Get.toNamed(RouteHelper.getAddressPage());
-                              } else {
-                                var location = Get.find<LocationController>()
-                                    .getUserAddress();
-                                var cart = Get.find<CartController>().getItems;
-                                var user = Get.find<UserController>().userModel;
-                                //This is our place order model, some variables are fixed for now
-                                PlaceOrderBody placeOrder = PlaceOrderBody(
-                                  cart: cart,
-                                  orderAmount: 100.0,
-                                  orderNote: "Note about teh food",
-                                  address: location.address,
-                                  latitude: location.latitude,
-                                  longitude: location.longitude,
-                                  contactPersonName: user!.name,
-                                  contactPersonNumber: user.phone,
-                                  scheduleAt: '',
-                                  distance: 10.0,
-                                );
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: Dimensions.width10 / 2,
+                                    ),
+                                    LargeText(
+                                        text:
+                                            "\$ ${cartController.totalAmount.toString()}"),
+                                    SizedBox(
+                                      width: Dimensions.width10 / 2,
+                                    ),
+                                  ],
+                                )),
+                            //Checkout button
+                            GestureDetector(
+                              onTap: () {
+                                //Checking if user has logged in or not
+                                if (Get.find<AuthController>().userLoggedIn()) {
+                                  if (Get.find<LocationController>()
+                                      .addressList
+                                      .isEmpty) {
+                                    Get.toNamed(RouteHelper.getAddressPage());
+                                  } else {
+                                    var location =
+                                        Get.find<LocationController>()
+                                            .getUserAddress();
+                                    var cart =
+                                        Get.find<CartController>().getItems;
+                                    var user =
+                                        Get.find<UserController>().userModel;
+                                    //This is our place order model, some variables are fixed for now
+                                    PlaceOrderBody placeOrder = PlaceOrderBody(
+                                      cart: cart,
+                                      orderAmount: 100.0,
+                                      orderNote: "Note about teh food",
+                                      address: location.address,
+                                      latitude: location.latitude,
+                                      longitude: location.longitude,
+                                      contactPersonName: user!.name,
+                                      contactPersonNumber: user.phone,
+                                      scheduleAt: '',
+                                      distance: 10.0,
+                                    );
 
-                                //_callBack is a function that we will pass to our controller and then the controller will send us BACK the info that we need
-                                Get.find<OrderController>()
-                                    .placeOrder(placeOrder, _callback);
-                              }
-                              cartController.addToHistory();
-                            } else {
-                              Get.toNamed(RouteHelper.getSignInPage());
-                            }
-                          },
-                          child: Container(
-                            padding: EdgeInsets.only(
-                                top: Dimensions.height20,
-                                bottom: Dimensions.height20,
-                                left: Dimensions.width20,
-                                right: Dimensions.width20),
-                            child: LargeText(
-                              text: "Check Out",
-                              color: Colors.white,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(Dimensions.radius20),
-                              color: Colors.blue,
-                            ),
-                          ),
-                        )
-                      ])
+                                    //_callBack is a function that we will pass to our controller and then the controller will send us BACK the info that we need
+                                    Get.find<OrderController>()
+                                        .placeOrder(placeOrder, _callback);
+                                  }
+                                  cartController.addToHistory();
+                                } else {
+                                  Get.toNamed(RouteHelper.getSignInPage());
+                                }
+                              },
+                              child: CommonTextButton(text: "Check Out"),
+                            )
+                          ])
+                    ],
+                  )
                 : Container(),
           );
         },

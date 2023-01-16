@@ -19,6 +19,9 @@ class OrderController extends GetxController implements GetxService {
   late List<OrderModel> _historyOrderList;
   List<OrderModel> get historyOrderList => _historyOrderList;
 
+  int _paymentIndex = 0;
+  int get paymentIndex => _paymentIndex;
+
   Future<void> placeOrder(PlaceOrderBody placeOrder, Function callback) async {
     _isLoading = true;
     Response response = await orderRepo.placeOrder(placeOrder);
@@ -59,6 +62,11 @@ class OrderController extends GetxController implements GetxService {
     _isLoading = false;
     //print("The length of the orders" + _currentOrderList.length.toString());
     ///print("The length of the orders" + _historyOrderList.length.toString());
+    update();
+  }
+
+  void setPaymentIndex(int index) {
+    _paymentIndex = index;
     update();
   }
 }
