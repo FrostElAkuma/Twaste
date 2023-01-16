@@ -12,11 +12,13 @@ import 'package:twaste/controllers/meal_controller.dart';
 import 'package:twaste/controllers/order_controller.dart';
 import 'package:twaste/controllers/user_controller.dart';
 import 'package:twaste/my_pages/home/main_page.dart';
+import 'package:twaste/my_pages/order/delivery_options.dart';
 import 'package:twaste/my_widgets/myIcons.dart';
 import 'package:twaste/my_widgets/my_text.dart';
 import 'package:twaste/my_pages/order/payment_option_button.dart';
 import 'package:twaste/routes/route_helper.dart';
 import 'package:twaste/utils/my_constants.dart';
+import 'package:twaste/utils/styles.dart';
 
 import '../../controllers/recommended_meals_controller.dart';
 import '../../models/place_order_model.dart';
@@ -335,6 +337,8 @@ class CartPage extends StatelessWidget {
                                                 top: Dimensions.height20,
                                               ),
                                               child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   PaymentOptionButton(
                                                     icon: Icons.money,
@@ -353,6 +357,39 @@ class CartPage extends StatelessWidget {
                                                         'Visa or Master Cards',
                                                     title: 'Digital Payments',
                                                   ),
+                                                  SizedBox(
+                                                    height: Dimensions.height30,
+                                                  ),
+                                                  Text(
+                                                    "Delivery options",
+                                                    style: robotoMedium,
+                                                  ),
+                                                  SizedBox(
+                                                    height:
+                                                        Dimensions.height10 / 2,
+                                                  ),
+                                                  DeliveryOptions(
+                                                      value: "delivery",
+                                                      title: "Home delivery",
+                                                      amount: double.parse(
+                                                          Get.find<
+                                                                  CartController>()
+                                                              .totalAmount
+                                                              .toString()),
+                                                      isFree: false),
+                                                  SizedBox(
+                                                    height:
+                                                        Dimensions.height10 / 2,
+                                                  ),
+                                                  DeliveryOptions(
+                                                      value: "take away",
+                                                      title: "Take away",
+                                                      amount: double.parse(
+                                                          Get.find<
+                                                                  CartController>()
+                                                              .totalAmount
+                                                              .toString()),
+                                                      isFree: true),
                                                 ],
                                               ),
                                             ),
