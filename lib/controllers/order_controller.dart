@@ -25,6 +25,9 @@ class OrderController extends GetxController implements GetxService {
   String _orderType = "delivery";
   String get orderType => _orderType;
 
+  String _orderNote = "";
+  String get orderNote => _orderNote;
+
   Future<void> placeOrder(PlaceOrderBody placeOrder, Function callback) async {
     _isLoading = true;
     Response response = await orderRepo.placeOrder(placeOrder);
@@ -76,5 +79,9 @@ class OrderController extends GetxController implements GetxService {
   void setDeliveryType(String type) {
     _orderType = type;
     update();
+  }
+
+  void setFoodNote(String note) {
+    _orderNote = note;
   }
 }
