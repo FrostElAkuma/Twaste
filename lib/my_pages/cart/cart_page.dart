@@ -507,6 +507,11 @@ class CartPage extends StatelessWidget {
                                         contactPersonNumber: user.phone,
                                         scheduleAt: '',
                                         distance: 10.0,
+                                        orderType: orderController.orderType,
+                                        paymentMethod:
+                                            orderController.paymentIndex == 0
+                                                ? 'cash_on_delivery'
+                                                : 'digital_payment',
                                       );
 
                                       //_callBack is a function that we will pass to our controller and then the controller will send us BACK the info that we need
@@ -536,8 +541,13 @@ class CartPage extends StatelessWidget {
       Get.find<CartController>().clear();
       Get.find<CartController>().removeCartSharedPreference();
       Get.find<CartController>().addToHistory();
-      Get.toNamed(RouteHelper.getPaymentPage(
-          orderID, Get.find<UserController>().userModel!.id));
+      //If it is cash
+      if (Get.find<OrderController>().paymentIndex == 0) {
+        Get.offNamed(RouteHelper.getOrderSuccessPage(orderID, "success"));
+      } else {
+        Get.offNamed(RouteHelper.getPaymentPage(
+            orderID, Get.find<UserController>().userModel!.id));
+      }
     } else {
       showCusotmSnackBar(message);
     }
