@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "403983922582",
+    "project_id": "twaste",
+    "storage_bucket": "twaste.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:403983922582:android:716bc21712435ca4d799b7",
+        "android_client_info": {
+          "package_name": "com.getx.app.twaste.firebaseApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "403983922582-34fe7fa8cspg6g0unprf03mt7sbsbe82.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBr3GH6lP6GVzKobtIhgLW2ughBF_9YzJE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "403983922582-34fe7fa8cspg6g0unprf03mt7sbsbe82.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
