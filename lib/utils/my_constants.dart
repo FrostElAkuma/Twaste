@@ -38,4 +38,6 @@ class MyConstants {
   static const String CART_HISTORY_LIST = "cart-history-list";
 
   //Googel api key AIzaSyD-qjHDwSanKXTEiua0tHl2fV1dLcKqB-o
+
+  static const String TOKEN_URI = '/api/v1/customer/cm-firebase-token';
 }

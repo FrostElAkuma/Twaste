@@ -1,4 +1,6 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twaste/models/singUp_model.dart';
 import 'package:twaste/utils/my_constants.dart';
@@ -68,5 +70,59 @@ class AuthRepo {
     apiClient.updateHeader('');
 
     return true;
+  }
+
+  //Updating token for our Firebase
+  Future<Response> updateToken() async {
+    String? _deviceToken;
+    //We check if IOS or not cuz there are some speical settings for IOS and request permission
+    if (GetPlatform.isIOS && !GetPlatform.isWeb) {
+      FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+          alert: true, badge: true, sound: true);
+      NotificationSettings settings =
+          await FirebaseMessaging.instance.requestPermission(
+        alert: true,
+        announcement: false,
+        badge: true,
+        carPlay: false,
+        criticalAlert: false,
+        provisional: false,
+        sound: true,
+      );
+      if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+        _deviceToken = await _saveDeviceToken();
+        print("Line 86 authrepo. My token is 1 " + _deviceToken!);
+      }
+      //This for Android
+      else {
+        _deviceToken = await _saveDeviceToken();
+        print("Line 86 authrepo. My token is 2 " + _deviceToken!);
+      }
+    }
+    if (!GetPlatform.isWeb) {
+      //FirebaseMessaging.instance.subscribeToTopic(AppConstants.topic)
+    }
+    //Sending data to our DB
+    return await apiClient.postData(MyConstants.TOKEN_URI,
+        {"_method": "put", "cm_firebase_token": _deviceToken});
+  }
+
+  Future<String?> _saveDeviceToken() async {
+    String? _deviceToken = '@';
+    if (!GetPlatform.isWeb) {
+      try {
+        //getting reqquest permission
+        FirebaseMessaging.instance.requestPermission();
+        //Getting the token
+        _deviceToken = await FirebaseMessaging.instance.getToken();
+      } catch (e) {
+        print("line 117 authrepo. Could not get the token");
+        print(e.toString());
+      }
+    }
+    if (_deviceToken != null) {
+      print('------------Device Token------------------------' + _deviceToken);
+    }
+    return _deviceToken;
   }
 }

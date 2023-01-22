@@ -482,6 +482,8 @@ class CartPage extends StatelessWidget {
                                   //Checking if user has logged in or not
                                   if (Get.find<AuthController>()
                                       .userLoggedIn()) {
+                                    //making sure we have this device's token
+                                    Get.find<AuthController>().updateToken();
                                     if (Get.find<LocationController>()
                                         .addressList
                                         .isEmpty) {
