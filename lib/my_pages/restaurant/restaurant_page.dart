@@ -166,7 +166,7 @@ class RestaurantDetails extends StatelessWidget {
         ],
       ),
       //We use the bottom navigaton bar that comes with scaffold
-      bottomNavigationBar: GetBuilder<MealController>(
+      /*bottomNavigationBar: GetBuilder<MealController>(
         builder: (restaurantMeal) {
           return Container(
             height: Dimensions.bottomHeightBar,
@@ -254,7 +254,7 @@ class RestaurantDetails extends StatelessWidget {
                 ]),
           );
         },
-      ),
+      ),*/
     );
   }
 }

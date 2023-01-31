@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:twaste/controllers/auth_controller.dart';
+import 'package:twaste/controllers/restaurant_controller.dart';
 import 'package:twaste/my_widgets/my_text.dart';
 import 'package:twaste/routes/route_helper.dart';
 import 'package:twaste/utils/dimensions.dart';
@@ -32,6 +33,7 @@ class _SplashScreenState extends State<SplashScreen>
   Future<void> _loadRescources() async {
     await Get.find<MealController>().getMealList();
     await Get.find<RecommendedMealController>().getRecommendedMealList();
+    await Get.find<RestaurantController>().getRestaurantList();
   }
 
   @override

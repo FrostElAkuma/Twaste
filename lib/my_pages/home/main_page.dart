@@ -4,6 +4,8 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:twaste/controllers/restaurant_controller.dart';
+import 'package:twaste/models/restaurant_model.dart';
 import 'package:twaste/my_pages/home/body_page.dart';
 import 'package:twaste/utils/colors.dart';
 import 'package:twaste/utils/dimensions.dart';
@@ -23,6 +25,7 @@ class _MyMainPageState extends State<MainPage> {
   Future<void> _loadRescources() async {
     await Get.find<MealController>().getMealList();
     await Get.find<RecommendedMealController>().getRecommendedMealList();
+    await Get.find<RestaurantController>().getRestaurantList();
   }
 
   @override

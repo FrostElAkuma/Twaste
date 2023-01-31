@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:twaste/controllers/meal_controller.dart';
 import 'package:twaste/controllers/recommended_meals_controller.dart';
+import 'package:twaste/controllers/restaurant_controller.dart';
 import 'package:twaste/my_pages/restaurant/restaurant_page.dart';
 import 'package:twaste/my_widgets/info_and_rating.dart';
 import 'package:twaste/routes/route_helper.dart';
@@ -113,6 +114,118 @@ class _BodyPageState extends State<BodyPage> {
                 )
               ]),
         ),
+        SizedBox(
+          height: Dimensions.height30,
+        ),
+        //Recommended Restaurant list
+        GetBuilder<RestaurantController>(builder: (restaurant) {
+          return restaurant.isLoaded
+              ? ListView.builder(
+                  //physics never thing so the whole poage is scrollable and not only the retaurant list
+                  physics: NeverScrollableScrollPhysics(),
+                  //ListView takes the height of the container it is in. Since the OG column does not have one we use shrinkWrap here even tho i am not exatly sure what it does
+                  shrinkWrap: true,
+                  itemCount: restaurant.restaurantList.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Get.toNamed(
+                            RouteHelper.getRecommendedFood(index, "home"));
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width20,
+                            right: Dimensions.width20,
+                            bottom: Dimensions.height10),
+                        //Our main restaurant card
+                        child: Row(children: [
+                          //This container for the image
+                          Container(
+                            width: Dimensions.restaurantListImg,
+                            height: Dimensions.restaurantListImg,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.circular(Dimensions.radius20),
+                              //In future when we load images from the network, so if they do not load there will be a white background
+                              color: Colors.white38,
+                              /*image: DecorationImage(
+                                  //We use this box fir so the image fits and looks like it has a border radius of 20
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(MyConstants.BASE_URL +
+                                      MyConstants.UPLOAD_URL +
+                                      restaurant.restaurantList[index].img!),
+                                )*/
+                            ),
+                          ),
+                          //Image Info container
+                          //We used Expanded widget so the width of thos info container takes all teh avaiable space
+                          Expanded(
+                            child: Container(
+                              height: Dimensions.restaurantListInfo,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topRight:
+                                      Radius.circular(Dimensions.radius20),
+                                  bottomRight:
+                                      Radius.circular(Dimensions.radius20),
+                                ),
+                                color: Colors.white,
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    left: Dimensions.width10,
+                                    right: Dimensions.width10),
+                                child: Column(
+                                    //This crossAxisAlignment so everything is left aligned. crossAxis = horizontal
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    //mainAxis = vertical
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      LargeText(
+                                        text: restaurant
+                                            .restaurantList[index].name,
+                                      ),
+                                      SizedBox(
+                                        height: Dimensions.height10,
+                                      ),
+                                      SmallText(
+                                        text: "idk sone description goes here",
+                                      ),
+                                      SizedBox(
+                                        height: Dimensions.height10,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          DistanceTime(
+                                              icon: Icons.circle_sharp,
+                                              text: "normal",
+                                              iconColor: Colors.orange),
+                                          DistanceTime(
+                                              icon: Icons.location_on,
+                                              text: "1.7km",
+                                              iconColor: Colors.blue),
+                                          DistanceTime(
+                                              icon: Icons
+                                                  .access_time_filled_rounded,
+                                              text: "32min",
+                                              iconColor: Colors.red),
+                                        ],
+                                      )
+                                    ]),
+                              ),
+                            ),
+                          )
+                        ]),
+                      ),
+                    );
+                  })
+              : CircularProgressIndicator(
+                  color: Colors.red,
+                );
+        }),
         //List of recommended restaurants or foods (i will decide later)
         //Every builder in flutter takes a function in their item builder, first is context and second is index which is the number of items
         GetBuilder<RecommendedMealController>(builder: (recommendedMeal) {

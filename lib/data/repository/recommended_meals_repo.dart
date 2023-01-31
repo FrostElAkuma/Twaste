@@ -10,7 +10,6 @@ class RecommendedMealRepo extends GetxService {
   RecommendedMealRepo({required this.apiClient});
 
   Future<Response> getRecommendedMealList() async {
-    return await apiClient.getData(MyConstants
-        .RECOMMENDED_PRODUCT_URI); // I will get the correct uri in the second video
+    return await apiClient.getData(MyConstants.RECOMMENDED_PRODUCT_URI);
   }
 }

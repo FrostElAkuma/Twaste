@@ -8,9 +8,11 @@ import 'package:twaste/controllers/order_controller.dart';
 import 'package:twaste/data/api/api_client.dart';
 import 'package:twaste/data/repository/location_repo.dart';
 import 'package:twaste/data/repository/meals_repo.dart';
+import 'package:twaste/data/repository/restaurant_repo.dart';
 import 'package:twaste/utils/my_constants.dart';
 
 import '../controllers/recommended_meals_controller.dart';
+import '../controllers/restaurant_controller.dart';
 import '../controllers/user_controller.dart';
 import '../data/repository/auth_repo.dart';
 import '../data/repository/cart_reop.dart';
@@ -36,6 +38,7 @@ Future<void> init() async {
 
   //Generally next are repositories
   //Get.find = Getx wil find the value for me ig
+  Get.lazyPut(() => RestaurantRepo(apiClient: Get.find()));
   Get.lazyPut(() => MealRepo(apiClient: Get.find()));
   Get.lazyPut(() => RecommendedMealRepo(apiClient: Get.find()));
   //We pass our sharedPreferences here
@@ -47,6 +50,7 @@ Future<void> init() async {
   //controllers
   Get.lazyPut(() => AuthController(authRepo: Get.find()));
   Get.lazyPut(() => UserController(userRepo: Get.find()));
+  Get.lazyPut(() => RestaurantController(restaurantRepo: Get.find()));
   Get.lazyPut(() => MealController(mealRepo: Get.find()));
   Get.lazyPut(() => RecommendedMealController(recommendedMealRepo: Get.find()));
   Get.lazyPut(() => CartController(cartRepo: Get.find()));

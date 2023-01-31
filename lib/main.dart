@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:twaste/controllers/cart_controller.dart';
+import 'package:twaste/controllers/restaurant_controller.dart';
 import 'package:twaste/my_pages/address/add_address_page.dart';
 import 'package:twaste/my_pages/auth/sign_up_page.dart';
 import 'package:twaste/my_pages/home/main_page.dart';
@@ -69,19 +70,21 @@ class MyApp extends StatelessWidget {
     //That is why we use the 2 Get Builders. In getX that is one way to keep data in memory
     return GetBuilder<MealController>(builder: (_) {
       return GetBuilder<RecommendedMealController>(builder: (_) {
-        return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          //We already defined initial route we do not need the line below
-          //home: AddAddressPage(),
-          initialRoute: RouteHelper.getSplashPage(),
-          getPages: RouteHelper.routes,
-          theme: ThemeData(
-            //I can defind what color is Primary color
-            primaryColor: Colors.blue,
-            fontFamily: "Lato",
-          ),
-        );
+        return GetBuilder<RestaurantController>(builder: (_) {
+          return GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            //We already defined initial route we do not need the line below
+            //home: AddAddressPage(),
+            initialRoute: RouteHelper.getSplashPage(),
+            getPages: RouteHelper.routes,
+            theme: ThemeData(
+              //I can defind what color is Primary color
+              primaryColor: Colors.blue,
+              fontFamily: "Lato",
+            ),
+          );
+        });
       });
     });
   }
