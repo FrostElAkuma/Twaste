@@ -38,7 +38,7 @@ class RestaurantModel {
   //String? description;
   //int? price;
   //int? stars;
-  //String? img;
+  String? img;
   //String? location;
   String? createdAt;
   String? updatedAt;
@@ -50,7 +50,7 @@ class RestaurantModel {
     //this.description,
     //this.price,
     //this.stars,
-    //this.img,
+    this.img,
     //this.location,
     this.createdAt,
     this.updatedAt,
@@ -63,7 +63,7 @@ class RestaurantModel {
     //description = json['description'];
     //price = json['price'];
     //stars = json['stars'];
-    //img = json['img'];
+    img = json['img'];
     //location = json['location'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -76,7 +76,7 @@ class RestaurantModel {
       "id": this.id,
       "name": this.name,
       //"price": this.price,
-      //"img": this.img,
+      "img": this.img,
       //"location": this.location,
       "createdAt": this.createdAt,
       "updatedAt": this.updatedAt,

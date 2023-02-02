@@ -144,18 +144,17 @@ class _BodyPageState extends State<BodyPage> {
                             width: Dimensions.restaurantListImg,
                             height: Dimensions.restaurantListImg,
                             decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(Dimensions.radius20),
-                              //In future when we load images from the network, so if they do not load there will be a white background
-                              color: Colors.white38,
-                              /*image: DecorationImage(
+                                borderRadius:
+                                    BorderRadius.circular(Dimensions.radius20),
+                                //In future when we load images from the network, so if they do not load there will be a white background
+                                color: Colors.white38,
+                                image: DecorationImage(
                                   //We use this box fir so the image fits and looks like it has a border radius of 20
                                   fit: BoxFit.cover,
                                   image: NetworkImage(MyConstants.BASE_URL +
                                       MyConstants.UPLOAD_URL +
                                       restaurant.restaurantList[index].img!),
-                                )*/
-                            ),
+                                )),
                           ),
                           //Image Info container
                           //We used Expanded widget so the width of thos info container takes all teh avaiable space
