@@ -129,8 +129,7 @@ class _BodyPageState extends State<BodyPage> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        Get.toNamed(
-                            RouteHelper.getRecommendedFood(index, "home"));
+                        Get.toNamed(RouteHelper.getRestaurant(index, "home"));
                       },
                       child: Container(
                         margin: EdgeInsets.only(
@@ -383,7 +382,7 @@ class _BodyPageState extends State<BodyPage> {
             onTap: (() {
               //Basic Getx routing we use this line of code below for smaller apps but for larger apps we need a seperate routing folder
               //Get.to(() => RestaurantDetails());
-              Get.toNamed(RouteHelper.getPopularFood(index, "home"));
+              Get.toNamed(RouteHelper.getRestaurant(index, "home"));
             }),
             child: Container(
               //The child container will take the whole sapce of the parent container s one of teh ways we can fix it is to use stack

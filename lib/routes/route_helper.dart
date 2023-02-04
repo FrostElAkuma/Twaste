@@ -16,7 +16,7 @@ import '../my_pages/payment/order_success_page.dart';
 class RouteHelper {
   static const String splashPage = "/splash-page";
   static const String initial = "/";
-  static const String popularFood = "/popular-food";
+  static const String restaurant = "/restaurant";
   static const String recommendedFood = "/recommended-food";
   static const String cartPage = "/cart-page";
   static const String signIn = "/sign-in";
@@ -31,8 +31,8 @@ class RouteHelper {
   //When we call this line of code below it will go to the corresponding route in the list routes
   static String getSplashPage() => '$splashPage';
   static String getInitial() => '$initial';
-  static String getPopularFood(int pageId, String page) =>
-      '$popularFood?pageId=$pageId&page=$page';
+  static String getRestaurant(int pageId, String page) =>
+      '$restaurant?pageId=$pageId&page=$page';
   static String getRecommendedFood(int pageId, String page) =>
       '$recommendedFood?pageId=$pageId&page=$page';
   static String getCartPage() => '$cartPage';
@@ -71,7 +71,7 @@ class RouteHelper {
       transition: Transition.fadeIn,
     ),
     GetPage(
-      name: popularFood,
+      name: restaurant,
       page: () {
         var pageId = Get.parameters['pageId'];
         var page = Get.parameters['page'];

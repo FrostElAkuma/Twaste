@@ -115,7 +115,7 @@ class CartPage extends StatelessWidget {
                                           //if found the index of the item in our mealList
                                           if (mealIndex >= 0) {
                                             Get.toNamed(
-                                                RouteHelper.getPopularFood(
+                                                RouteHelper.getRestaurant(
                                                     mealIndex, "cartpage"));
                                           }
                                           //else it must be on our other recommendedMealList

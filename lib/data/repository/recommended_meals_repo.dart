@@ -9,7 +9,8 @@ class RecommendedMealRepo extends GetxService {
 
   RecommendedMealRepo({required this.apiClient});
 
-  Future<Response> getRecommendedMealList() async {
-    return await apiClient.getData(MyConstants.RECOMMENDED_PRODUCT_URI);
+  Future<Response> getRecommendedMealList(String restaurantID) async {
+    return await apiClient.getData(
+        '${MyConstants.RECOMMENDED_PRODUCT_URI}?restaurantid=$restaurantID');
   }
 }

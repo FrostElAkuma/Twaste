@@ -21,7 +21,7 @@ class RecommendedMealController extends GetxController {
   //So here i will call my repository and my reposiory will return the data and i will put the data inside the list
   Future<void> getRecommendedMealList() async {
     //We used await because getMealList is returning a future type. We also saved the data inside a response object cuz the data that will be returned from getMealList is Resposne type
-    Response response = await recommendedMealRepo.getRecommendedMealList();
+    Response response = await recommendedMealRepo.getRecommendedMealList('2');
     //Status code 200 means successful
     if (response.statusCode == 200) {
       //I initialize it to NULL so my data does not get repeated

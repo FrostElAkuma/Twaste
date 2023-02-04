@@ -24,7 +24,7 @@ class RestaurantController extends GetxController {
 
   //So here i will call my repository and my reposiory will return the data and i will put the data inside the list
   Future<void> getRestaurantList() async {
-    print("Line 27 restaurant_controller Got called !!!!!!!!!!!!");
+    //print("Line 27 restaurant_controller Got called !!!!!!!!!!!!");
     //We used await because getrestaurantList is returning a future type. We also saved the data inside a response object cuz the data that will be returned from getrestaurantList is Resposne type
     Response response = await restaurantRepo.getRestaurantList();
     //Status code 200 means successful
@@ -34,12 +34,12 @@ class RestaurantController extends GetxController {
       //Inside our response there is a lot of data, among which is the data we want which is json type. So in order to use it we need to convert it to model data
       //.restaurants so we get the list that is public
       _restaurantList.addAll(Restaurant.fromJson(response.body).restaurants);
-      print("Line 36 restaurant_controller Got data !!!!!!!!!!!!");
+      //print("Line 36 restaurant_controller Got data !!!!!!!!!!!!");
       _isLoaded = true;
       //This update is more like setState() to update our UI
       update();
     } else {
-      print("Line 41 Restaurant_controller DID NOT WORK");
+      //print("Line 41 Restaurant_controller DID NOT WORK");
     }
   }
 }
