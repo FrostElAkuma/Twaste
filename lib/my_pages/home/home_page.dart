@@ -6,6 +6,7 @@ import 'package:twaste/my_pages/auth/sign_up_page.dart';
 import 'package:twaste/my_pages/cart/cart_history_page.dart';
 import 'package:twaste/my_pages/home/main_page.dart';
 import 'package:twaste/my_pages/order/order_page.dart';
+import 'package:twaste/my_pages/restaurant/add_meal_page.dart';
 
 import '../auth/sign_in_page.dart';
 
@@ -20,7 +21,8 @@ class _HomePageState extends State<HomePage> {
   int _index = 0;
   List pages = [
     MainPage(),
-    OrderPage(),
+    //OrderPage(),
+    AddMeal(),
     CartHistory(),
     AccountPage(),
   ];

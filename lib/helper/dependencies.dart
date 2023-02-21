@@ -1,11 +1,13 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:twaste/controllers/add_meal_controller.dart';
 import 'package:twaste/controllers/auth_controller.dart';
 import 'package:twaste/controllers/cart_controller.dart';
 import 'package:twaste/controllers/location_controller.dart';
 import 'package:twaste/controllers/meal_controller.dart';
 import 'package:twaste/controllers/order_controller.dart';
 import 'package:twaste/data/api/api_client.dart';
+import 'package:twaste/data/repository/add_meal_repo.dart';
 import 'package:twaste/data/repository/location_repo.dart';
 import 'package:twaste/data/repository/meals_repo.dart';
 import 'package:twaste/data/repository/restaurant_repo.dart';
@@ -46,6 +48,7 @@ Future<void> init() async {
   Get.lazyPut(
       () => LocationRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(() => OrderRepo(apiClient: Get.find()));
+  //Get.lazyPut(() => AddMealRepo(apiClient: Get.find()));
 
   //controllers
   Get.lazyPut(() => AuthController(authRepo: Get.find()));
@@ -56,4 +59,5 @@ Future<void> init() async {
   Get.lazyPut(() => CartController(cartRepo: Get.find()));
   Get.lazyPut(() => LocationController(locationRepo: Get.find()));
   Get.lazyPut(() => OrderController(orderRepo: Get.find()));
+  //Get.lazyPut(() => AddMealController(addMealRepo: Get.find()));
 }

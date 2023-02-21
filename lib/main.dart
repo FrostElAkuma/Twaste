@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:twaste/controllers/add_meal_controller.dart';
 import 'package:twaste/controllers/cart_controller.dart';
 import 'package:twaste/controllers/restaurant_controller.dart';
 import 'package:twaste/my_pages/address/add_address_page.dart';
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Get.lazyPut(() => AddMealController());
     Get.find<CartController>().getCartData();
     //Getting the data from our controller. VIP we need to do this for all our controllers so we can laod the data
     //This is not the most propper way to load the data and we will change it soon
