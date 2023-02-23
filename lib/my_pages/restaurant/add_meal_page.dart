@@ -45,7 +45,7 @@ class _AddMealState extends State<AddMeal> {
       if (name.isEmpty) {
         showCusotmSnackBar("Name can't be empty", title: "Name");
       } else if (price.isEmpty) {
-        showCusotmSnackBar("Price can't be empty", title: "Phone");
+        showCusotmSnackBar("Price can't be empty", title: "Price");
       } else {
         ProductModel productModel = ProductModel(
           name: name,
