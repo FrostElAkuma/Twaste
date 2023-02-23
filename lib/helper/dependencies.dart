@@ -48,7 +48,7 @@ Future<void> init() async {
   Get.lazyPut(
       () => LocationRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(() => OrderRepo(apiClient: Get.find()));
-  //Get.lazyPut(() => AddMealRepo(apiClient: Get.find()));
+  Get.lazyPut(() => AddMealRepo(apiClient: Get.find()));
 
   //controllers
   Get.lazyPut(() => AuthController(authRepo: Get.find()));
@@ -59,5 +59,5 @@ Future<void> init() async {
   Get.lazyPut(() => CartController(cartRepo: Get.find()));
   Get.lazyPut(() => LocationController(locationRepo: Get.find()));
   Get.lazyPut(() => OrderController(orderRepo: Get.find()));
-  //Get.lazyPut(() => AddMealController(addMealRepo: Get.find()));
+  Get.lazyPut(() => AddMealController(addMealRepo: Get.find()));
 }

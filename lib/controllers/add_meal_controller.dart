@@ -5,11 +5,19 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:twaste/data/repository/add_meal_repo.dart';
 import 'package:http/http.dart' as http;
+import 'package:twaste/models/meal_model.dart';
+import 'package:twaste/utils/my_constants.dart';
+
+import '../models/response_model.dart';
 
 class AddMealController extends GetxController {
-  //AddMealRepo addMealRepo;
+  final AddMealRepo addMealRepo;
 
-  //AddMealController({required this.addMealRepo});
+  AddMealController({required this.addMealRepo});
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
   PickedFile? _pickedFile;
   PickedFile? get pickedFile => _pickedFile;
 
@@ -47,9 +55,7 @@ class AddMealController extends GetxController {
 
   Future<http.StreamedResponse> updateImage(PickedFile? data) async {
     http.MultipartRequest request = http.MultipartRequest(
-        'POST',
-        Uri.parse(
-            'https://cd23-86-98-115-176.in.ngrok.io/api/v1/restaurant/upload'));
+        'POST', Uri.parse(MyConstants.BASE_URL + MyConstants.MEAL_UPLOAD_URI));
     // request.headers.addAll(<String,String>{'Authorization': 'Bearer $token'});
     if (GetPlatform.isMobile && data != null) {
       File _file = File(data.path);
@@ -65,5 +71,23 @@ class AddMealController extends GetxController {
     //request.fields.addAll(_fields);
     http.StreamedResponse response = await request.send();
     return response;
+  }
+
+  Future<ResponseModel> addMeal(ProductModel productModel) async {
+    //Data is being loaded, which means we are talking to the server
+    _isLoading = true;
+    update();
+    Response response = await addMealRepo.addMeal(productModel);
+    late ResponseModel responseModel;
+    //If it was a success server would give us 200 and a token as a response
+    if (response.statusCode == 200) {
+      print("Line 84 add_meal_controller -> meal added to DB");
+    } else {
+      responseModel = ResponseModel(false, response.statusText!);
+    }
+    _isLoading = false;
+    //To update our front ends
+    update();
+    return responseModel;
   }
 }

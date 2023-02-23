@@ -1,5 +1,6 @@
-/*import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:twaste/data/api/api_client.dart';
+import 'package:twaste/models/meal_model.dart';
 import 'package:twaste/utils/my_constants.dart';
 
 //Repositories talk to Api client and it has to do with internet connection ? And that is why when we load data from the internet we should extend the GetxService ?
@@ -9,7 +10,8 @@ class AddMealRepo extends GetxService {
 
   AddMealRepo({required this.apiClient});
 
-  Future<Response> addMeal() async {
-    return await apiClient.getData(MyConstants.BASE_URL);
+  Future<Response> addMeal(ProductModel productModel) async {
+    return await apiClient.postData(
+        MyConstants.MEAL_UPLOAD_URI, productModel.toJson());
   }
-}*/
+}

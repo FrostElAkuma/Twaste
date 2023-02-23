@@ -6,9 +6,14 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:twaste/controllers/add_meal_controller.dart';
+import 'package:twaste/models/meal_model.dart';
 import 'package:twaste/utils/dimensions.dart';
 
 import '../../base/custom_app_bar.dart';
+import '../../base/show_custom_snackBar.dart';
+import '../../my_widgets/input_field.dart';
+import '../../my_widgets/my_text.dart';
+import '../../routes/route_helper.dart';
 import '../../utils/my_constants.dart';
 
 class AddMeal extends StatefulWidget {
@@ -27,20 +32,67 @@ class _AddMealState extends State<AddMeal> {
 
   @override
   Widget build(BuildContext context) {
+    var nameController = TextEditingController();
+    var priceController = TextEditingController();
+
+    void _validation(AddMealController mealController) {
+      //We removed the line below because we already passed an authcntroller object into this metod from our scaffold s
+      //var authController = Get.find<AuthController>();
+      String name = nameController.text.trim();
+      String price = priceController.text.trim();
+      int price2 = int.parse(price);
+
+      if (name.isEmpty) {
+        showCusotmSnackBar("Name can't be empty", title: "Name");
+      } else if (price.isEmpty) {
+        showCusotmSnackBar("Price can't be empty", title: "Phone");
+      } else {
+        ProductModel productModel = ProductModel(
+          name: name,
+          price: price2,
+          img: mealController.imagePath,
+        );
+        mealController.addMeal(productModel).then((status) {
+          //Reminder we definded isSuccess in our response model
+          if (status.isSuccess) {
+            print("Success registration");
+            Get.offNamed(RouteHelper.getInitial());
+          } else {
+            showCusotmSnackBar(status.message);
+          }
+        });
+      }
+    }
+
     return Scaffold(
       appBar: CustomAppBar(
         title: "Add New Item",
       ),
-      body: GetBuilder<AddMealController>(builder: (addMealController) {
+      body: GetBuilder<AddMealController>(builder: (_addMealController) {
         return SafeArea(
           child: Padding(
             padding: EdgeInsets.all(Dimensions.height30),
             child: Column(
               children: [
+                InputField(
+                    textController: nameController,
+                    hintText: "Name of Meal",
+                    icon: Icons.person),
+                SizedBox(
+                  height: Dimensions.height20,
+                ),
+                //phone
+                InputField(
+                    textController: priceController,
+                    hintText: "Price of Meal",
+                    icon: Icons.phone),
+                SizedBox(
+                  height: Dimensions.height20,
+                ),
                 Center(
                   child: GestureDetector(
                     child: Text('Select An Image'),
-                    onTap: () => addMealController.pickImage(),
+                    onTap: () => _addMealController.pickImage(),
                   ),
                 ),
                 SizedBox(
@@ -51,9 +103,9 @@ class _AddMealState extends State<AddMeal> {
                   width: double.infinity,
                   height: Dimensions.height20 * 10,
                   color: Colors.grey[300],
-                  child: addMealController.pickedFile != null
+                  child: _addMealController.pickedFile != null
                       ? Image.file(
-                          File(addMealController.pickedFile!.path),
+                          File(_addMealController.pickedFile!.path),
                           width: Dimensions.width10 * 10,
                           height: Dimensions.height10 * 10,
                           fit: BoxFit.cover,
@@ -63,8 +115,30 @@ class _AddMealState extends State<AddMeal> {
                 SizedBox(
                   height: Dimensions.height30,
                 ),
+                GestureDetector(
+                  onTap: () {
+                    //Getting the Image path
+                    _addMealController.upload();
+                    _validation(_addMealController);
+                  },
+                  child: Container(
+                    width: Dimensions.screenWidth / 3,
+                    height: Dimensions.screenHeight / 19,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(Dimensions.radius30),
+                      color: Colors.blue,
+                    ),
+                    child: Center(
+                      child: LargeText(
+                        text: "add meal",
+                        size: Dimensions.font20,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
                 //This server upload section
-                Center(
+                /*Center(
                   child: GestureDetector(
                     child: Text('Server upload'),
                     onTap: () => addMealController.upload(),
@@ -86,7 +160,7 @@ class _AddMealState extends State<AddMeal> {
                           fit: BoxFit.cover,
                         )
                       : const Text('Please select an image'),
-                ),
+                ),*/
               ],
             ),
           ),

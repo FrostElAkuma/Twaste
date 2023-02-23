@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => AddMealController());
+    //Get.lazyPut(() => AddMealController());
     Get.find<CartController>().getCartData();
     //Getting the data from our controller. VIP we need to do this for all our controllers so we can laod the data
     //This is not the most propper way to load the data and we will change it soon
@@ -73,19 +73,21 @@ class MyApp extends StatelessWidget {
     return GetBuilder<MealController>(builder: (_) {
       return GetBuilder<RecommendedMealController>(builder: (_) {
         return GetBuilder<RestaurantController>(builder: (_) {
-          return GetMaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Flutter Demo',
-            //We already defined initial route we do not need the line below
-            //home: AddAddressPage(),
-            initialRoute: RouteHelper.getSplashPage(),
-            getPages: RouteHelper.routes,
-            theme: ThemeData(
-              //I can defind what color is Primary color
-              primaryColor: Colors.blue,
-              fontFamily: "Lato",
-            ),
-          );
+          return GetBuilder<AddMealController>(builder: (_) {
+            return GetMaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Flutter Demo',
+              //We already defined initial route we do not need the line below
+              //home: AddAddressPage(),
+              initialRoute: RouteHelper.getSplashPage(),
+              getPages: RouteHelper.routes,
+              theme: ThemeData(
+                //I can defind what color is Primary color
+                primaryColor: Colors.blue,
+                fontFamily: "Lato",
+              ),
+            );
+          });
         });
       });
     });
