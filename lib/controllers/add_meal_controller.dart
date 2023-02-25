@@ -45,7 +45,7 @@ class AddMealController extends GetxController {
       // _pickedFile = null;
       //await getUserInfo();
       success = true;
-      print(message);
+      print('I am here line 48 addMealcontroller ' + message);
     } else {
       print("error posting the image");
     }
@@ -54,8 +54,8 @@ class AddMealController extends GetxController {
   }
 
   Future<http.StreamedResponse> updateImage(PickedFile? data) async {
-    http.MultipartRequest request = http.MultipartRequest(
-        'POST', Uri.parse(MyConstants.BASE_URL + MyConstants.MEAL_UPLOAD_URI));
+    http.MultipartRequest request = http.MultipartRequest('POST',
+        Uri.parse(MyConstants.BASE_URL + MyConstants.MEAL_IMAGE_UPLOAD_URI));
     // request.headers.addAll(<String,String>{'Authorization': 'Bearer $token'});
     if (GetPlatform.isMobile && data != null) {
       File _file = File(data.path);
@@ -73,21 +73,35 @@ class AddMealController extends GetxController {
     return response;
   }
 
-  Future<ResponseModel> addMeal(ProductModel productModel) async {
+  Future<ResponseModel> addMeal(String name, int price) async {
     //Data is being loaded, which means we are talking to the server
-    _isLoading = true;
-    update();
-    Response response = await addMealRepo.addMeal(productModel);
+    bool imgGood = await upload();
     late ResponseModel responseModel;
-    //If it was a success server would give us 200 and a token as a response
-    if (response.statusCode == 200) {
-      print("Line 84 add_meal_controller -> meal added to DB");
+    if (imgGood) {
+      ProductModel productModel = ProductModel(
+        name: name,
+        price: price,
+        img: imagePath,
+      );
+
+      _isLoading = true;
+      update();
+      Response response = await addMealRepo.addMeal(productModel);
+
+      //If it was a success server would give us 200
+      if (response.statusCode == 200) {
+        print("Line 84 add_meal_controller -> meal added to DB");
+        responseModel = ResponseModel(true, response.body);
+      } else {
+        responseModel = ResponseModel(false, response.statusText!);
+      }
+      _isLoading = false;
+      //To update our front ends
+      update();
+      return responseModel;
     } else {
-      responseModel = ResponseModel(false, response.statusText!);
+      responseModel = ResponseModel(false, "failed to get image");
+      return responseModel;
     }
-    _isLoading = false;
-    //To update our front ends
-    update();
-    return responseModel;
   }
 }

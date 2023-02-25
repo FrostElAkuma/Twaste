@@ -35,28 +35,38 @@ class _AddMealState extends State<AddMeal> {
     var nameController = TextEditingController();
     var priceController = TextEditingController();
 
-    void _validation(AddMealController mealController) {
+    Future<void> _validation(AddMealController mealController) async {
       //We removed the line below because we already passed an authcntroller object into this metod from our scaffold s
       //var authController = Get.find<AuthController>();
       String name = nameController.text.trim();
       String price = priceController.text.trim();
       int price2 = int.parse(price);
+      //Getting the Image path
+      //bool imgGood = await mealController.upload();
+      //String img = await mealController.imagePath!;
 
       if (name.isEmpty) {
         showCusotmSnackBar("Name can't be empty", title: "Name");
       } else if (price.isEmpty) {
         showCusotmSnackBar("Price can't be empty", title: "Price");
-      } else {
-        ProductModel productModel = ProductModel(
+      } /*else if (imgGood) {
+        showCusotmSnackBar("Failed to get image path", title: "Img");
+      }*/
+      else {
+        /*ProductModel productModel = ProductModel(
           name: name,
           price: price2,
           img: mealController.imagePath,
-        );
-        mealController.addMeal(productModel).then((status) {
+        );*/
+        mealController.addMeal(name, price2).then((status) {
           //Reminder we definded isSuccess in our response model
           if (status.isSuccess) {
-            print("Success registration");
-            Get.offNamed(RouteHelper.getInitial());
+            print("Success upload");
+            //Get.offNamed(RouteHelper.getInitial());
+            //At first it the re route was nto working but after looking a bit I need to add the prevent duplicates: false for it to work :D
+            Get.toNamed(RouteHelper.getInitial(), preventDuplicates: false);
+            showCusotmSnackBar(status.message,
+                isError: false, title: 'refresh');
           } else {
             showCusotmSnackBar(status.message);
           }
@@ -117,8 +127,6 @@ class _AddMealState extends State<AddMeal> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    //Getting the Image path
-                    _addMealController.upload();
                     _validation(_addMealController);
                   },
                   child: Container(
