@@ -129,7 +129,8 @@ class _BodyPageState extends State<BodyPage> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        Get.toNamed(RouteHelper.getRestaurant(index, "home"));
+                        Get.toNamed(RouteHelper.getRestaurant(
+                            restaurant.restaurantList[index].id, "home"));
                       },
                       child: Container(
                         margin: EdgeInsets.only(

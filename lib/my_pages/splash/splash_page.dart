@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen>
   //To load our data and recoursces from the internet wgile the user is in loading screen
   Future<void> _loadRescources() async {
     await Get.find<MealController>().getMealList();
-    await Get.find<RecommendedMealController>().getRecommendedMealList();
+    await Get.find<RecommendedMealController>().getRecommendedMealList(2);
     await Get.find<RestaurantController>().getRestaurantList();
   }
 

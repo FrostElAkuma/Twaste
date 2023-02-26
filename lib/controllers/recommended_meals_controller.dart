@@ -19,9 +19,12 @@ class RecommendedMealController extends GetxController {
   bool get isLoaded => _isLoaded;
 
   //So here i will call my repository and my reposiory will return the data and i will put the data inside the list
-  Future<void> getRecommendedMealList() async {
+  Future<void> getRecommendedMealList(int restId) async {
     //We used await because getMealList is returning a future type. We also saved the data inside a response object cuz the data that will be returned from getMealList is Resposne type
-    Response response = await recommendedMealRepo.getRecommendedMealList('2');
+    //I have 2 options either I get the restaurant ID and egt the meals of only that restaurant OR get all the meals and when presse on a restaurant I filter that huge list based on restaurant ID. I think the first option is more effecient.
+    String restIdString = restId.toString();
+    Response response =
+        await recommendedMealRepo.getRecommendedMealList(restIdString);
     //Status code 200 means successful
     if (response.statusCode == 200) {
       //I initialize it to NULL so my data does not get repeated

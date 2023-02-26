@@ -34,6 +34,7 @@ class RestaurantController extends GetxController {
       //Inside our response there is a lot of data, among which is the data we want which is json type. So in order to use it we need to convert it to model data
       //.restaurants so we get the list that is public
       _restaurantList.addAll(Restaurant.fromJson(response.body).restaurants);
+      print("we are in line 72 restController" + _restaurantList.toString());
       //print("Line 36 restaurant_controller Got data !!!!!!!!!!!!");
       _isLoaded = true;
       //This update is more like setState() to update our UI

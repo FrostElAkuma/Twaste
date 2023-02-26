@@ -24,7 +24,7 @@ class MainPage extends StatefulWidget {
 class _MyMainPageState extends State<MainPage> {
   Future<void> _loadRescources() async {
     await Get.find<MealController>().getMealList();
-    await Get.find<RecommendedMealController>().getRecommendedMealList();
+    await Get.find<RecommendedMealController>().getRecommendedMealList(3);
     await Get.find<RestaurantController>().getRestaurantList();
   }
 
