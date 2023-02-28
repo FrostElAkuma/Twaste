@@ -383,7 +383,9 @@ class _BodyPageState extends State<BodyPage> {
             onTap: (() {
               //Basic Getx routing we use this line of code below for smaller apps but for larger apps we need a seperate routing folder
               //Get.to(() => RestaurantDetails());
-              Get.toNamed(RouteHelper.getRestaurant(index, "home"));
+              //So I changed this, the swipe section is for meals and not restaurants. Also not that this was popular products but The repo for popular products became for restaurants I think I changed that
+              //Get.toNamed(RouteHelper.getRestaurant(index, "home"));
+              Get.toNamed(RouteHelper.getRecommendedFood(index, "home"));
             }),
             child: Container(
               //The child container will take the whole sapce of the parent container s one of teh ways we can fix it is to use stack

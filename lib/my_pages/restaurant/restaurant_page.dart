@@ -28,7 +28,7 @@ class RestaurantDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.find<RecommendedMealController>().getRecommendedMealList(pageId);
     var meal =
-        Get.find<RecommendedMealController>().recommendedMealList[pageId - 2];
+        Get.find<RecommendedMealController>().recommendedMealList[pageId];
     var restaurant =
         Get.find<RestaurantController>().restaurantList[pageId - 2];
     //To initialize the number of products added to 0. Whenever a pager is built this function is called. In our whole app we only have 1 cart // we also passing the product / meal
