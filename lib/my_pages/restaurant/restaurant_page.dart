@@ -20,17 +20,21 @@ import '../../routes/route_helper.dart';
 
 class RestaurantDetails extends StatelessWidget {
   final int pageId;
+  final int index;
   final String page;
   const RestaurantDetails(
-      {super.key, required this.pageId, required this.page});
+      {super.key,
+      required this.pageId,
+      required this.index,
+      required this.page});
 
   @override
   Widget build(BuildContext context) {
     Get.find<RecommendedMealController>().getRecommendedMealList(pageId);
     var meal =
         Get.find<RecommendedMealController>().recommendedMealList[pageId];
-    var restaurant =
-        Get.find<RestaurantController>().restaurantList[pageId - 2];
+    //I cant use List.where cuz then I get an error with hte img and name of the restaurant below in the code
+    var restaurant = Get.find<RestaurantController>().restaurantList[index];
     //To initialize the number of products added to 0. Whenever a pager is built this function is called. In our whole app we only have 1 cart // we also passing the product / meal
     Get.find<MealController>().initProduct(meal, Get.find<CartController>());
     //print("page id is " + pageId.toString());
@@ -64,6 +68,33 @@ class RestaurantDetails extends StatelessWidget {
                                 restaurant.img!,
                           ))),
                 )),
+            //Restaruant info. I added this to make it look like hte figma design
+            Positioned(
+              top: 120,
+              left: 80,
+              child: Container(
+                padding: EdgeInsets.only(
+                    left: Dimensions.width15,
+                    right: Dimensions.width15,
+                    top: Dimensions.height15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(Dimensions.radius20),
+                    topLeft: Radius.circular(Dimensions.radius20),
+                    bottomLeft: Radius.circular(Dimensions.radius20),
+                    bottomRight: Radius.circular(Dimensions.radius20),
+                  ),
+                  color: Colors.white,
+                ),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      infoRating(
+                        text: restaurant.name,
+                      ),
+                    ]),
+              ),
+            ),
             //Back and cart icons
             Positioned(
                 //I added this comment so the auto formatter does its job
@@ -139,22 +170,23 @@ class RestaurantDetails extends StatelessWidget {
               top: Dimensions.restaurantCoverImg - 60,
               child: Container(
                 padding: EdgeInsets.only(
-                    left: Dimensions.width20,
-                    right: Dimensions.width20,
-                    top: Dimensions.height20),
+                    left: Dimensions.width15,
+                    right: Dimensions.width15,
+                    top: Dimensions.height15),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(Dimensions.radius20),
-                    topLeft: Radius.circular(Dimensions.radius20),
-                  ),
+
+                      ///topRight: Radius.circular(Dimensions.radius20),
+                      //topLeft: Radius.circular(Dimensions.radius20),
+                      ),
                   color: Colors.white,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    infoRating(
+                    /*infoRating(
                       text: restaurant.name,
-                    ),
+                    ),*/
                     GetBuilder<RecommendedMealController>(
                         builder: (recommendedMeal) {
                       return recommendedMeal.isLoaded
@@ -247,9 +279,8 @@ class RestaurantDetails extends StatelessWidget {
                                                             .spaceBetween,
                                                     children: [
                                                       DistanceTime(
-                                                          icon: Icons
-                                                              .circle_sharp,
-                                                          text: "normal",
+                                                          icon: Icons.percent,
+                                                          text: "50 off",
                                                           iconColor:
                                                               Colors.orange),
                                                       DistanceTime(
@@ -261,7 +292,7 @@ class RestaurantDetails extends StatelessWidget {
                                                       DistanceTime(
                                                           icon: Icons
                                                               .access_time_filled_rounded,
-                                                          text: "32min",
+                                                          text: "7pm-9pm",
                                                           iconColor:
                                                               Colors.red),
                                                     ],

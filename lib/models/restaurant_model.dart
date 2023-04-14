@@ -43,6 +43,8 @@ class RestaurantModel {
   String? createdAt;
   String? updatedAt;
   //int? typeId;
+  String? latitude;
+  String? longitude;
 
   RestaurantModel({
     this.id,
@@ -55,6 +57,8 @@ class RestaurantModel {
     this.createdAt,
     this.updatedAt,
     //this.typeId,
+    this.latitude,
+    this.longitude,
   });
 
   RestaurantModel.fromJson(Map<String, dynamic> json) {
@@ -68,6 +72,8 @@ class RestaurantModel {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     //typeId = json['type_id'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
   }
 
   //Converting object to a map or Json (cuz json is like a map)
@@ -81,6 +87,8 @@ class RestaurantModel {
       "createdAt": this.createdAt,
       "updatedAt": this.updatedAt,
       //"typeId": this.typeId,
+      "latitude": this.latitude,
+      "longitude": this.longitude,
     };
   }
 }

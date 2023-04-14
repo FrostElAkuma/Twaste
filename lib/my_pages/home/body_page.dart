@@ -130,7 +130,9 @@ class _BodyPageState extends State<BodyPage> {
                     return GestureDetector(
                       onTap: () {
                         Get.toNamed(RouteHelper.getRestaurant(
-                            restaurant.restaurantList[index].id, "home"));
+                            restaurant.restaurantList[index].id,
+                            index,
+                            "home"));
                       },
                       child: Container(
                         margin: EdgeInsets.only(
@@ -199,8 +201,8 @@ class _BodyPageState extends State<BodyPage> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           DistanceTime(
-                                              icon: Icons.circle_sharp,
-                                              text: "normal",
+                                              icon: Icons.percent,
+                                              text: "50 off",
                                               iconColor: Colors.orange),
                                           DistanceTime(
                                               icon: Icons.location_on,
@@ -209,7 +211,7 @@ class _BodyPageState extends State<BodyPage> {
                                           DistanceTime(
                                               icon: Icons
                                                   .access_time_filled_rounded,
-                                              text: "32min",
+                                              text: "7pm-9pm",
                                               iconColor: Colors.red),
                                         ],
                                       )
@@ -227,7 +229,7 @@ class _BodyPageState extends State<BodyPage> {
         }),
         //List of recommended restaurants or foods (i will decide later)
         //Every builder in flutter takes a function in their item builder, first is context and second is index which is the number of items
-        GetBuilder<RecommendedMealController>(builder: (recommendedMeal) {
+        /*GetBuilder<RecommendedMealController>(builder: (recommendedMeal) {
           return recommendedMeal.isLoaded
               ? ListView.builder(
                   //physics never thing so the whole poage is scrollable and not only the retaurant list
@@ -334,7 +336,7 @@ class _BodyPageState extends State<BodyPage> {
               : CircularProgressIndicator(
                   color: Colors.red,
                 );
-        }),
+        }),*/
       ],
     );
   }

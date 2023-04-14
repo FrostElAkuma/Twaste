@@ -53,8 +53,8 @@ class infoRating extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               DistanceTime(
-                  icon: Icons.circle_sharp,
-                  text: "normal",
+                  icon: Icons.percent,
+                  text: "50 off",
                   iconColor: Colors.orange),
               DistanceTime(
                   icon: Icons.location_on,
@@ -62,7 +62,7 @@ class infoRating extends StatelessWidget {
                   iconColor: Colors.blue),
               DistanceTime(
                   icon: Icons.access_time_filled_rounded,
-                  text: "32min",
+                  text: "7pm-9pm",
                   iconColor: Colors.red),
             ],
           )

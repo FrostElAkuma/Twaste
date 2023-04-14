@@ -1,9 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:twaste/controllers/cart_controller.dart';
 import 'package:twaste/data/repository/restaurant_repo.dart';
 import 'package:twaste/models/cart_model.dart';
 import 'package:twaste/models/restaurant_model.dart';
+
+import 'location_controller.dart';
 
 //Notice how this time we used GetxController and not GetxService like we did in our repo and api client
 class RestaurantController extends GetxController {
@@ -33,8 +38,19 @@ class RestaurantController extends GetxController {
       _restaurantList = [];
       //Inside our response there is a lot of data, among which is the data we want which is json type. So in order to use it we need to convert it to model data
       //.restaurants so we get the list that is public
+      //Get.find<LocationController>().getAddress["latitude"]
       _restaurantList.addAll(Restaurant.fromJson(response.body).restaurants);
       print("we are in line 72 restController" + _restaurantList.toString());
+      /*_restaurantList.removeWhere((element) => (Geolocator.distanceBetween(
+            double.parse(element.latitude),
+            double.parse(element.longitude),
+            25.204851057220324,
+            55.27078080922365,
+          ) <
+          1000));*/
+      //Need to replace the hard numbers with Get.find<LocationController>().getAddress["latitude"], Get.find<LocationController>().getAddress["longitude"],
+      //But for now I am getting an error where they are not initialized so need to fix that
+
       //print("Line 36 restaurant_controller Got data !!!!!!!!!!!!");
       _isLoaded = true;
       //This update is more like setState() to update our UI

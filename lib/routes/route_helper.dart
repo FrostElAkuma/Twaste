@@ -31,8 +31,8 @@ class RouteHelper {
   //When we call this line of code below it will go to the corresponding route in the list routes
   static String getSplashPage() => '$splashPage';
   static String getInitial() => '$initial';
-  static String getRestaurant(int pageId, String page) =>
-      '$restaurant?pageId=$pageId&page=$page';
+  static String getRestaurant(int pageId, int index, String page) =>
+      '$restaurant?pageId=$pageId&index=$index&page=$page';
   static String getRecommendedFood(int pageId, String page) =>
       '$recommendedFood?pageId=$pageId&page=$page';
   static String getCartPage() => '$cartPage';
@@ -75,8 +75,13 @@ class RouteHelper {
       page: () {
         var pageId = Get.parameters['pageId'];
         var page = Get.parameters['page'];
+        var index = Get.parameters['index'];
         //We needed to cast it to int cuz the above line of code may get us the id as a string
-        return RestaurantDetails(pageId: int.parse(pageId!), page: page!);
+        return RestaurantDetails(
+          pageId: int.parse(pageId!),
+          page: page!,
+          index: int.parse(index!),
+        );
       },
       //Nice transition when going to a page
       transition: Transition.fadeIn,
