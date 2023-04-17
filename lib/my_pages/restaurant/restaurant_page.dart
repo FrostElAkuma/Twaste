@@ -62,6 +62,9 @@ class RestaurantDetails extends StatelessWidget {
                       image: DecorationImage(
                           //Again fit so it fills the whole screen
                           fit: BoxFit.cover,
+                          //Trying to make the backgrund image a bit darker, need to configure this more later
+                          colorFilter: new ColorFilter.mode(
+                              Colors.black.withOpacity(0.7), BlendMode.dstATop),
                           image: NetworkImage(
                             MyConstants.BASE_URL +
                                 MyConstants.UPLOAD_URL +
@@ -70,13 +73,15 @@ class RestaurantDetails extends StatelessWidget {
                 )),
             //Restaruant info. I added this to make it look like hte figma design
             Positioned(
-              top: 120,
-              left: 80,
+              top: 100,
+              left: 60,
               child: Container(
                 padding: EdgeInsets.only(
-                    left: Dimensions.width15,
-                    right: Dimensions.width15,
-                    top: Dimensions.height15),
+                  left: Dimensions.width45,
+                  right: Dimensions.width45,
+                  top: Dimensions.height45,
+                  bottom: Dimensions.height15,
+                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(Dimensions.radius20),
@@ -91,8 +96,45 @@ class RestaurantDetails extends StatelessWidget {
                     children: [
                       infoRating(
                         text: restaurant.name,
+                        start: false,
                       ),
                     ]),
+              ),
+            ),
+            //Restaurant logo
+            Positioned(
+              top: 40,
+              left: 0,
+              right: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                        //size/2 to make it a circle
+                        borderRadius: BorderRadius.circular(100 / 2),
+                        color: Colors.amber,
+                        image: DecorationImage(
+                            //Again fit so it fills the whole screen
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              MyConstants.BASE_URL +
+                                  MyConstants.UPLOAD_URL +
+                                  restaurant.img!,
+                            )),
+                        //This for bluring arounf logo
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.purple.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(0, 3), // changes position of shadow
+                          )
+                        ]),
+                  ),
+                ],
               ),
             ),
             //Back and cart icons

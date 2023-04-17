@@ -8,13 +8,15 @@ import 'my_text.dart';
 
 class infoRating extends StatelessWidget {
   final String text;
-  const infoRating({super.key, required this.text});
+  final bool start;
+  infoRating({super.key, required this.text, this.start = true});
 
   @override
   Widget build(BuildContext context) {
     return Column(
         //So everything is right aligned in the container
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment:
+            start ? CrossAxisAlignment.start : CrossAxisAlignment.center,
         children: [
           LargeText(
             text: text,
