@@ -33,6 +33,8 @@ class RestaurantDetails extends StatelessWidget {
     Get.find<RecommendedMealController>().getRecommendedMealList(pageId);
     var meal =
         Get.find<RecommendedMealController>().recommendedMealList[pageId];
+    //The default random meal box (I scraped the idea Cuz for now I will add it manually and diffirent restaurants will have diffirent prices etc.)
+    //var RandomMeal = Get.find<RecommendedMealController>().recommendedMealList[0];
     //I cant use List.where cuz then I get an error with hte img and name of the restaurant below in the code
     var restaurant = Get.find<RestaurantController>().restaurantList[index];
     //To initialize the number of products added to 0. Whenever a pager is built this function is called. In our whole app we only have 1 cart // we also passing the product / meal
@@ -41,13 +43,17 @@ class RestaurantDetails extends StatelessWidget {
     //print("meal name is " + meal.name.toString());
 
     return Scaffold(
+      //This can be used to ad shades to the background img as well
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Stack(
           children: [
             //Co
             Container(
-              height: Dimensions.height20 * 100,
+              //This is SOOO WRONG the height of the page should be dynamic... I need to change this later
+              height: Dimensions.height20 * 110,
+              //This adds a nice shade over the background img
+              color: Colors.black87,
             ),
             //Cover image
             Positioned(
@@ -221,7 +227,8 @@ class RestaurantDetails extends StatelessWidget {
                       ///topRight: Radius.circular(Dimensions.radius20),
                       //topLeft: Radius.circular(Dimensions.radius20),
                       ),
-                  color: Colors.white,
+                  //Originally this was white but I am trying to make it same as figma, this whole lower background
+                  color: Color.fromARGB(255, 245, 243, 246),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -246,10 +253,13 @@ class RestaurantDetails extends StatelessWidget {
                                         index, "home"));
                                   },
                                   child: Container(
+                                    //This to see the borders of the contauner, for testing purposes
+                                    //color: Colors.black87,
                                     margin: EdgeInsets.only(
+                                        top: Dimensions.height10,
                                         left: Dimensions.width20,
                                         right: Dimensions.width20,
-                                        bottom: Dimensions.height10),
+                                        bottom: Dimensions.height30),
                                     //Our main restaurant card
                                     child: Row(children: [
                                       //This container for the image
@@ -277,7 +287,9 @@ class RestaurantDetails extends StatelessWidget {
                                       //We used Expanded widget so the width of thos info container takes all teh avaiable space
                                       Expanded(
                                         child: Container(
-                                          height: Dimensions.restaurantListInfo,
+                                          height:
+                                              Dimensions.restaurantListInfo +
+                                                  Dimensions.height10,
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.only(
                                               topRight: Radius.circular(
@@ -285,12 +297,14 @@ class RestaurantDetails extends StatelessWidget {
                                               bottomRight: Radius.circular(
                                                   Dimensions.radius20),
                                             ),
-                                            color: Colors.white,
+                                            //THis was origanlly white as well but trying to make it same figma desig, this for background of item
+                                            color: Color.fromARGB(
+                                                255, 245, 243, 246),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.only(
                                                 left: Dimensions.width10,
-                                                right: Dimensions.width10),
+                                                right: 0),
                                             child: Column(
                                                 //This crossAxisAlignment so everything is left aligned. crossAxis = horizontal
                                                 crossAxisAlignment:
@@ -315,28 +329,134 @@ class RestaurantDetails extends StatelessWidget {
                                                   SizedBox(
                                                     height: Dimensions.height10,
                                                   ),
+                                                  //Meal price, and adding meal to cart
                                                   Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                     children: [
-                                                      DistanceTime(
-                                                          icon: Icons.percent,
-                                                          text: "50 off",
-                                                          iconColor:
-                                                              Colors.orange),
-                                                      DistanceTime(
-                                                          icon:
-                                                              Icons.location_on,
-                                                          text: "1.7km",
-                                                          iconColor:
-                                                              Colors.blue),
-                                                      DistanceTime(
-                                                          icon: Icons
-                                                              .access_time_filled_rounded,
-                                                          text: "7pm-9pm",
-                                                          iconColor:
-                                                              Colors.red),
+                                                      Column(
+                                                        children: [
+                                                          //Might remove the %off later
+                                                          LargeText(
+                                                            text: '60% off',
+                                                            size: 10,
+                                                          ),
+                                                          Text('15 AED',
+                                                              style: TextStyle(
+                                                                  decoration:
+                                                                      TextDecoration
+                                                                          .lineThrough,
+                                                                  fontSize:
+                                                                      Dimensions
+                                                                          .font12)),
+                                                          LargeText(
+                                                            text: '6 AED',
+                                                            size: 15,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      //Here is the adding item to cart button
+                                                      Container(
+                                                          padding: EdgeInsets.only(
+                                                              top: Dimensions
+                                                                      .height10 /
+                                                                  2,
+                                                              bottom: Dimensions
+                                                                      .height10 /
+                                                                  2,
+                                                              left: Dimensions
+                                                                  .width10,
+                                                              right: Dimensions
+                                                                  .width10),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                    Dimensions
+                                                                        .radius20),
+                                                            color: Colors.white,
+                                                          ),
+                                                          child: Row(
+                                                            children: [
+                                                              GestureDetector(
+                                                                onTap: () {
+                                                                  /*cartController
+                                                              .addItem(
+                                                                  _cartList[
+                                                                          index]
+                                                                      .product!,
+                                                                  -1)*/
+                                                                  null;
+                                                                },
+                                                                child: Icon(
+                                                                  Icons.remove,
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                width: Dimensions
+                                                                        .width10 /
+                                                                    2,
+                                                              ),
+                                                              LargeText(
+                                                                  text: "1"),
+                                                              /*LargeText(
+                                                          text: _cartList[index]
+                                                              .quantity
+                                                              .toString()), //restaurantMeal.incCartItems.toString(),*/
+                                                              SizedBox(
+                                                                width: Dimensions
+                                                                        .width10 /
+                                                                    2,
+                                                              ),
+                                                              GestureDetector(
+                                                                onTap: () {
+                                                                  /*cartController.addItem(
+                                                                _cartList[index]
+                                                                    .product!,
+                                                                1);*/
+                                                                  null;
+                                                                },
+                                                                child: Icon(
+                                                                  Icons.add,
+                                                                  color: Colors
+                                                                      .blue,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          )),
+                                                      //Here it should end
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          //controller.addItem(meal);
+                                                          null;
+                                                        },
+                                                        child: Container(
+                                                          padding: EdgeInsets.only(
+                                                              top: Dimensions
+                                                                  .height10,
+                                                              bottom: Dimensions
+                                                                  .height10,
+                                                              left: Dimensions
+                                                                  .width15,
+                                                              right: Dimensions
+                                                                  .width15),
+                                                          child: SmallText(
+                                                            text: "Add",
+                                                            color: Colors.white,
+                                                          ),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                    Dimensions
+                                                                        .radius20),
+                                                            color: Colors.blue,
+                                                          ),
+                                                        ),
+                                                      )
                                                     ],
                                                   )
                                                 ]),
