@@ -10,6 +10,7 @@ class MealRepo extends GetxService {
   MealRepo({required this.apiClient});
 
   Future<Response> getMealList() async {
+    //print("I am here meal repo");
     return await apiClient.getData(MyConstants.POPULAR_PRODUCT_URI);
   }
 }

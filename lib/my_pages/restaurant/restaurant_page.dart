@@ -38,7 +38,8 @@ class RestaurantDetails extends StatelessWidget {
     //I cant use List.where cuz then I get an error with hte img and name of the restaurant below in the code
     var restaurant = Get.find<RestaurantController>().restaurantList[index];
     //To initialize the number of products added to 0. Whenever a pager is built this function is called. In our whole app we only have 1 cart // we also passing the product / meal
-    Get.find<MealController>().initProduct(meal, Get.find<CartController>());
+    Get.find<RecommendedMealController>()
+        .initProduct(meal, Get.find<CartController>());
     //print("page id is " + pageId.toString());
     //print("meal name is " + meal.name.toString());
 
@@ -163,7 +164,8 @@ class RestaurantDetails extends StatelessWidget {
                         },
                         child: MyIcons(icon: Icons.arrow_back_ios)),
                     //Showing the number of items in cart
-                    GetBuilder<MealController>(builder: (controller) {
+                    GetBuilder<RecommendedMealController>(
+                        builder: (controller) {
                       //we used stack cuz not all items might show up,so we keep it dynamic
                       return GestureDetector(
                         onTap: () {
@@ -175,7 +177,8 @@ class RestaurantDetails extends StatelessWidget {
                           children: [
                             //The blue background for the number of items
                             MyIcons(icon: Icons.shopping_cart_outlined),
-                            Get.find<MealController>().totalItems >= 1
+                            Get.find<RecommendedMealController>().totalItems >=
+                                    1
                                 ? Positioned(
                                     right: 0,
                                     top: 0,
@@ -193,9 +196,10 @@ class RestaurantDetails extends StatelessWidget {
                                     right: 3,
                                     top: 3,
                                     child: LargeText(
-                                      text: Get.find<MealController>()
-                                          .totalItems
-                                          .toString(),
+                                      text:
+                                          Get.find<RecommendedMealController>()
+                                              .totalItems
+                                              .toString(),
                                       size: 12,
                                       color: Colors.white,
                                     ),
@@ -381,13 +385,10 @@ class RestaurantDetails extends StatelessWidget {
                                                             children: [
                                                               GestureDetector(
                                                                 onTap: () {
-                                                                  /*cartController
-                                                              .addItem(
-                                                                  _cartList[
-                                                                          index]
-                                                                      .product!,
-                                                                  -1)*/
-                                                                  null;
+                                                                  recommendedMeal
+                                                                      .setQuantity(
+                                                                          false,
+                                                                          index);
                                                                 },
                                                                 child: Icon(
                                                                   Icons.remove,
@@ -400,8 +401,42 @@ class RestaurantDetails extends StatelessWidget {
                                                                         .width10 /
                                                                     2,
                                                               ),
+                                                              /*GetBuilder<
+                                                                      CartController>(
+                                                                  builder:
+                                                                      (cartController) {
+                                                                var _cartList =
+                                                                    cartController
+                                                                        .getItems;
+                                                                var _cListId =
+                                                                    _cartList
+                                                                        .map((v) =>
+                                                                            v.id)
+                                                                        .toList();
+                                                                //This took me an hour to figure out haha, thought I can't use if else conditions, also forgot if the index of the item was not found it returns -1
+                                                                //At the end I commented it out but it is good to have if I want to show the number of meals I have in cart for that certain item, 
+                                                                var mealIndex = _cListId.indexOf(
+                                                                    recommendedMeal
+                                                                        .recommendedMealList[
+                                                                            index]
+                                                                        .id);
+                                                                if (mealIndex <
+                                                                    0) {
+                                                                  return LargeText(
+                                                                      text:
+                                                                          "0");
+                                                                } else {
+                                                                  return LargeText(
+                                                                    text: _cartList[
+                                                                            mealIndex]
+                                                                        .quantity
+                                                                        .toString(),
+                                                                  );
+                                                                }
+                                                              }),*/
                                                               LargeText(
-                                                                  text: "1"),
+                                                                  text:
+                                                                      "${recommendedMeal.quantity[index]} "),
                                                               /*LargeText(
                                                           text: _cartList[index]
                                                               .quantity
@@ -413,11 +448,10 @@ class RestaurantDetails extends StatelessWidget {
                                                               ),
                                                               GestureDetector(
                                                                 onTap: () {
-                                                                  /*cartController.addItem(
-                                                                _cartList[index]
-                                                                    .product!,
-                                                                1);*/
-                                                                  null;
+                                                                  recommendedMeal
+                                                                      .setQuantity(
+                                                                          true,
+                                                                          index);
                                                                 },
                                                                 child: Icon(
                                                                   Icons.add,
@@ -430,8 +464,11 @@ class RestaurantDetails extends StatelessWidget {
                                                       //Here it should end
                                                       GestureDetector(
                                                         onTap: () {
-                                                          //controller.addItem(meal);
-                                                          null;
+                                                          recommendedMeal.addItem(
+                                                              recommendedMeal
+                                                                      .recommendedMealList[
+                                                                  index],
+                                                              index);
                                                         },
                                                         child: Container(
                                                           padding: EdgeInsets.only(

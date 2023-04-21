@@ -35,6 +35,7 @@ class MealController extends GetxController {
     //Status code 200 means successful
     if (response.statusCode == 200) {
       //I initialize it to NULL so my data does not get repeated
+      //print("I am here line 38 meal controller");
       _mealList = [];
       //Inside our response there is a lot of data, among which is the data we want which is json type. So in order to use it we need to convert it to model data
       //.products so we get the list that is public
@@ -51,7 +52,7 @@ class MealController extends GetxController {
   //Adding and subtracting items
   void setQuantity(bool isIncrement) {
     if (isIncrement) {
-      //print("increment" + _quantity.toString());
+      print("increment" + _quantity.toString());
       _quantity = checkQuantity(_quantity + 1);
     } else {
       _quantity = checkQuantity(_quantity - 1);
