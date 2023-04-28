@@ -40,7 +40,7 @@ class RestaurantController extends GetxController {
       //.restaurants so we get the list that is public
       //Get.find<LocationController>().getAddress["latitude"]
       _restaurantList.addAll(Restaurant.fromJson(response.body).restaurants);
-      print("we are in line 72 restController" + _restaurantList.toString());
+      print("we are in line 43 restController" + _restaurantList.toString());
       /*_restaurantList.removeWhere((element) => (Geolocator.distanceBetween(
             double.parse(element.latitude),
             double.parse(element.longitude),

@@ -31,15 +31,16 @@ class RestaurantDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.find<RecommendedMealController>().getRecommendedMealList(pageId);
-    var meal =
-        Get.find<RecommendedMealController>().recommendedMealList[pageId];
+    //Have an error with this cuz if pageId (aka restaurant id) is larger than the amomunt of meals we have we get an error
+    /*var meal =
+        Get.find<RecommendedMealController>().recommendedMealList[pageId];*/
     //The default random meal box (I scraped the idea Cuz for now I will add it manually and diffirent restaurants will have diffirent prices etc.)
     //var RandomMeal = Get.find<RecommendedMealController>().recommendedMealList[0];
     //I cant use List.where cuz then I get an error with hte img and name of the restaurant below in the code
     var restaurant = Get.find<RestaurantController>().restaurantList[index];
     //To initialize the number of products added to 0. Whenever a pager is built this function is called. In our whole app we only have 1 cart // we also passing the product / meal
     Get.find<RecommendedMealController>()
-        .initProduct(meal, Get.find<CartController>());
+        .initProduct(Get.find<CartController>());
     //print("page id is " + pageId.toString());
     //print("meal name is " + meal.name.toString());
 
@@ -242,6 +243,39 @@ class RestaurantDetails extends StatelessWidget {
                     ),*/
                     GetBuilder<RecommendedMealController>(
                         builder: (recommendedMeal) {
+                      return GestureDetector(
+                        onTap: () {
+                          recommendedMeal.isEditing();
+                        },
+                        child: Container(
+                          //Not a fan of using margin to center this button
+                          margin: EdgeInsets.only(
+                            left: Dimensions.width45 * 3.5,
+                          ),
+                          padding: EdgeInsets.only(
+                              top: Dimensions.height10,
+                              bottom: Dimensions.height10,
+                              left: Dimensions.width15,
+                              right: Dimensions.width15),
+                          child: recommendedMeal.editing
+                              ? SmallText(
+                                  text: "Save Changes",
+                                  color: Colors.white,
+                                )
+                              : SmallText(
+                                  text: "Edit meals left",
+                                  color: Colors.white,
+                                ),
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.circular(Dimensions.radius20),
+                            color: Colors.blue,
+                          ),
+                        ),
+                      );
+                    }),
+                    GetBuilder<RecommendedMealController>(
+                        builder: (recommendedMeal) {
                       return recommendedMeal.isLoaded
                           ? ListView.builder(
                               //physics never thing so the whole poage is scrollable and not only the retaurant list
@@ -361,106 +395,123 @@ class RestaurantDetails extends StatelessWidget {
                                                         ],
                                                       ),
                                                       //Here is the adding item to cart button
-                                                      Container(
-                                                          padding: EdgeInsets.only(
-                                                              top: Dimensions
-                                                                      .height10 /
-                                                                  2,
-                                                              bottom: Dimensions
-                                                                      .height10 /
-                                                                  2,
-                                                              left: Dimensions
-                                                                  .width10,
-                                                              right: Dimensions
-                                                                  .width10),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                    Dimensions
-                                                                        .radius20),
-                                                            color: Colors.white,
+                                                      Column(
+                                                        children: [
+                                                          SmallText(
+                                                            //maybe bblack maybe red depnding on amount left
+                                                            color: Colors.red,
+                                                            size: Dimensions
+                                                                    .font12 *
+                                                                1.2,
+                                                            text: recommendedMeal
+                                                                    .recommendedMealList[
+                                                                        index]
+                                                                    .remaining
+                                                                    .toString() +
+                                                                " left",
                                                           ),
-                                                          child: Row(
-                                                            children: [
-                                                              GestureDetector(
-                                                                onTap: () {
-                                                                  recommendedMeal
-                                                                      .setQuantity(
+                                                          Container(
+                                                              padding: EdgeInsets.only(
+                                                                  top: Dimensions
+                                                                          .height10 /
+                                                                      2,
+                                                                  bottom: Dimensions
+                                                                          .height10 /
+                                                                      2,
+                                                                  left: Dimensions
+                                                                      .width10,
+                                                                  right: Dimensions
+                                                                      .width10),
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius.circular(
+                                                                        Dimensions
+                                                                            .radius20),
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                              child: Row(
+                                                                children: [
+                                                                  GestureDetector(
+                                                                    onTap: () {
+                                                                      recommendedMeal.setQuantity(
                                                                           false,
                                                                           index);
-                                                                },
-                                                                child: Icon(
-                                                                  Icons.remove,
-                                                                  color: Colors
-                                                                      .black,
-                                                                ),
-                                                              ),
-                                                              SizedBox(
-                                                                width: Dimensions
-                                                                        .width10 /
-                                                                    2,
-                                                              ),
-                                                              /*GetBuilder<
-                                                                      CartController>(
-                                                                  builder:
-                                                                      (cartController) {
-                                                                var _cartList =
-                                                                    cartController
-                                                                        .getItems;
-                                                                var _cListId =
-                                                                    _cartList
-                                                                        .map((v) =>
-                                                                            v.id)
-                                                                        .toList();
-                                                                //This took me an hour to figure out haha, thought I can't use if else conditions, also forgot if the index of the item was not found it returns -1
-                                                                //At the end I commented it out but it is good to have if I want to show the number of meals I have in cart for that certain item, 
-                                                                var mealIndex = _cListId.indexOf(
-                                                                    recommendedMeal
-                                                                        .recommendedMealList[
-                                                                            index]
-                                                                        .id);
-                                                                if (mealIndex <
-                                                                    0) {
-                                                                  return LargeText(
+                                                                    },
+                                                                    child: Icon(
+                                                                      Icons
+                                                                          .remove,
+                                                                      color: Colors
+                                                                          .black,
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: Dimensions
+                                                                            .width10 /
+                                                                        2,
+                                                                  ),
+                                                                  /*GetBuilder<
+                                                                          CartController>(
+                                                                      builder:
+                                                                          (cartController) {
+                                                                    var _cartList =
+                                                                        cartController
+                                                                            .getItems;
+                                                                    var _cListId =
+                                                                        _cartList
+                                                                            .map((v) =>
+                                                                                v.id)
+                                                                            .toList();
+                                                                    //This took me an hour to figure out haha, thought I can't use if else conditions, also forgot if the index of the item was not found it returns -1
+                                                                    //At the end I commented it out but it is good to have if I want to show the number of meals I have in cart for that certain item, 
+                                                                    var mealIndex = _cListId.indexOf(
+                                                                        recommendedMeal
+                                                                            .recommendedMealList[
+                                                                                index]
+                                                                            .id);
+                                                                    if (mealIndex <
+                                                                        0) {
+                                                                      return LargeText(
+                                                                          text:
+                                                                              "0");
+                                                                    } else {
+                                                                      return LargeText(
+                                                                        text: _cartList[
+                                                                                mealIndex]
+                                                                            .quantity
+                                                                            .toString(),
+                                                                      );
+                                                                    }
+                                                                  }),*/
+                                                                  LargeText(
                                                                       text:
-                                                                          "0");
-                                                                } else {
-                                                                  return LargeText(
-                                                                    text: _cartList[
-                                                                            mealIndex]
-                                                                        .quantity
-                                                                        .toString(),
-                                                                  );
-                                                                }
-                                                              }),*/
-                                                              LargeText(
-                                                                  text:
-                                                                      "${recommendedMeal.quantity[index]} "),
-                                                              /*LargeText(
-                                                          text: _cartList[index]
-                                                              .quantity
-                                                              .toString()), //restaurantMeal.incCartItems.toString(),*/
-                                                              SizedBox(
-                                                                width: Dimensions
-                                                                        .width10 /
-                                                                    2,
-                                                              ),
-                                                              GestureDetector(
-                                                                onTap: () {
-                                                                  recommendedMeal
-                                                                      .setQuantity(
+                                                                          "${recommendedMeal.quantity[index]} "),
+                                                                  /*LargeText(
+                                                              text: _cartList[index]
+                                                                  .quantity
+                                                                  .toString()), //restaurantMeal.incCartItems.toString(),*/
+                                                                  SizedBox(
+                                                                    width: Dimensions
+                                                                            .width10 /
+                                                                        2,
+                                                                  ),
+                                                                  GestureDetector(
+                                                                    onTap: () {
+                                                                      recommendedMeal.setQuantity(
                                                                           true,
                                                                           index);
-                                                                },
-                                                                child: Icon(
-                                                                  Icons.add,
-                                                                  color: Colors
-                                                                      .blue,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          )),
+                                                                    },
+                                                                    child: Icon(
+                                                                      Icons.add,
+                                                                      color: Colors
+                                                                          .blue,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              )),
+                                                        ],
+                                                      ),
                                                       //Here it should end
                                                       GestureDetector(
                                                         onTap: () {
@@ -519,7 +570,7 @@ class RestaurantDetails extends StatelessWidget {
                     Expanded(
                       child: SingleChildScrollView(
                         child: CollapseText(
-                          text: meal.description,
+                          text: "meal.description",
                         ),
                       ),
                     )

@@ -29,6 +29,10 @@ class RecommendedMealController extends GetxController {
   int _inCartItems = 0;
   //int get incCartItems => _inCartItems + _quantity;
 
+  //This for editing button
+  bool _editing = false;
+  bool get editing => _editing;
+
   //So here i will call my repository and my reposiory will return the data and i will put the data inside the list
   Future<void> getRecommendedMealList(int restId) async {
     //We used await because getMealList is returning a future type. We also saved the data inside a response object cuz the data that will be returned from getMealList is Resposne type
@@ -79,23 +83,24 @@ class RecommendedMealController extends GetxController {
       }
       return 0;
       //20 is like a limit of 20 orderes. later we can have the max ammount come from the server
-    } else if ((_inCartItems + quantity) > 20) {
-      return 20;
+    } else if ((_inCartItems + quantity) >
+        _recommendedMealList[index].remaining) {
+      return _recommendedMealList[index].remaining;
     } else {
       return quantity;
     }
   }
 
-  void initProduct(ProductModel product, CartController cart) {
+  void initProduct(CartController cart) {
     var recoLength = _recommendedMealList.length;
     _quantity = List<int>.filled(recoLength, 0, growable: true);
     _inCartItems = 0;
     _cart = cart;
     var exist = false;
-    exist = _cart.existInCart(product);
+    /*exist = _cart.existInCart(product);
     if (exist) {
       _inCartItems = _cart.getQuantity(product);
-    }
+    }*/
   }
 
   //To add to cart
@@ -122,5 +127,16 @@ class RecommendedMealController extends GetxController {
 
   List<CartModel> get getItems {
     return _cart.getItems;
+  }
+
+  //Security Concern Here. Need to add validation here to make sure it is the vendor of the restaurant0
+  void isEditing() {
+    if (_editing) {
+      _editing = false;
+    } else {
+      _editing = true;
+    }
+    print(_editing);
+    update();
   }
 }

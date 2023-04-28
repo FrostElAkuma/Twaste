@@ -35,6 +35,7 @@ class ProductModel {
   String? name;
   String? description;
   int? price;
+  int? remaining;
   int? stars;
   String? img;
   String? location;
@@ -47,6 +48,7 @@ class ProductModel {
     this.name,
     this.description,
     this.price,
+    this.remaining,
     this.stars,
     this.img,
     this.location,
@@ -60,6 +62,7 @@ class ProductModel {
     name = json['name'];
     description = json['description'];
     price = json['price'];
+    remaining = json['remaining'];
     stars = json['stars'];
     img = json['img'];
     location = json['location'];
@@ -74,6 +77,7 @@ class ProductModel {
       "id": this.id,
       "name": this.name,
       "price": this.price,
+      "remaning": this.remaining,
       "img": this.img,
       "location": this.location,
       "createdAt": this.createdAt,
