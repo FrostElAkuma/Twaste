@@ -245,7 +245,7 @@ class RestaurantDetails extends StatelessWidget {
                         builder: (recommendedMeal) {
                       return GestureDetector(
                         onTap: () {
-                          recommendedMeal.isEditing();
+                          recommendedMeal.isEditing(pageId);
                         },
                         child: Container(
                           //Not a fan of using margin to center this button
@@ -266,11 +266,17 @@ class RestaurantDetails extends StatelessWidget {
                                   text: "Edit meals left",
                                   color: Colors.white,
                                 ),
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(Dimensions.radius20),
-                            color: Colors.blue,
-                          ),
+                          decoration: recommendedMeal.editing
+                              ? BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.radius20),
+                                  color: Colors.green,
+                                )
+                              : BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.radius20),
+                                  color: Colors.blue,
+                                ),
                         ),
                       );
                     }),
@@ -285,173 +291,230 @@ class RestaurantDetails extends StatelessWidget {
                               itemCount:
                                   recommendedMeal.recommendedMealList.length,
                               itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    Get.toNamed(RouteHelper.getRecommendedFood(
-                                        index, "home"));
-                                  },
-                                  child: Container(
-                                    //This to see the borders of the contauner, for testing purposes
-                                    //color: Colors.black87,
-                                    margin: EdgeInsets.only(
-                                        top: Dimensions.height10,
-                                        left: Dimensions.width20,
-                                        right: Dimensions.width20,
-                                        bottom: Dimensions.height30),
-                                    //Our main restaurant card
-                                    child: Row(children: [
-                                      //This container for the image
-                                      Container(
-                                        width: Dimensions.restaurantListImg,
-                                        height: Dimensions.restaurantListImg,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                                Dimensions.radius20),
-                                            //In future when we load images from the network, so if they do not load there will be a white background
-                                            color: Colors.white38,
-                                            image: DecorationImage(
-                                              //We use this box fir so the image fits and looks like it has a border radius of 20
-                                              fit: BoxFit.cover,
-                                              image: NetworkImage(
-                                                  MyConstants.BASE_URL +
-                                                      MyConstants.UPLOAD_URL +
-                                                      recommendedMeal
-                                                          .recommendedMealList[
-                                                              index]
-                                                          .img!),
-                                            )),
-                                      ),
-                                      //Image Info container
-                                      //We used Expanded widget so the width of thos info container takes all teh avaiable space
-                                      Expanded(
+                                return recommendedMeal.editing
+                                    ? GestureDetector(
+                                        onTap: () {
+                                          Get.toNamed(
+                                              RouteHelper.getRecommendedFood(
+                                                  index, "home"));
+                                        },
                                         child: Container(
-                                          height:
-                                              Dimensions.restaurantListInfo +
-                                                  Dimensions.height10,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(
-                                                  Dimensions.radius20),
-                                              bottomRight: Radius.circular(
-                                                  Dimensions.radius20),
+                                          //This to see the borders of the contauner, for testing purposes
+                                          //color: Colors.black87,
+                                          margin: EdgeInsets.only(
+                                              top: Dimensions.height10,
+                                              left: Dimensions.width20,
+                                              right: Dimensions.width20,
+                                              bottom: Dimensions.height30),
+                                          //Our main restaurant card
+                                          child: Row(children: [
+                                            //This container for the image
+                                            Container(
+                                              width:
+                                                  Dimensions.restaurantListImg,
+                                              height:
+                                                  Dimensions.restaurantListImg,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          Dimensions.radius20),
+                                                  //In future when we load images from the network, so if they do not load there will be a white background
+                                                  color: Colors.white38,
+                                                  image: DecorationImage(
+                                                    //We use this box fir so the image fits and looks like it has a border radius of 20
+                                                    fit: BoxFit.cover,
+                                                    image: NetworkImage(MyConstants
+                                                            .BASE_URL +
+                                                        MyConstants.UPLOAD_URL +
+                                                        recommendedMeal
+                                                            .recommendedMealList[
+                                                                index]
+                                                            .img!),
+                                                  )),
                                             ),
-                                            //THis was origanlly white as well but trying to make it same figma desig, this for background of item
-                                            color: Color.fromARGB(
-                                                255, 245, 243, 246),
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                                left: Dimensions.width10,
-                                                right: 0),
-                                            child: Column(
-                                                //This crossAxisAlignment so everything is left aligned. crossAxis = horizontal
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                //mainAxis = vertical
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  LargeText(
-                                                    text: recommendedMeal
-                                                        .recommendedMealList[
-                                                            index]
-                                                        .name,
+                                            //Image Info container
+                                            //We used Expanded widget so the width of thos info container takes all teh avaiable space
+                                            Expanded(
+                                              child: Container(
+                                                height: Dimensions
+                                                        .restaurantListInfo +
+                                                    Dimensions.height10,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topRight: Radius.circular(
+                                                        Dimensions.radius20),
+                                                    bottomRight:
+                                                        Radius.circular(
+                                                            Dimensions
+                                                                .radius20),
                                                   ),
-                                                  SizedBox(
-                                                    height: Dimensions.height10,
-                                                  ),
-                                                  SmallText(
-                                                    text:
-                                                        "idk sone description goes here",
-                                                  ),
-                                                  SizedBox(
-                                                    height: Dimensions.height10,
-                                                  ),
-                                                  //Meal price, and adding meal to cart
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Column(
-                                                        children: [
-                                                          //Might remove the %off later
-                                                          LargeText(
-                                                            text: '60% off',
-                                                            size: 10,
-                                                          ),
-                                                          Text('15 AED',
-                                                              style: TextStyle(
-                                                                  decoration:
-                                                                      TextDecoration
-                                                                          .lineThrough,
-                                                                  fontSize:
-                                                                      Dimensions
-                                                                          .font12)),
-                                                          LargeText(
-                                                            text: '6 AED',
-                                                            size: 15,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      //Here is the adding item to cart button
-                                                      Column(
-                                                        children: [
-                                                          SmallText(
-                                                            //maybe bblack maybe red depnding on amount left
-                                                            color: Colors.red,
-                                                            size: Dimensions
-                                                                    .font12 *
-                                                                1.2,
-                                                            text: recommendedMeal
-                                                                    .recommendedMealList[
-                                                                        index]
-                                                                    .remaining
-                                                                    .toString() +
-                                                                " left",
-                                                          ),
-                                                          Container(
-                                                              padding: EdgeInsets.only(
-                                                                  top: Dimensions
-                                                                          .height10 /
-                                                                      2,
-                                                                  bottom: Dimensions
-                                                                          .height10 /
-                                                                      2,
-                                                                  left: Dimensions
-                                                                      .width10,
-                                                                  right: Dimensions
-                                                                      .width10),
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius.circular(
-                                                                        Dimensions
-                                                                            .radius20),
-                                                                color: Colors
-                                                                    .white,
-                                                              ),
-                                                              child: Row(
-                                                                children: [
-                                                                  GestureDetector(
-                                                                    onTap: () {
-                                                                      recommendedMeal.setQuantity(
-                                                                          false,
-                                                                          index);
-                                                                    },
-                                                                    child: Icon(
-                                                                      Icons
-                                                                          .remove,
+                                                  //THis was origanlly white as well but trying to make it same figma desig, this for background of item
+                                                  color: Color.fromARGB(
+                                                      255, 245, 243, 246),
+                                                ),
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: Dimensions.width10,
+                                                      right: 0),
+                                                  child: Column(
+                                                      //This crossAxisAlignment so everything is left aligned. crossAxis = horizontal
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      //mainAxis = vertical
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        LargeText(
+                                                          text: recommendedMeal
+                                                              .recommendedMealList[
+                                                                  index]
+                                                              .name,
+                                                        ),
+                                                        SizedBox(
+                                                          height: Dimensions
+                                                              .height10,
+                                                        ),
+                                                        SmallText(
+                                                          text:
+                                                              "idk sone description goes here",
+                                                        ),
+                                                        SizedBox(
+                                                          height: Dimensions
+                                                              .height10,
+                                                        ),
+                                                        //Meal price, and adding meal to cart
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Column(
+                                                              children: [
+                                                                //Might remove the %off later
+                                                                LargeText(
+                                                                  text:
+                                                                      '60% off',
+                                                                  size: 10,
+                                                                ),
+                                                                Text('15 AED',
+                                                                    style: TextStyle(
+                                                                        decoration:
+                                                                            TextDecoration
+                                                                                .lineThrough,
+                                                                        fontSize:
+                                                                            Dimensions.font12)),
+                                                                LargeText(
+                                                                  text: '6 AED',
+                                                                  size: 15,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            //Here is the remaining meals when editing
+                                                            Column(
+                                                              children: [
+                                                                recommendedMeal
+                                                                        .editing
+                                                                    ? Row(
+                                                                        children: [
+                                                                          GestureDetector(
+                                                                            onTap:
+                                                                                () {
+                                                                              recommendedMeal.setQuantityRemaining(false, index);
+                                                                            },
+                                                                            child:
+                                                                                Icon(
+                                                                              Icons.remove,
+                                                                              color: Colors.black,
+                                                                              size: Dimensions.iconSize16,
+                                                                            ),
+                                                                          ),
+                                                                          SizedBox(
+                                                                            width:
+                                                                                Dimensions.width10 / 2,
+                                                                          ),
+                                                                          SmallText(
+                                                                            //maybe bblack maybe red depnding on amount left
+                                                                            color:
+                                                                                Colors.green,
+                                                                            size:
+                                                                                Dimensions.font12 * 1.2,
+                                                                            text:
+                                                                                "${recommendedMeal.remaining[index]} left",
+                                                                          ),
+                                                                          SizedBox(
+                                                                            width:
+                                                                                Dimensions.width10 / 2,
+                                                                          ),
+                                                                          GestureDetector(
+                                                                            onTap:
+                                                                                () {
+                                                                              recommendedMeal.setQuantityRemaining(true, index);
+                                                                            },
+                                                                            child:
+                                                                                Icon(
+                                                                              Icons.add,
+                                                                              color: Colors.blue,
+                                                                              size: Dimensions.iconSize16,
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      )
+                                                                    : Row(
+                                                                        children: [
+                                                                          SmallText(
+                                                                            //maybe bblack maybe red depnding on amount left
+                                                                            color:
+                                                                                Colors.red,
+                                                                            size:
+                                                                                Dimensions.font12 * 1.2,
+                                                                            text:
+                                                                                "${recommendedMeal.remaining[index]} left",
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                //Here is the adding item to cart button
+                                                                Container(
+                                                                    padding: EdgeInsets.only(
+                                                                        top: Dimensions.height10 /
+                                                                            2,
+                                                                        bottom:
+                                                                            Dimensions.height10 /
+                                                                                2,
+                                                                        left: Dimensions
+                                                                            .width10,
+                                                                        right: Dimensions
+                                                                            .width10),
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              Dimensions.radius20),
                                                                       color: Colors
-                                                                          .black,
+                                                                          .white,
                                                                     ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width: Dimensions
-                                                                            .width10 /
-                                                                        2,
-                                                                  ),
-                                                                  /*GetBuilder<
+                                                                    child: Row(
+                                                                      children: [
+                                                                        GestureDetector(
+                                                                          onTap:
+                                                                              () {
+                                                                            recommendedMeal.setQuantity(false,
+                                                                                index);
+                                                                          },
+                                                                          child:
+                                                                              Icon(
+                                                                            Icons.remove,
+                                                                            color:
+                                                                                Colors.black,
+                                                                          ),
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width:
+                                                                              Dimensions.width10 / 2,
+                                                                        ),
+                                                                        /*GetBuilder<
                                                                           CartController>(
                                                                       builder:
                                                                           (cartController) {
@@ -484,76 +547,392 @@ class RestaurantDetails extends StatelessWidget {
                                                                       );
                                                                     }
                                                                   }),*/
-                                                                  LargeText(
-                                                                      text:
-                                                                          "${recommendedMeal.quantity[index]} "),
-                                                                  /*LargeText(
+                                                                        LargeText(
+                                                                            text:
+                                                                                "${recommendedMeal.quantity[index]} "),
+                                                                        /*LargeText(
                                                               text: _cartList[index]
                                                                   .quantity
                                                                   .toString()), //restaurantMeal.incCartItems.toString(),*/
-                                                                  SizedBox(
-                                                                    width: Dimensions
-                                                                            .width10 /
-                                                                        2,
-                                                                  ),
-                                                                  GestureDetector(
-                                                                    onTap: () {
-                                                                      recommendedMeal.setQuantity(
-                                                                          true,
-                                                                          index);
-                                                                    },
-                                                                    child: Icon(
-                                                                      Icons.add,
+                                                                        SizedBox(
+                                                                          width:
+                                                                              Dimensions.width10 / 2,
+                                                                        ),
+                                                                        GestureDetector(
+                                                                          onTap:
+                                                                              () {
+                                                                            recommendedMeal.setQuantity(true,
+                                                                                index);
+                                                                          },
+                                                                          child:
+                                                                              Icon(
+                                                                            Icons.add,
+                                                                            color:
+                                                                                Colors.blue,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    )),
+                                                              ],
+                                                            ),
+                                                            //Here it should end
+                                                            GestureDetector(
+                                                              onTap: () {
+                                                                recommendedMeal.addItem(
+                                                                    recommendedMeal
+                                                                            .recommendedMealList[
+                                                                        index],
+                                                                    index);
+                                                              },
+                                                              child: Container(
+                                                                padding: EdgeInsets.only(
+                                                                    top: Dimensions
+                                                                        .height10,
+                                                                    bottom: Dimensions
+                                                                        .height10,
+                                                                    left: Dimensions
+                                                                        .width15,
+                                                                    right: Dimensions
+                                                                        .width15),
+                                                                child:
+                                                                    SmallText(
+                                                                  text: "Add",
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius.circular(
+                                                                          Dimensions
+                                                                              .radius20),
+                                                                  color: Colors
+                                                                      .blue,
+                                                                ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        )
+                                                      ]),
+                                                ),
+                                              ),
+                                            )
+                                          ]),
+                                        ),
+                                      )
+                                    : recommendedMeal.recommendedMealList[index]
+                                                .remaining !=
+                                            0
+                                        ? GestureDetector(
+                                            onTap: () {
+                                              Get.toNamed(RouteHelper
+                                                  .getRecommendedFood(
+                                                      index, "home"));
+                                            },
+                                            child: Container(
+                                              //This to see the borders of the contauner, for testing purposes
+                                              //color: Colors.black87,
+                                              margin: EdgeInsets.only(
+                                                  top: Dimensions.height10,
+                                                  left: Dimensions.width20,
+                                                  right: Dimensions.width20,
+                                                  bottom: Dimensions.height30),
+                                              //Our main restaurant card
+                                              child: Row(children: [
+                                                //This container for the image
+                                                Container(
+                                                  width: Dimensions
+                                                      .restaurantListImg,
+                                                  height: Dimensions
+                                                      .restaurantListImg,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              Dimensions
+                                                                  .radius20),
+                                                      //In future when we load images from the network, so if they do not load there will be a white background
+                                                      color: Colors.white38,
+                                                      image: DecorationImage(
+                                                        //We use this box fir so the image fits and looks like it has a border radius of 20
+                                                        fit: BoxFit.cover,
+                                                        image: NetworkImage(
+                                                            MyConstants
+                                                                    .BASE_URL +
+                                                                MyConstants
+                                                                    .UPLOAD_URL +
+                                                                recommendedMeal
+                                                                    .recommendedMealList[
+                                                                        index]
+                                                                    .img!),
+                                                      )),
+                                                ),
+                                                //Image Info container
+                                                //We used Expanded widget so the width of thos info container takes all teh avaiable space
+                                                Expanded(
+                                                  child: Container(
+                                                    height: Dimensions
+                                                            .restaurantListInfo +
+                                                        Dimensions.height10,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        topRight:
+                                                            Radius.circular(
+                                                                Dimensions
+                                                                    .radius20),
+                                                        bottomRight:
+                                                            Radius.circular(
+                                                                Dimensions
+                                                                    .radius20),
+                                                      ),
+                                                      //THis was origanlly white as well but trying to make it same figma desig, this for background of item
+                                                      color: Color.fromARGB(
+                                                          255, 245, 243, 246),
+                                                    ),
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: Dimensions
+                                                              .width10,
+                                                          right: 0),
+                                                      child: Column(
+                                                          //This crossAxisAlignment so everything is left aligned. crossAxis = horizontal
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          //mainAxis = vertical
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            LargeText(
+                                                              text: recommendedMeal
+                                                                  .recommendedMealList[
+                                                                      index]
+                                                                  .name,
+                                                            ),
+                                                            SizedBox(
+                                                              height: Dimensions
+                                                                  .height10,
+                                                            ),
+                                                            SmallText(
+                                                              text:
+                                                                  "idk sone description goes here",
+                                                            ),
+                                                            SizedBox(
+                                                              height: Dimensions
+                                                                  .height10,
+                                                            ),
+                                                            //Meal price, and adding meal to cart
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Column(
+                                                                  children: [
+                                                                    //Might remove the %off later
+                                                                    LargeText(
+                                                                      text:
+                                                                          '60% off',
+                                                                      size: 10,
+                                                                    ),
+                                                                    Text(
+                                                                        '15 AED',
+                                                                        style: TextStyle(
+                                                                            decoration:
+                                                                                TextDecoration.lineThrough,
+                                                                            fontSize: Dimensions.font12)),
+                                                                    LargeText(
+                                                                      text:
+                                                                          '6 AED',
+                                                                      size: 15,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                //Here is the remaining meals when editing
+                                                                Column(
+                                                                  children: [
+                                                                    recommendedMeal
+                                                                            .editing
+                                                                        ? Row(
+                                                                            children: [
+                                                                              GestureDetector(
+                                                                                onTap: () {
+                                                                                  recommendedMeal.setQuantityRemaining(false, index);
+                                                                                },
+                                                                                child: Icon(
+                                                                                  Icons.remove,
+                                                                                  color: Colors.black,
+                                                                                  size: Dimensions.iconSize16,
+                                                                                ),
+                                                                              ),
+                                                                              SizedBox(
+                                                                                width: Dimensions.width10 / 2,
+                                                                              ),
+                                                                              SmallText(
+                                                                                //maybe bblack maybe red depnding on amount left
+                                                                                color: Colors.green,
+                                                                                size: Dimensions.font12 * 1.2,
+                                                                                text: "${recommendedMeal.remaining[index]} left",
+                                                                              ),
+                                                                              SizedBox(
+                                                                                width: Dimensions.width10 / 2,
+                                                                              ),
+                                                                              GestureDetector(
+                                                                                onTap: () {
+                                                                                  recommendedMeal.setQuantityRemaining(true, index);
+                                                                                },
+                                                                                child: Icon(
+                                                                                  Icons.add,
+                                                                                  color: Colors.blue,
+                                                                                  size: Dimensions.iconSize16,
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          )
+                                                                        : Row(
+                                                                            children: [
+                                                                              SmallText(
+                                                                                //maybe bblack maybe red depnding on amount left
+                                                                                color: Colors.red,
+                                                                                size: Dimensions.font12 * 1.2,
+                                                                                text: "${recommendedMeal.remaining[index]} left",
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                    //Here is the adding item to cart button
+                                                                    Container(
+                                                                        padding: EdgeInsets.only(
+                                                                            top: Dimensions.height10 /
+                                                                                2,
+                                                                            bottom: Dimensions.height10 /
+                                                                                2,
+                                                                            left: Dimensions
+                                                                                .width10,
+                                                                            right: Dimensions
+                                                                                .width10),
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(Dimensions.radius20),
+                                                                          color:
+                                                                              Colors.white,
+                                                                        ),
+                                                                        child:
+                                                                            Row(
+                                                                          children: [
+                                                                            GestureDetector(
+                                                                              onTap: () {
+                                                                                recommendedMeal.setQuantity(false, index);
+                                                                              },
+                                                                              child: Icon(
+                                                                                Icons.remove,
+                                                                                color: Colors.black,
+                                                                              ),
+                                                                            ),
+                                                                            SizedBox(
+                                                                              width: Dimensions.width10 / 2,
+                                                                            ),
+                                                                            /*GetBuilder<
+                                                                          CartController>(
+                                                                      builder:
+                                                                          (cartController) {
+                                                                    var _cartList =
+                                                                        cartController
+                                                                            .getItems;
+                                                                    var _cListId =
+                                                                        _cartList
+                                                                            .map((v) =>
+                                                                                v.id)
+                                                                            .toList();
+                                                                    //This took me an hour to figure out haha, thought I can't use if else conditions, also forgot if the index of the item was not found it returns -1
+                                                                    //At the end I commented it out but it is good to have if I want to show the number of meals I have in cart for that certain item, 
+                                                                    var mealIndex = _cListId.indexOf(
+                                                                        recommendedMeal
+                                                                            .recommendedMealList[
+                                                                                index]
+                                                                            .id);
+                                                                    if (mealIndex <
+                                                                        0) {
+                                                                      return LargeText(
+                                                                          text:
+                                                                              "0");
+                                                                    } else {
+                                                                      return LargeText(
+                                                                        text: _cartList[
+                                                                                mealIndex]
+                                                                            .quantity
+                                                                            .toString(),
+                                                                      );
+                                                                    }
+                                                                  }),*/
+                                                                            LargeText(text: "${recommendedMeal.quantity[index]} "),
+                                                                            /*LargeText(
+                                                              text: _cartList[index]
+                                                                  .quantity
+                                                                  .toString()), //restaurantMeal.incCartItems.toString(),*/
+                                                                            SizedBox(
+                                                                              width: Dimensions.width10 / 2,
+                                                                            ),
+                                                                            GestureDetector(
+                                                                              onTap: () {
+                                                                                recommendedMeal.setQuantity(true, index);
+                                                                              },
+                                                                              child: Icon(
+                                                                                Icons.add,
+                                                                                color: Colors.blue,
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        )),
+                                                                  ],
+                                                                ),
+                                                                //Here it should end
+                                                                GestureDetector(
+                                                                  onTap: () {
+                                                                    recommendedMeal.addItem(
+                                                                        recommendedMeal
+                                                                            .recommendedMealList[index],
+                                                                        index);
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    padding: EdgeInsets.only(
+                                                                        top: Dimensions
+                                                                            .height10,
+                                                                        bottom: Dimensions
+                                                                            .height10,
+                                                                        left: Dimensions
+                                                                            .width15,
+                                                                        right: Dimensions
+                                                                            .width15),
+                                                                    child:
+                                                                        SmallText(
+                                                                      text:
+                                                                          "Add",
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              Dimensions.radius20),
                                                                       color: Colors
                                                                           .blue,
                                                                     ),
                                                                   ),
-                                                                ],
-                                                              )),
-                                                        ],
-                                                      ),
-                                                      //Here it should end
-                                                      GestureDetector(
-                                                        onTap: () {
-                                                          recommendedMeal.addItem(
-                                                              recommendedMeal
-                                                                      .recommendedMealList[
-                                                                  index],
-                                                              index);
-                                                        },
-                                                        child: Container(
-                                                          padding: EdgeInsets.only(
-                                                              top: Dimensions
-                                                                  .height10,
-                                                              bottom: Dimensions
-                                                                  .height10,
-                                                              left: Dimensions
-                                                                  .width15,
-                                                              right: Dimensions
-                                                                  .width15),
-                                                          child: SmallText(
-                                                            text: "Add",
-                                                            color: Colors.white,
-                                                          ),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                    Dimensions
-                                                                        .radius20),
-                                                            color: Colors.blue,
-                                                          ),
-                                                        ),
-                                                      )
-                                                    ],
-                                                  )
-                                                ]),
-                                          ),
-                                        ),
-                                      )
-                                    ]),
-                                  ),
-                                );
+                                                                )
+                                                              ],
+                                                            )
+                                                          ]),
+                                                    ),
+                                                  ),
+                                                )
+                                              ]),
+                                            ),
+                                          )
+                                        : null;
                               })
                           : CircularProgressIndicator(
                               color: Colors.red,

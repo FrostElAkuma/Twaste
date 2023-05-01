@@ -13,4 +13,9 @@ class RecommendedMealRepo extends GetxService {
     return await apiClient.getData(
         '${MyConstants.RECOMMENDED_PRODUCT_URI}?restaurantid=$restaurantID');
   }
+
+  Future<Response> updateRemaining(String mealID, String rem) async {
+    return await apiClient.postData(
+        MyConstants.UPDATE_REMAINING_URI, {"id": mealID, "remaining": rem});
+  }
 }
