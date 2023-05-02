@@ -72,7 +72,7 @@ class RecommendedMealController extends GetxController {
         i++;
       }
       //_originalRemaining = _remaining;
-      print("We are here recoMealController line 73" + _remaining.toString());
+      //print("We are here recoMealController line 73" + _remaining.toString());
       //print("we are here line 48 recoController" + _quantity.toString());
       //print("Got data recommedned");
       _isLoaded = true;
@@ -158,13 +158,12 @@ class RecommendedMealController extends GetxController {
     //Done editing
     if (_editing) {
       _editing = false;
-      print("We are here recoMealController line 163" + _remaining.toString());
+      /*print("We are here recoMealController line 163" + _remaining.toString());
       print("We are here recoMealController line 164" +
-          _originalRemaining.toString());
+          _originalRemaining.toString());*/
       //To check if there was a change in the original list, if there wasn't no need to send a request to our backend
       if (listEquals(_remaining, _originalRemaining) == true) {
-        print(
-            "Line 165 recoMealController no change was made to the ramining list");
+        //print("Line 165 recoMealController no change was made to the ramining list");
       } else {
         //Again not a fan of this while loop but it shall do the job for now
         var recoLength = _recommendedMealList.length;
@@ -172,9 +171,7 @@ class RecommendedMealController extends GetxController {
         //updating our original list with the new remaining items
         while (i < recoLength) {
           if (_remaining[i] == _originalRemaining[i]) {
-            print(
-                "Line 167 recoMealController no change was made to this item" +
-                    _recommendedMealList[i].id.toString());
+            //print("Line 167 recoMealController no change was made to this item" + _recommendedMealList[i].id.toString());
           } else {
             _recommendedMealList[i].remaining = _remaining[i];
             //Sending post req. to server. Need more security on this to make sure that the vendor is updateing his meals and not other vendor's meals
@@ -190,7 +187,7 @@ class RecommendedMealController extends GetxController {
     else {
       _editing = true;
     }
-    print(_editing);
+    //print(_editing);
     update();
   }
 
@@ -198,8 +195,8 @@ class RecommendedMealController extends GetxController {
   void setQuantityRemaining(bool isIncrement, index) {
     var quantit = _remaining[index];
     if (isIncrement) {
-      print("increment " + quantit.toString());
-      print("We are here recoMealController line 175" + _remaining.toString());
+      /*print("increment " + quantit.toString());
+      print("We are here recoMealController line 175" + _remaining.toString());*/
       _remaining[index] = checkQuantityRemaining(quantit + 1, index);
     } else {
       _remaining[index] = checkQuantityRemaining(quantit - 1, index);
