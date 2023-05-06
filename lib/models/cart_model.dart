@@ -12,6 +12,7 @@ class CartModel {
   //String? updatedAt;
   //int? typeId;
   int? quantity;
+  int? remaining;
   bool? isExist; //If it was added in the cart or not
   String? time; //time it was added
   ProductModel? product;
@@ -28,6 +29,7 @@ class CartModel {
     //this.updatedAt,
     //this.typeId,
     this.quantity,
+    this.remaining,
     this.isExist,
     this.time,
     this.product,
@@ -45,6 +47,7 @@ class CartModel {
     //updatedAt = json['updated_at'];
     //typeId = json['type_id'];
     quantity = json['quantity'];
+    remaining = json['remaining'];
     isExist = json['isExist'];
     time = json['time'];
     product = ProductModel.fromJson(json['product']); //25:00
@@ -58,6 +61,7 @@ class CartModel {
       "price": this.price,
       "img": this.img,
       "quantity": this.quantity,
+      "remaining": this.remaining,
       "isExist": this.isExist,
       "time": this.time,
       //Product we did a function for this in out meal_model

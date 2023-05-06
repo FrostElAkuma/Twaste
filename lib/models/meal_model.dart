@@ -77,7 +77,7 @@ class ProductModel {
       "id": this.id,
       "name": this.name,
       "price": this.price,
-      "remaning": this.remaining,
+      "remaining": this.remaining,
       "img": this.img,
       "location": this.location,
       "createdAt": this.createdAt,

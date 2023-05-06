@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../data/repository/meals_repo.dart';
@@ -121,6 +122,7 @@ class RecommendedMealController extends GetxController {
     _inCartItems = 0;
     _cart = cart;
     var exist = false;
+    //This to show how much of that certain item you have in caart. You can have it or leave it
     /*exist = _cart.existInCart(product);
     if (exist) {
       _inCartItems = _cart.getQuantity(product);
@@ -129,18 +131,24 @@ class RecommendedMealController extends GetxController {
 
   //To add to cart
   void addItem(ProductModel product, index) {
-    _cart.addItem(product, _quantity[index]);
-    //Before adding should be 0 and after adding should also be reset to 0
-    _quantity[index] = 0;
+    if ((_cart.getQuantity(product) + _quantity[index]) > product.remaining!) {
+      Get.snackbar("Item count", "You can't add more to your cart!",
+          backgroundColor: Colors.red, colorText: Colors.white);
+    } else {
+      _cart.addItem(product, _quantity[index]);
+      //Before adding should be 0 and after adding should also be reset to 0
+      _quantity[index] = 0;
+    }
 
-    ///We need this else when we minus an item it will be 0 instantly
-    _inCartItems = _cart.getQuantity(product);
+    //We need this else when we minus an item it will be 0 instantly
+    //This If I am showing items currently in cart inside the restaurant page
+    /*_inCartItems = _cart.getQuantity(product);
     _cart.items.forEach((key, value) {
       print("The id is " +
           value.id.toString() +
           " The quantity is " +
           value.quantity.toString());
-    });
+    });*/
     update();
   }
 
@@ -175,6 +183,7 @@ class RecommendedMealController extends GetxController {
           } else {
             _recommendedMealList[i].remaining = _remaining[i];
             //Sending post req. to server. Need more security on this to make sure that the vendor is updateing his meals and not other vendor's meals
+            //Think what is better is to send 1 request with all the meal Ids that need changing instead of sending a request for each one but guess wil do this later
             recommendedMealRepo.updateRemaining(
                 _recommendedMealList[i].id.toString(),
                 _recommendedMealList[i].remaining.toString());

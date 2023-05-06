@@ -44,7 +44,8 @@ Future<void> init() async {
   Get.lazyPut(() => MealRepo(apiClient: Get.find()));
   Get.lazyPut(() => RecommendedMealRepo(apiClient: Get.find()));
   //We pass our sharedPreferences here
-  Get.lazyPut(() => CartRepo(sharedPreferences: Get.find()));
+  Get.lazyPut(
+      () => CartRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(
       () => LocationRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(() => OrderRepo(apiClient: Get.find()));

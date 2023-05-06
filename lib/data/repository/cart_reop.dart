@@ -2,15 +2,19 @@
 
 import 'dart:convert';
 
+import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twaste/utils/my_constants.dart';
 
 import '../../models/cart_model.dart';
+import '../api/api_client.dart';
 
-class CartRepo {
+class CartRepo extends GetxService {
+  final ApiClient apiClient;
   final SharedPreferences sharedPreferences;
   //shared preferences store data in string format
-  CartRepo({required this.sharedPreferences});
+  CartRepo({required this.apiClient, required this.sharedPreferences});
 
   List<String> cart = [];
   List<String> cartHistory = [];
@@ -103,5 +107,10 @@ class CartRepo {
   void removeCartSharedPreference() {
     sharedPreferences.remove(MyConstants.CART_LIST);
     sharedPreferences.remove(MyConstants.CART_HISTORY_LIST);
+  }
+
+  Future<Response> getCartRemaining(List<dynamic> cartIds) async {
+    return await apiClient
+        .getData('${MyConstants.CART_REMAINING_URI}?mealIds=$cartIds');
   }
 }

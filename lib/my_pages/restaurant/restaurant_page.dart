@@ -167,48 +167,60 @@ class RestaurantDetails extends StatelessWidget {
                     //Showing the number of items in cart
                     GetBuilder<RecommendedMealController>(
                         builder: (controller) {
-                      //we used stack cuz not all items might show up,so we keep it dynamic
-                      return GestureDetector(
-                        onTap: () {
-                          //if (controller.totalItems >= 1) {
-                          Get.toNamed(RouteHelper.getCartPage());
-                          //}
-                        },
-                        child: Stack(
-                          children: [
-                            //The blue background for the number of items
-                            MyIcons(icon: Icons.shopping_cart_outlined),
-                            Get.find<RecommendedMealController>().totalItems >=
-                                    1
-                                ? Positioned(
-                                    right: 0,
-                                    top: 0,
-                                    child: MyIcons(
-                                      icon: Icons.circle,
-                                      size: 20,
-                                      iconColor: Colors.transparent,
-                                      backgroundColor: Colors.blue,
-                                    ),
-                                  )
-                                : Container(),
-                            //The number of items
-                            controller.totalItems >= 1
-                                ? Positioned(
-                                    right: 3,
-                                    top: 3,
-                                    child: LargeText(
-                                      text:
-                                          Get.find<RecommendedMealController>()
-                                              .totalItems
-                                              .toString(),
-                                      size: 12,
-                                      color: Colors.white,
-                                    ),
-                                  )
-                                : Container()
-                          ],
-                        ),
-                      );
+                      return GetBuilder<CartController>(
+                          builder: (cartController) {
+                        var _cartList = cartController.getItems;
+                        //we used stack cuz not all items might show up,so we keep it dynamic
+                        return GestureDetector(
+                          onTap: () async {
+                            //if (controller.totalItems >= 1) {
+                            await Get.find<CartController>().getRemaining();
+                            for (var i = 0; i < _cartList.length; i++) {
+                              if (_cartList[i].remaining! <= 0) {
+                                await cartController
+                                    .removeItem(_cartList[i].product!);
+                              }
+                            }
+                            Get.toNamed(RouteHelper.getCartPage());
+                            //}
+                          },
+                          child: Stack(
+                            children: [
+                              //The blue background for the number of items
+                              MyIcons(icon: Icons.shopping_cart_outlined),
+                              Get.find<RecommendedMealController>()
+                                          .totalItems >=
+                                      1
+                                  ? Positioned(
+                                      right: 0,
+                                      top: 0,
+                                      child: MyIcons(
+                                        icon: Icons.circle,
+                                        size: 20,
+                                        iconColor: Colors.transparent,
+                                        backgroundColor: Colors.blue,
+                                      ),
+                                    )
+                                  : Container(),
+                              //The number of items
+                              controller.totalItems >= 1
+                                  ? Positioned(
+                                      right: 3,
+                                      top: 3,
+                                      child: LargeText(
+                                        text: Get.find<
+                                                RecommendedMealController>()
+                                            .totalItems
+                                            .toString(),
+                                        size: 12,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  : Container()
+                            ],
+                          ),
+                        );
+                      });
                     }),
                   ],
                 )),
@@ -932,7 +944,7 @@ class RestaurantDetails extends StatelessWidget {
                                               ]),
                                             ),
                                           )
-                                        : null;
+                                        : SizedBox();
                               })
                           : CircularProgressIndicator(
                               color: Colors.red,

@@ -199,76 +199,100 @@ class CartPage extends StatelessWidget {
                                                   color: Colors.redAccent,
                                                 ),
                                                 //add or remove item
-                                                Container(
-                                                    padding: EdgeInsets.only(
-                                                        top:
-                                                            Dimensions.height10,
-                                                        bottom:
-                                                            Dimensions.height10,
-                                                        left:
-                                                            Dimensions.width10,
-                                                        right:
-                                                            Dimensions.width10),
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              Dimensions
-                                                                  .radius20),
-                                                      color: Colors.white,
-                                                    ),
-                                                    child: Row(
+                                                Column(
+                                                  children: [
+                                                    Row(
                                                       children: [
-                                                        GestureDetector(
-                                                          onTap: () {
-                                                            cartController.addItem(
-                                                                _cartList[index]
-                                                                    .product!,
-                                                                -1);
-                                                          },
-                                                          child: Icon(
-                                                            Icons.remove,
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    224,
-                                                                    224,
-                                                                    224),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: Dimensions
-                                                                  .width10 /
-                                                              2,
-                                                        ),
-                                                        LargeText(
-                                                            text: _cartList[
-                                                                    index]
-                                                                .quantity
-                                                                .toString()), //restaurantMeal.incCartItems.toString(),
-                                                        SizedBox(
-                                                          width: Dimensions
-                                                                  .width10 /
-                                                              2,
-                                                        ),
-                                                        GestureDetector(
-                                                          onTap: () {
-                                                            cartController.addItem(
-                                                                _cartList[index]
-                                                                    .product!,
-                                                                1);
-                                                          },
-                                                          child: Icon(
-                                                            Icons.add,
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    224,
-                                                                    224,
-                                                                    224),
-                                                          ),
+                                                        SmallText(
+                                                          //maybe bblack maybe red depnding on amount left
+                                                          color: Colors.red,
+                                                          size: Dimensions
+                                                                  .font12 *
+                                                              1.2,
+                                                          text:
+                                                              "${cartController.getItems[index].remaining} left",
                                                         ),
                                                       ],
-                                                    )),
+                                                    ),
+                                                    Container(
+                                                        padding: EdgeInsets.only(
+                                                            top: Dimensions
+                                                                    .height10 /
+                                                                2,
+                                                            bottom: Dimensions
+                                                                    .height10 /
+                                                                2,
+                                                            left: Dimensions
+                                                                    .width10 /
+                                                                2,
+                                                            right: Dimensions
+                                                                    .width10 /
+                                                                2),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  Dimensions
+                                                                      .radius20),
+                                                          color: Colors.white,
+                                                        ),
+                                                        child: Row(
+                                                          children: [
+                                                            GestureDetector(
+                                                              onTap: () {
+                                                                cartController.addItem(
+                                                                    _cartList[
+                                                                            index]
+                                                                        .product!,
+                                                                    -1);
+                                                              },
+                                                              child: Icon(
+                                                                Icons.remove,
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        224,
+                                                                        224,
+                                                                        224),
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              width: Dimensions
+                                                                      .width10 /
+                                                                  2,
+                                                            ),
+                                                            LargeText(
+                                                                text: _cartList[
+                                                                        index]
+                                                                    .quantity
+                                                                    .toString()), //restaurantMeal.incCartItems.toString(),
+                                                            SizedBox(
+                                                              width: Dimensions
+                                                                      .width10 /
+                                                                  2,
+                                                            ),
+                                                            GestureDetector(
+                                                              onTap: () {
+                                                                cartController.addItem(
+                                                                    _cartList[
+                                                                            index]
+                                                                        .product!,
+                                                                    1);
+                                                              },
+                                                              child: Icon(
+                                                                Icons.add,
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        224,
+                                                                        224,
+                                                                        224),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )),
+                                                  ],
+                                                ),
                                               ],
                                             )
                                           ],
@@ -491,6 +515,7 @@ class CartPage extends StatelessWidget {
                                         .isEmpty) {
                                       Get.toNamed(RouteHelper.getAddressPage());
                                     } else {
+                                      //Get.snackbar("Item count", "You can't reduce more!", backgroundColor: Colors.blue, colorText: Colors.white);
                                       var location =
                                           Get.find<LocationController>()
                                               .getUserAddress();
