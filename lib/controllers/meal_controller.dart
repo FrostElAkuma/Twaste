@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:twaste/controllers/cart_controller.dart';
 import 'package:twaste/models/cart_model.dart';
@@ -52,7 +51,7 @@ class MealController extends GetxController {
   //Adding and subtracting items
   void setQuantity(bool isIncrement) {
     if (isIncrement) {
-      print("increment" + _quantity.toString());
+      print("increment$_quantity");
       _quantity = checkQuantity(_quantity + 1);
     } else {
       _quantity = checkQuantity(_quantity - 1);
@@ -99,10 +98,7 @@ class MealController extends GetxController {
     ///We need this else when we minus an item it will be 0 instantly
     _inCartItems = _cart.getQuantity(product);
     _cart.items.forEach((key, value) {
-      print("The id is " +
-          value.id.toString() +
-          " The quantity is " +
-          value.quantity.toString());
+      print("The id is ${value.id} The quantity is ${value.quantity}");
     });
     update();
   }

@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:twaste/my_pages/account/account_page.dart';
-import 'package:twaste/my_pages/auth/sign_up_page.dart';
 import 'package:twaste/my_pages/cart/cart_history_page.dart';
 import 'package:twaste/my_pages/home/main_page.dart';
-import 'package:twaste/my_pages/order/order_page.dart';
 import 'package:twaste/my_pages/restaurant/add_meal_page.dart';
 
-import '../auth/sign_in_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,11 +15,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _index = 0;
   List pages = [
-    MainPage(),
+    const MainPage(),
     //OrderPage(),
-    AddMeal(),
-    CartHistory(),
-    AccountPage(),
+    const AddMeal(),
+    const CartHistory(),
+    const AccountPage(),
   ];
 
   void onTapNav(int i) {

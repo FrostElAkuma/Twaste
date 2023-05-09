@@ -4,9 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:twaste/data/api/api_checker.dart';
 import 'package:twaste/data/repository/location_repo.dart';
@@ -54,7 +51,7 @@ class LocationController extends GetxController implements GetxService {
   late List<AddressModel> _allAddressList;
   List<AddressModel> get allAddressList => _allAddressList;
 
-  List<String> _addressTypeList = ["home", "office", "others"];
+  final List<String> _addressTypeList = ["home", "office", "others"];
   List<String> get addressTypeList => _addressTypeList;
   int _addressTypeIndex = 0;
   int get addressTypeIndex => _addressTypeIndex;
@@ -111,23 +108,23 @@ class LocationController extends GetxController implements GetxService {
         }
 
         //Every time the map is moved we check the zone and disable the button
-        ResponseModel _responseModel = await getZone(
+        ResponseModel responseModel = await getZone(
             position.target.latitude.toString(),
             position.target.longitude.toString(),
             false);
         //Checking the response. If hte button value is false then we are within the service area
         //I need to uncomment 2 lines below later when i get zones working
-        _buttonDisabled = !_responseModel.isSuccess;
+        _buttonDisabled = !responseModel.isSuccess;
         _buttonDisabled = false;
         if (_changeAddress) {
           //Grabbing the this String from the google server
-          String _address = await getADdressfromGeocode(
+          String address = await getADdressfromGeocode(
             LatLng(position.target.latitude, position.target.longitude),
           );
           //If we are coming from address page
           fromAddress
-              ? _placemark = Placemark(name: _address)
-              : _pickPlacemark = Placemark(name: _address);
+              ? _placemark = Placemark(name: address)
+              : _pickPlacemark = Placemark(name: address);
           //Good for debugging
           //print(_placemark.)
         }
@@ -147,18 +144,18 @@ class LocationController extends GetxController implements GetxService {
   }
 
   Future<String> getADdressfromGeocode(LatLng latLng) async {
-    String _address = "Unkown Location Found";
+    String address = "Unkown Location Found";
     //talking to our server then our server will talk to the google server
     Response response = await locationRepo.getADdressfromGeocode(latLng);
     if (response.body["status"] == 'OK') {
-      _address = response.body["results"][0]['formatted_address'].toString();
+      address = response.body["results"][0]['formatted_address'].toString();
       //for debugging purposes
-      print("printing address line 135 in location controller" + _address);
+      print("printing address line 135 in location controller$address");
     } else {
-      print("Error getting the google api " + response.body.toString());
+      print("Error getting the google api ${response.body}");
     }
     update();
-    return _address;
+    return address;
   }
 
   //This will be coming from DB
@@ -166,16 +163,16 @@ class LocationController extends GetxController implements GetxService {
   Map get getAddress => _getAddress;
 
   AddressModel getUserAddress() {
-    late AddressModel _addressModel;
+    late AddressModel addressModel;
     //converting to map using jsonDecode
     _getAddress = jsonDecode(locationRepo.getUserAddress());
     try {
-      _addressModel =
+      addressModel =
           AddressModel.fromJson(jsonDecode(locationRepo.getUserAddress()));
     } catch (e) {
       print(e);
     }
-    return _addressModel;
+    return addressModel;
   }
 
   //For another address
@@ -211,7 +208,7 @@ class LocationController extends GetxController implements GetxService {
   Future<void> getAddressList() async {
     _loading = true;
     print(
-        "Are we loading ? Line 197 location controller " + _loading.toString());
+        "Are we loading ? Line 197 location controller $_loading");
     Response response = await locationRepo.getAllAddress();
     if (response.statusCode == 200) {
       print("I am here 5 at line 193 location controller");
@@ -219,7 +216,7 @@ class LocationController extends GetxController implements GetxService {
       _addressList = [];
       _allAddressList = [];
       response.body.forEach((address) {
-        print("Location contreoller line 198" + address.toString());
+        print("Location contreoller line 198$address");
         _addressList.add(AddressModel.fromJson(address));
         _allAddressList.add(AddressModel.fromJson(address));
       });
@@ -232,7 +229,7 @@ class LocationController extends GetxController implements GetxService {
     }
 
     print(
-        "Are we loading ? Line 212 location controller " + _loading.toString());
+        "Are we loading ? Line 212 location controller $_loading");
     update();
   }
 
@@ -263,7 +260,7 @@ class LocationController extends GetxController implements GetxService {
   }
 
   Future<ResponseModel> getZone(String lat, String lng, bool markerLoad) async {
-    late ResponseModel _responseModel;
+    late ResponseModel responseModel;
     //if it is true
     if (markerLoad) {
       _loading = true;
@@ -275,8 +272,8 @@ class LocationController extends GetxController implements GetxService {
     //It is important that when you do a network request that you check the response
     if (response.statusCode == 200) {
       _inZone = true;
-      print("We are here 1 line 265" + response.body.toString());
-      _responseModel = ResponseModel(true, response.body["zone_id"].toString());
+      print("We are here 1 line 265${response.body}");
+      responseModel = ResponseModel(true, response.body["zone_id"].toString());
       //Simulating if we not in zone
       /*if (response.body["zone_id"] != 2) {
         print("We are here 2 line 269 location controller");
@@ -291,7 +288,7 @@ class LocationController extends GetxController implements GetxService {
       }*/
     } else {
       _inZone = false;
-      _responseModel = ResponseModel(false, response.statusText!);
+      responseModel = ResponseModel(false, response.statusText!);
     }
     if (markerLoad) {
       _loading = false;
@@ -299,11 +296,10 @@ class LocationController extends GetxController implements GetxService {
       _isLoading = false;
     }
     print(
-        "This is the status code given inside getZone line 288 locationController" +
-            response.statusCode.toString());
+        "This is the status code given inside getZone line 288 locationController${response.statusCode}");
     update();
 
-    return _responseModel;
+    return responseModel;
   }
 
   Future<List<Prediction>> searchLocation(

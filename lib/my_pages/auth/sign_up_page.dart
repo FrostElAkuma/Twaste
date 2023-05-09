@@ -1,11 +1,7 @@
-import 'dart:math';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:twaste/base/custom_loader.dart';
 import 'package:twaste/base/show_custom_snackBar.dart';
 import 'package:twaste/models/singUp_model.dart';
@@ -77,23 +73,23 @@ class SignUpPage extends StatelessWidget {
         backgroundColor: Colors.white,
         //We used SingChildScrollView and physics so when the keybaord os on the screen there won't be any overflow errors
         //We used GetBuilder here so we can use the isLoading method
-        body: GetBuilder<AuthController>(builder: (_authController) {
-          return !_authController.isLoading
+        body: GetBuilder<AuthController>(builder: (authController) {
+          return !authController.isLoading
               ? SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   child: Column(children: [
                     SizedBox(
                       height: Dimensions.screenHeight * 0.05,
                     ),
                     //Our Logo
-                    Container(
+                    SizedBox(
                       height: Dimensions.screenHeight * 0.25,
                       child: Center(
                         child: CircleAvatar(
                           backgroundColor: Colors.white,
                           radius: Dimensions.radius20 * 4,
                           backgroundImage:
-                              AssetImage("assets/images/Twasty.png"),
+                              const AssetImage("assets/images/Twasty.png"),
                         ),
                       ),
                     ),
@@ -135,7 +131,7 @@ class SignUpPage extends StatelessWidget {
                     //Sign Up button
                     GestureDetector(
                       onTap: () {
-                        _registration(_authController);
+                        _registration(authController);
                       },
                       child: Container(
                         width: Dimensions.screenWidth / 3,
@@ -194,7 +190,7 @@ class SignUpPage extends StatelessWidget {
                             backgroundColor: Colors.white,
                             radius: Dimensions.radius20,
                             backgroundImage: AssetImage(
-                                "assets/images/" + signUpImages[index]),
+                                "assets/images/${signUpImages[index]}"),
                           ),
                         ),
                       ),

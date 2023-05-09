@@ -2,12 +2,9 @@ import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:twaste/models/user_model.dart';
-import 'package:twaste/utils/my_constants.dart';
 
-import '../data/repository/auth_repo.dart';
 import '../data/repository/user_repo.dart';
 import '../models/response_model.dart';
-import '../models/singUp_model.dart';
 
 class UserController extends GetxController implements GetxService {
   //We are doing this because AuthRepo has a method that we will call from AuthControler
@@ -25,7 +22,7 @@ class UserController extends GetxController implements GetxService {
     //print("I am here");
     Response response = await userRepo.getUserInfo();
     late ResponseModel responseModel;
-    print("this is the response " + response.body.toString());
+    print("this is the response ${response.body}");
     //If it was a success server would give us 200 and a token as a response
     if (response.statusCode == 200) {
       _userModel = UserModel.fromJson(response.body);

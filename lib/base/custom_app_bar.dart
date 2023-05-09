@@ -30,8 +30,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               onPressed: () => onBackPressed != null
                   ? onBackPressed!()
                   : Navigator.pushReplacementNamed(context, "/initial"),
-              icon: Icon(Icons.arrow_back_ios))
-          : SizedBox(),
+              icon: const Icon(Icons.arrow_back_ios))
+          : const SizedBox(),
     );
   }
 
@@ -39,5 +39,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   // TODO: implement preferredSize
   //Size for the app bar, width and height
-  Size get preferredSize => Size(500, 53);
+  Size get preferredSize => const Size(500, 53);
 }

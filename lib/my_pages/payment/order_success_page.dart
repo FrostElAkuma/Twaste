@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:twaste/base/custom_button.dart';
 import 'package:twaste/utils/dimensions.dart';
@@ -10,12 +8,13 @@ import '../../routes/route_helper.dart';
 class OrderSuccessPage extends StatelessWidget {
   final String orderID;
   final int status;
-  OrderSuccessPage({required this.orderID, required this.status});
+  const OrderSuccessPage(
+      {super.key, required this.orderID, required this.status});
 
   @override
   Widget build(BuildContext context) {
     if (status == 0) {
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(const Duration(seconds: 1), () {
         //
       });
     }
@@ -58,7 +57,7 @@ class OrderSuccessPage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(Dimensions.height10),
               child: CustomButton(
-                  buttonText: 'BAck to Home',
+                  buttonText: 'Back to Home',
                   onPressed: () => Get.offAllNamed(RouteHelper.getInitial())),
             ),
           ],

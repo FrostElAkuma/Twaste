@@ -15,22 +15,22 @@ class CommonTextButton extends StatelessWidget {
           bottom: Dimensions.height20,
           left: Dimensions.width20,
           right: Dimensions.width20),
-      child: Center(
-        child: LargeText(
-          text: text,
-          color: Colors.white,
-        ),
-      ),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, 5),
+            offset: const Offset(0, 5),
             blurRadius: Dimensions.radius20 / 2,
             color: Colors.blue.withOpacity(0.3),
           ),
         ],
         borderRadius: BorderRadius.circular(Dimensions.radius20),
         color: Colors.blue,
+      ),
+      child: Center(
+        child: LargeText(
+          text: text,
+          color: Colors.white,
+        ),
       ),
     );
   }

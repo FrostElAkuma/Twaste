@@ -45,7 +45,7 @@ class AddMealController extends GetxController {
       // _pickedFile = null;
       //await getUserInfo();
       success = true;
-      print('I am here line 48 addMealcontroller ' + message);
+      print('I am here line 48 addMealcontroller $message');
     } else {
       print("error posting the image");
     }
@@ -58,10 +58,10 @@ class AddMealController extends GetxController {
         Uri.parse(MyConstants.BASE_URL + MyConstants.MEAL_IMAGE_UPLOAD_URI));
     // request.headers.addAll(<String,String>{'Authorization': 'Bearer $token'});
     if (GetPlatform.isMobile && data != null) {
-      File _file = File(data.path);
+      File file = File(data.path);
       request.files.add(http.MultipartFile(
-          'image', _file.readAsBytes().asStream(), _file.lengthSync(),
-          filename: _file.path.split('/').last));
+          'image', file.readAsBytes().asStream(), file.lengthSync(),
+          filename: file.path.split('/').last));
     }
     /*Map<String, String> _fields = Map();
     _fields.addAll(<String, String>{

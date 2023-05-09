@@ -21,7 +21,7 @@ class PaymentOptionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     //Get builder here so we can pass the index into our controller
     return GetBuilder<OrderController>(builder: (orderController) {
-      bool _selected = orderController.paymentIndex == index;
+      bool selected = orderController.paymentIndex == index;
       return InkWell(
         onTap: () => orderController.setPaymentIndex(index),
         child: Container(
@@ -42,7 +42,7 @@ class PaymentOptionButton extends StatelessWidget {
             leading: Icon(
               icon,
               size: 40,
-              color: _selected ? Colors.blue : Theme.of(context).disabledColor,
+              color: selected ? Colors.blue : Theme.of(context).disabledColor,
             ),
             title: Text(
               title,
@@ -57,11 +57,11 @@ class PaymentOptionButton extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: robotoRegular.copyWith(
                 color:
-                    _selected ? Colors.blue : Theme.of(context).disabledColor,
+                    selected ? Colors.blue : Theme.of(context).disabledColor,
                 fontSize: Dimensions.font16,
               ),
             ),
-            trailing: _selected
+            trailing: selected
                 ? Icon(
                     Icons.check_circle,
                     color: Theme.of(context).primaryColor,

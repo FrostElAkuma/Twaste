@@ -1,8 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:twaste/utils/dimensions.dart';
@@ -18,7 +14,7 @@ class LoactionSearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _controller = TextEditingController();
+    final TextEditingController controller = TextEditingController();
     return Container(
       padding: EdgeInsets.all(Dimensions.width10),
       alignment: Alignment.topCenter,
@@ -36,7 +32,7 @@ class LoactionSearch extends StatelessWidget {
             //Solved be nesting it inside a scrollable widget :)
             child: TypeAheadField(
               textFieldConfiguration: TextFieldConfiguration(
-                controller: _controller,
+                controller: controller,
                 textInputAction: TextInputAction.search,
                 autofocus: true,
                 textCapitalization: TextCapitalization.words,
@@ -47,7 +43,7 @@ class LoactionSearch extends StatelessWidget {
                   border: OutlineInputBorder(
                     borderRadius:
                         BorderRadius.circular(Dimensions.radius20 / 2),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       style: BorderStyle.none,
                       width: 0,
                     ),
@@ -78,7 +74,7 @@ class LoactionSearch extends StatelessWidget {
                   padding: EdgeInsets.all(Dimensions.width10),
                   child: Row(
                     children: [
-                      Icon(Icons.location_on),
+                      const Icon(Icons.location_on),
                       //Expanded to take the rest of the space
                       Expanded(
                         child: Text(

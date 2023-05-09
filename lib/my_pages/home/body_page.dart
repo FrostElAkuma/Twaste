@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:twaste/controllers/meal_controller.dart';
-import 'package:twaste/controllers/recommended_meals_controller.dart';
 import 'package:twaste/controllers/restaurant_controller.dart';
-import 'package:twaste/my_pages/restaurant/restaurant_page.dart';
 import 'package:twaste/my_widgets/info_and_rating.dart';
 import 'package:twaste/routes/route_helper.dart';
 import 'package:twaste/utils/dimensions.dart';
@@ -28,8 +24,8 @@ class _BodyPageState extends State<BodyPage> {
   PageController pageController = PageController(viewportFraction: 0.85);
   //This value is what we will use to determine the zoom in and zoom out while sliding left and right
   var _currPageValue = 0.0;
-  double _scaleFactor = 0.8;
-  double _height = Dimensions.pageVeiwContainer;
+  final double _scaleFactor = 0.8;
+  final double _height = Dimensions.pageVeiwContainer;
 
   //initState is a built in method inside any stateful class but if we wabt to use it we need to override it
   @override
@@ -60,7 +56,7 @@ class _BodyPageState extends State<BodyPage> {
         //We used GetBuilder so we can get data directly from the server. It connects our controller with the ui
         GetBuilder<MealController>(builder: (meals) {
           return meals.isLoaded
-              ? Container(
+              ? SizedBox(
                   height: Dimensions.pageVeiw,
                   //This pageview builderis what is giving us the scroll left and right feature
                   child: PageView.builder(
@@ -70,13 +66,13 @@ class _BodyPageState extends State<BodyPage> {
                         return _buildSwipe(index, meals.mealList[index]);
                       }),
                 )
-              : CircularProgressIndicator(); //Dis loading icon
+              : const CircularProgressIndicator(); //Dis loading icon
         }),
         //dots section
         GetBuilder<MealController>(builder: (meals) {
           return DotsIndicator(
             //Some times it takes time to get the data. And dotsCount can't be zero, so we initialize it to 1 then when we get the data we make it the data length
-            dotsCount: meals.mealList.length <= 0 ? 1 : meals.mealList.length,
+            dotsCount: meals.mealList.isEmpty ? 1 : meals.mealList.length,
             position: _currPageValue,
             decorator: DotsDecorator(
               activeColor: Colors.blue,
@@ -122,7 +118,7 @@ class _BodyPageState extends State<BodyPage> {
           return restaurant.isLoaded
               ? ListView.builder(
                   //physics never thing so the whole poage is scrollable and not only the retaurant list
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   //ListView takes the height of the container it is in. Since the OG column does not have one we use shrinkWrap here even tho i am not exatly sure what it does
                   shrinkWrap: true,
                   itemCount: restaurant.restaurantList.length,
@@ -196,7 +192,7 @@ class _BodyPageState extends State<BodyPage> {
                                       SizedBox(
                                         height: Dimensions.height10,
                                       ),
-                                      Row(
+                                      const Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
@@ -223,7 +219,7 @@ class _BodyPageState extends State<BodyPage> {
                       ),
                     );
                   })
-              : CircularProgressIndicator(
+              : const CircularProgressIndicator(
                   color: Colors.red,
                 );
         }),
@@ -343,7 +339,7 @@ class _BodyPageState extends State<BodyPage> {
 
   Widget _buildSwipe(int index, ProductModel meal) {
     //For the image zoom we are gonna use an api
-    Matrix4 matrix = new Matrix4.identity();
+    Matrix4 matrix = Matrix4.identity();
     //floor is rounding
     //This condition is for the current slide
     if (index == _currPageValue.floor()) {
@@ -396,7 +392,7 @@ class _BodyPageState extends State<BodyPage> {
                   left: Dimensions.width10, right: Dimensions.width10),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Dimensions.radius30),
-                  color: Color(0xFF696969),
+                  color: const Color(0xFF696969),
                   image: DecorationImage(
                     fit: BoxFit.cover,
                     //VIP if you get an error like type string don't match type strng just use ! to tell the compiler that this value won't be null
@@ -419,7 +415,7 @@ class _BodyPageState extends State<BodyPage> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Dimensions.radius20),
                   color: Colors.white,
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Color(0xFFe8e8e8),
                       blurRadius: 5.0,

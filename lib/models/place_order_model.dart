@@ -28,17 +28,17 @@ class PlaceOrderBody {
     required String orderType,
     required String paymentMethod,
   }) {
-    this._cart = cart;
-    this._orderAmount = orderAmount;
-    this._orderNote = orderNote;
-    this._distance = distance;
-    this._address = address;
-    this._latitude = latitude;
-    this._longitude = longitude;
-    this._contactPersonName = contactPersonName;
-    this._contactPersonNumber = contactPersonNumber;
-    this._orderType = orderType;
-    this._paymentMethod = paymentMethod;
+    _cart = cart;
+    _orderAmount = orderAmount;
+    _orderNote = orderNote;
+    _distance = distance;
+    _address = address;
+    _latitude = latitude;
+    _longitude = longitude;
+    _contactPersonName = contactPersonName;
+    _contactPersonNumber = contactPersonNumber;
+    _orderType = orderType;
+    _paymentMethod = paymentMethod;
   }
 
   List<CartModel> get cart => _cart!;
@@ -59,7 +59,7 @@ class PlaceOrderBody {
     if (json['cart'] != null) {
       _cart = [];
       json['cart'].forEach((v) {
-        _cart!.add(new CartModel.fromJson(v));
+        _cart!.add(CartModel.fromJson(v));
       });
     }
 
@@ -78,21 +78,21 @@ class PlaceOrderBody {
 
   //Reminder Note whenever we sent data to server we need to send Json format. Also note the name inside the data[] is the same insdie the DB
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
 
-    if (this._cart != null) {
-      data['cart'] = this._cart!.map((v) => v.toJson()).toList();
+    if (_cart != null) {
+      data['cart'] = _cart!.map((v) => v.toJson()).toList();
     }
-    data['order_amount'] = this._orderAmount;
-    data['order_note'] = this._orderNote;
-    data['distance'] = this._distance;
-    data['address'] = this._address;
-    data['latitude'] = this._latitude;
-    data['longitude'] = this._longitude;
-    data['contact_person_name'] = this._contactPersonName;
-    data['contact_person_number'] = this._contactPersonNumber;
-    data['order_type'] = this._orderType;
-    data['payment_method'] = this._paymentMethod;
+    data['order_amount'] = _orderAmount;
+    data['order_note'] = _orderNote;
+    data['distance'] = _distance;
+    data['address'] = _address;
+    data['latitude'] = _latitude;
+    data['longitude'] = _longitude;
+    data['contact_person_name'] = _contactPersonName;
+    data['contact_person_number'] = _contactPersonNumber;
+    data['order_type'] = _orderType;
+    data['payment_method'] = _paymentMethod;
     return data;
   }
 }

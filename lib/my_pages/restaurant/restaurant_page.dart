@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:twaste/controllers/meal_controller.dart';
 import 'package:twaste/controllers/restaurant_controller.dart';
-import 'package:twaste/my_pages/cart/cart_page.dart';
-import 'package:twaste/my_pages/home/main_page.dart';
 import 'package:twaste/my_widgets/myIcons.dart';
 import 'package:twaste/my_widgets/collapse_text.dart';
 import 'package:twaste/my_widgets/info_and_rating.dart';
@@ -14,7 +9,6 @@ import 'package:twaste/utils/my_constants.dart';
 
 import '../../controllers/cart_controller.dart';
 import '../../controllers/recommended_meals_controller.dart';
-import '../../my_widgets/distance_time.dart';
 import '../../my_widgets/my_text.dart';
 import '../../routes/route_helper.dart';
 
@@ -49,6 +43,7 @@ class RestaurantDetails extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Stack(
+          clipBehavior: Clip.none,
           children: [
             //Co
             Container(
@@ -71,7 +66,7 @@ class RestaurantDetails extends StatelessWidget {
                           //Again fit so it fills the whole screen
                           fit: BoxFit.cover,
                           //Trying to make the backgrund image a bit darker, need to configure this more later
-                          colorFilter: new ColorFilter.mode(
+                          colorFilter: ColorFilter.mode(
                               Colors.black.withOpacity(0.7), BlendMode.dstATop),
                           image: NetworkImage(
                             MyConstants.BASE_URL +
@@ -138,7 +133,7 @@ class RestaurantDetails extends StatelessWidget {
                             color: Colors.purple.withOpacity(0.5),
                             spreadRadius: 5,
                             blurRadius: 7,
-                            offset: Offset(0, 3), // changes position of shadow
+                            offset: const Offset(0, 3), // changes position of shadow
                           )
                         ]),
                   ),
@@ -163,22 +158,22 @@ class RestaurantDetails extends StatelessWidget {
                             Get.toNamed(RouteHelper.getInitial());
                           }
                         },
-                        child: MyIcons(icon: Icons.arrow_back_ios)),
+                        child: const MyIcons(icon: Icons.arrow_back_ios)),
                     //Showing the number of items in cart
                     GetBuilder<RecommendedMealController>(
                         builder: (controller) {
                       return GetBuilder<CartController>(
                           builder: (cartController) {
-                        var _cartList = cartController.getItems;
+                        var cartList = cartController.getItems;
                         //we used stack cuz not all items might show up,so we keep it dynamic
                         return GestureDetector(
                           onTap: () async {
                             //if (controller.totalItems >= 1) {
                             await Get.find<CartController>().getRemaining();
-                            for (var i = 0; i < _cartList.length; i++) {
-                              if (_cartList[i].remaining! <= 0) {
+                            for (var i = 0; i < cartList.length; i++) {
+                              if (cartList[i].remaining! <= 0) {
                                 await cartController
-                                    .removeItem(_cartList[i].product!);
+                                    .removeItem(cartList[i].product!);
                               }
                             }
                             Get.toNamed(RouteHelper.getCartPage());
@@ -187,11 +182,11 @@ class RestaurantDetails extends StatelessWidget {
                           child: Stack(
                             children: [
                               //The blue background for the number of items
-                              MyIcons(icon: Icons.shopping_cart_outlined),
+                              const MyIcons(icon: Icons.shopping_cart_outlined),
                               Get.find<RecommendedMealController>()
                                           .totalItems >=
                                       1
-                                  ? Positioned(
+                                  ? const Positioned(
                                       right: 0,
                                       top: 0,
                                       child: MyIcons(
@@ -238,7 +233,7 @@ class RestaurantDetails extends StatelessWidget {
                     left: Dimensions.width15,
                     right: Dimensions.width15,
                     top: Dimensions.height15),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
 
                       ///topRight: Radius.circular(Dimensions.radius20),
@@ -269,15 +264,6 @@ class RestaurantDetails extends StatelessWidget {
                               bottom: Dimensions.height10,
                               left: Dimensions.width15,
                               right: Dimensions.width15),
-                          child: recommendedMeal.editing
-                              ? SmallText(
-                                  text: "Save Changes",
-                                  color: Colors.white,
-                                )
-                              : SmallText(
-                                  text: "Edit meals left",
-                                  color: Colors.white,
-                                ),
                           decoration: recommendedMeal.editing
                               ? BoxDecoration(
                                   borderRadius: BorderRadius.circular(
@@ -289,6 +275,15 @@ class RestaurantDetails extends StatelessWidget {
                                       Dimensions.radius20),
                                   color: Colors.blue,
                                 ),
+                          child: recommendedMeal.editing
+                              ? SmallText(
+                                  text: "Save Changes",
+                                  color: Colors.white,
+                                )
+                              : SmallText(
+                                  text: "Edit meals left",
+                                  color: Colors.white,
+                                ),
                         ),
                       );
                     }),
@@ -297,7 +292,7 @@ class RestaurantDetails extends StatelessWidget {
                       return recommendedMeal.isLoaded
                           ? ListView.builder(
                               //physics never thing so the whole poage is scrollable and not only the retaurant list
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               //ListView takes the height of the container it is in. Since the OG column does not have one we use shrinkWrap here even tho i am not exatly sure what it does
                               shrinkWrap: true,
                               itemCount:
@@ -362,7 +357,7 @@ class RestaurantDetails extends StatelessWidget {
                                                                 .radius20),
                                                   ),
                                                   //THis was origanlly white as well but trying to make it same figma desig, this for background of item
-                                                  color: Color.fromARGB(
+                                                  color: const Color.fromARGB(
                                                       255, 245, 243, 246),
                                                 ),
                                                 child: Padding(
@@ -516,7 +511,7 @@ class RestaurantDetails extends StatelessWidget {
                                                                                 index);
                                                                           },
                                                                           child:
-                                                                              Icon(
+                                                                              const Icon(
                                                                             Icons.remove,
                                                                             color:
                                                                                 Colors.black,
@@ -577,7 +572,7 @@ class RestaurantDetails extends StatelessWidget {
                                                                                 index);
                                                                           },
                                                                           child:
-                                                                              Icon(
+                                                                              const Icon(
                                                                             Icons.add,
                                                                             color:
                                                                                 Colors.blue,
@@ -606,12 +601,6 @@ class RestaurantDetails extends StatelessWidget {
                                                                         .width15,
                                                                     right: Dimensions
                                                                         .width15),
-                                                                child:
-                                                                    SmallText(
-                                                                  text: "Add",
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
                                                                 decoration:
                                                                     BoxDecoration(
                                                                   borderRadius:
@@ -620,6 +609,12 @@ class RestaurantDetails extends StatelessWidget {
                                                                               .radius20),
                                                                   color: Colors
                                                                       .blue,
+                                                                ),
+                                                                child:
+                                                                    SmallText(
+                                                                  text: "Add",
+                                                                  color: Colors
+                                                                      .white,
                                                                 ),
                                                               ),
                                                             )
@@ -698,7 +693,7 @@ class RestaurantDetails extends StatelessWidget {
                                                                     .radius20),
                                                       ),
                                                       //THis was origanlly white as well but trying to make it same figma desig, this for background of item
-                                                      color: Color.fromARGB(
+                                                      color: const Color.fromARGB(
                                                           255, 245, 243, 246),
                                                     ),
                                                     child: Padding(
@@ -837,7 +832,7 @@ class RestaurantDetails extends StatelessWidget {
                                                                               onTap: () {
                                                                                 recommendedMeal.setQuantity(false, index);
                                                                               },
-                                                                              child: Icon(
+                                                                              child: const Icon(
                                                                                 Icons.remove,
                                                                                 color: Colors.black,
                                                                               ),
@@ -890,7 +885,7 @@ class RestaurantDetails extends StatelessWidget {
                                                                               onTap: () {
                                                                                 recommendedMeal.setQuantity(true, index);
                                                                               },
-                                                                              child: Icon(
+                                                                              child: const Icon(
                                                                                 Icons.add,
                                                                                 color: Colors.blue,
                                                                               ),
@@ -918,13 +913,6 @@ class RestaurantDetails extends StatelessWidget {
                                                                             .width15,
                                                                         right: Dimensions
                                                                             .width15),
-                                                                    child:
-                                                                        SmallText(
-                                                                      text:
-                                                                          "Add",
-                                                                      color: Colors
-                                                                          .white,
-                                                                    ),
                                                                     decoration:
                                                                         BoxDecoration(
                                                                       borderRadius:
@@ -932,6 +920,13 @@ class RestaurantDetails extends StatelessWidget {
                                                                               Dimensions.radius20),
                                                                       color: Colors
                                                                           .blue,
+                                                                    ),
+                                                                    child:
+                                                                        SmallText(
+                                                                      text:
+                                                                          "Add",
+                                                                      color: Colors
+                                                                          .white,
                                                                     ),
                                                                   ),
                                                                 )
@@ -944,9 +939,9 @@ class RestaurantDetails extends StatelessWidget {
                                               ]),
                                             ),
                                           )
-                                        : SizedBox();
+                                        : const SizedBox();
                               })
-                          : CircularProgressIndicator(
+                          : const CircularProgressIndicator(
                               color: Colors.red,
                             );
                     }),
@@ -958,7 +953,7 @@ class RestaurantDetails extends StatelessWidget {
                       height: Dimensions.height20,
                     ),
                     //SingleChildScrollView so we can scroll thro the text but it does not work alone inside a column so we need to wrap it inside another widget which is Expnded
-                    Expanded(
+                    const Expanded(
                       child: SingleChildScrollView(
                         child: CollapseText(
                           text: "meal.description",
@@ -970,7 +965,6 @@ class RestaurantDetails extends StatelessWidget {
               ),
             ),
           ],
-          clipBehavior: Clip.none,
         ),
       ),
       //We use the bottom navigaton bar that comes with scaffold

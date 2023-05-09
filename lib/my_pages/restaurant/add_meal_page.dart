@@ -1,12 +1,9 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:twaste/controllers/add_meal_controller.dart';
-import 'package:twaste/models/meal_model.dart';
 import 'package:twaste/utils/dimensions.dart';
 
 import '../../base/custom_app_bar.dart';
@@ -14,7 +11,6 @@ import '../../base/show_custom_snackBar.dart';
 import '../../my_widgets/input_field.dart';
 import '../../my_widgets/my_text.dart';
 import '../../routes/route_helper.dart';
-import '../../utils/my_constants.dart';
 
 class AddMeal extends StatefulWidget {
   const AddMeal({super.key});
@@ -75,10 +71,10 @@ class _AddMealState extends State<AddMeal> {
     }
 
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: "Add New Item",
       ),
-      body: GetBuilder<AddMealController>(builder: (_addMealController) {
+      body: GetBuilder<AddMealController>(builder: (addMealController) {
         return SafeArea(
           child: Padding(
             padding: EdgeInsets.all(Dimensions.height30),
@@ -101,8 +97,8 @@ class _AddMealState extends State<AddMeal> {
                 ),
                 Center(
                   child: GestureDetector(
-                    child: Text('Select An Image'),
-                    onTap: () => _addMealController.pickImage(),
+                    child: const Text('Select An Image'),
+                    onTap: () => addMealController.pickImage(),
                   ),
                 ),
                 SizedBox(
@@ -113,9 +109,9 @@ class _AddMealState extends State<AddMeal> {
                   width: double.infinity,
                   height: Dimensions.height20 * 10,
                   color: Colors.grey[300],
-                  child: _addMealController.pickedFile != null
+                  child: addMealController.pickedFile != null
                       ? Image.file(
-                          File(_addMealController.pickedFile!.path),
+                          File(addMealController.pickedFile!.path),
                           width: Dimensions.width10 * 10,
                           height: Dimensions.height10 * 10,
                           fit: BoxFit.cover,
@@ -127,7 +123,7 @@ class _AddMealState extends State<AddMeal> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    _validation(_addMealController);
+                    _validation(addMealController);
                   },
                   child: Container(
                     width: Dimensions.screenWidth / 3,

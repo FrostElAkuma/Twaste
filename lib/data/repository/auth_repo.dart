@@ -27,14 +27,13 @@ class AuthRepo {
   bool userLoggedIn() {
     //We used .contains key here cuz it returns bool
     //I added this line for debugging
-    print("Getting token now " +
-        sharedPreferences.getString(MyConstants.TOKEN).toString());
+    print("Getting token now ${sharedPreferences.getString(MyConstants.TOKEN)}");
     return sharedPreferences.containsKey(MyConstants.TOKEN);
   }
 
   Future<String> getUserToken() async {
     //If it does not exist return None
-    return await sharedPreferences.getString(MyConstants.TOKEN) ?? "None";
+    return sharedPreferences.getString(MyConstants.TOKEN) ?? "None";
   }
 
   Future<Response> login(String phone, String password) async {
@@ -56,7 +55,7 @@ class AuthRepo {
       await sharedPreferences.setString(MyConstants.PHONE, number);
       await sharedPreferences.setString(MyConstants.PASSWORD, password);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -74,7 +73,7 @@ class AuthRepo {
 
   //Updating token for our Firebase
   Future<Response> updateToken() async {
-    String? _deviceToken;
+    String? deviceToken;
     //We check if IOS or not cuz there are some speical settings for IOS and request permission
     if (GetPlatform.isIOS && !GetPlatform.isWeb) {
       FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -90,13 +89,13 @@ class AuthRepo {
         sound: true,
       );
       if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-        _deviceToken = await _saveDeviceToken();
-        print("Line 86 authrepo. My token is 1 " + _deviceToken!);
+        deviceToken = await _saveDeviceToken();
+        print("Line 86 authrepo. My token is 1 ${deviceToken!}");
       }
       //This for Android
       else {
-        _deviceToken = await _saveDeviceToken();
-        print("Line 86 authrepo. My token is 2 " + _deviceToken!);
+        deviceToken = await _saveDeviceToken();
+        print("Line 86 authrepo. My token is 2 ${deviceToken!}");
       }
     }
     if (!GetPlatform.isWeb) {
@@ -104,25 +103,25 @@ class AuthRepo {
     }
     //Sending data to our DB
     return await apiClient.postData(MyConstants.TOKEN_URI,
-        {"_method": "put", "cm_firebase_token": _deviceToken});
+        {"_method": "put", "cm_firebase_token": deviceToken});
   }
 
   Future<String?> _saveDeviceToken() async {
-    String? _deviceToken = '@';
+    String? deviceToken = '@';
     if (!GetPlatform.isWeb) {
       try {
         //getting reqquest permission
         FirebaseMessaging.instance.requestPermission();
         //Getting the token
-        _deviceToken = await FirebaseMessaging.instance.getToken();
+        deviceToken = await FirebaseMessaging.instance.getToken();
       } catch (e) {
         print("line 117 authrepo. Could not get the token");
         print(e.toString());
       }
     }
-    if (_deviceToken != null) {
-      print('------------Device Token------------------------' + _deviceToken);
+    if (deviceToken != null) {
+      print('------------Device Token------------------------$deviceToken');
     }
-    return _deviceToken;
+    return deviceToken;
   }
 }

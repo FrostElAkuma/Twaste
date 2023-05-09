@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:twaste/controllers/meal_controller.dart';
 import 'package:twaste/controllers/recommended_meals_controller.dart';
-import 'package:twaste/my_pages/cart/cart_page.dart';
 import 'package:twaste/my_widgets/myIcons.dart';
 import 'package:twaste/my_widgets/collapse_text.dart';
 import 'package:twaste/my_widgets/my_text.dart';
@@ -49,7 +46,7 @@ class Meal extends StatelessWidget {
                       Get.toNamed(RouteHelper.getInitial());
                     }
                   },
-                  child: MyIcons(icon: Icons.clear),
+                  child: const MyIcons(icon: Icons.clear),
                 ),
                 //MyIcons(icon: Icons.shopping_cart_outlined)
                 //Here we are making an instance of the MealController and we called it controller
@@ -65,9 +62,9 @@ class Meal extends StatelessWidget {
                     child: Stack(
                       children: [
                         //The blue background for the number of items
-                        MyIcons(icon: Icons.shopping_cart_outlined),
+                        const MyIcons(icon: Icons.shopping_cart_outlined),
                         Get.find<MealController>().totalItems >= 1
-                            ? Positioned(
+                            ? const Positioned(
                                 right: 0,
                                 top: 0,
                                 child: MyIcons(
@@ -101,12 +98,10 @@ class Meal extends StatelessWidget {
             //this bottom for the text above that will stay attatched
             bottom: PreferredSize(
               //This let us see more of the pinned bar thing
-              preferredSize: Size.fromHeight(30),
+              preferredSize: const Size.fromHeight(30),
               child: Container(
-                child: Center(
-                    child: LargeText(size: Dimensions.font26, text: meal.name)),
                 width: double.maxFinite,
-                padding: EdgeInsets.only(top: 5, bottom: 10),
+                padding: const EdgeInsets.only(top: 5, bottom: 10),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -114,6 +109,8 @@ class Meal extends StatelessWidget {
                     topRight: Radius.circular(Dimensions.radius20),
                   ),
                 ),
+                child: Center(
+                    child: LargeText(size: Dimensions.font26, text: meal.name)),
               ),
             ),
 
@@ -197,7 +194,7 @@ class Meal extends StatelessWidget {
                   left: Dimensions.width20,
                   right: Dimensions.width20),
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 240, 239, 239),
+                  color: const Color.fromARGB(255, 240, 239, 239),
                   borderRadius: BorderRadius.only(
                     //we sued *2 cuz i want 40
                     topLeft: Radius.circular(Dimensions.radius20 * 2),
@@ -219,7 +216,7 @@ class Meal extends StatelessWidget {
                             BorderRadius.circular(Dimensions.radius20),
                         color: Colors.white,
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.favorite,
                         color: Colors.blue,
                       ),
@@ -235,14 +232,14 @@ class Meal extends StatelessWidget {
                             bottom: Dimensions.height20,
                             left: Dimensions.width20,
                             right: Dimensions.width20),
-                        child: LargeText(
-                          text: "\$ ${meal.price} | Add to cart",
-                          color: Colors.white,
-                        ),
                         decoration: BoxDecoration(
                           borderRadius:
                               BorderRadius.circular(Dimensions.radius20),
                           color: Colors.blue,
+                        ),
+                        child: LargeText(
+                          text: "\$ ${meal.price} | Add to cart",
+                          color: Colors.white,
                         ),
                       ),
                     )

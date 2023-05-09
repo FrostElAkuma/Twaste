@@ -1,9 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:twaste/controllers/auth_controller.dart';
 import 'package:twaste/controllers/restaurant_controller.dart';
@@ -44,11 +41,11 @@ class _SplashScreenState extends State<SplashScreen>
     _loadRescources();
     //..forward to start the animation
     controller =
-        new AnimationController(vsync: this, duration: Duration(seconds: 2))
+        AnimationController(vsync: this, duration: const Duration(seconds: 2))
           ..forward();
-    animation = new CurvedAnimation(parent: controller, curve: Curves.linear);
+    animation = CurvedAnimation(parent: controller, curve: Curves.linear);
     //So after 3 seconds go to the main page. But we need a route for our splash screen
-    Timer(Duration(seconds: 3), () => Get.offNamed(RouteHelper.getInitial()));
+    Timer(const Duration(seconds: 3), () => Get.offNamed(RouteHelper.getInitial()));
   }
 
   @override
@@ -60,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen>
           Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/background.png"),
+            image: const AssetImage("assets/images/background.png"),
             colorFilter: ColorFilter.mode(
               Colors.white.withOpacity(0.23),
               BlendMode.modulate,

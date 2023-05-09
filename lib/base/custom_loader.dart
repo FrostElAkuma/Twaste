@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:twaste/utils/dimensions.dart';
 
 class CustomLoader extends StatelessWidget {
@@ -18,7 +15,7 @@ class CustomLoader extends StatelessWidget {
           color: Colors.blue,
         ),
         alignment: Alignment.center,
-        child: CircularProgressIndicator(color: Colors.white),
+        child: const CircularProgressIndicator(color: Colors.white),
       ),
     );
   }

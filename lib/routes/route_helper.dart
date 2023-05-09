@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:twaste/models/order_model.dart';
 import 'package:twaste/my_pages/address/add_address_page.dart';
 import 'package:twaste/my_pages/auth/sign_in_page.dart';
-import 'package:twaste/my_pages/home/main_page.dart';
 import 'package:twaste/my_pages/payment/payment_page.dart';
 import 'package:twaste/my_pages/restaurant/meal_page.dart';
 import 'package:twaste/my_pages/restaurant/restaurant_page.dart';
@@ -29,17 +28,17 @@ class RouteHelper {
 
   //We use this so we can pass parameters and have different routes
   //When we call this line of code below it will go to the corresponding route in the list routes
-  static String getSplashPage() => '$splashPage';
-  static String getInitial() => '$initial';
+  static String getSplashPage() => splashPage;
+  static String getInitial() => initial;
   static String getRestaurant(int pageId, int index, String page) =>
       '$restaurant?pageId=$pageId&index=$index&page=$page';
   static String getRecommendedFood(int pageId, String page) =>
       '$recommendedFood?pageId=$pageId&page=$page';
-  static String getCartPage() => '$cartPage';
-  static String getSignInPage() => '$signIn';
+  static String getCartPage() => cartPage;
+  static String getSignInPage() => signIn;
 
-  static String getAddressPage() => '$addAddress';
-  static String getPickAddressPage() => '$pickAddressMap';
+  static String getAddressPage() => addAddress;
+  static String getPickAddressPage() => pickAddressMap;
 
   static String getPaymentPage(String id, int userId) =>
       '$payment?id=$id&userId=$userId';
@@ -52,21 +51,21 @@ class RouteHelper {
       name: pickAddressMap,
       page: () {
         //We are passing a widget or a screen here, which is a bit diffirent than what we used to do passing parameters
-        PickAddressMap _pickAddress = Get.arguments;
-        return _pickAddress;
+        PickAddressMap pickAddress = Get.arguments;
+        return pickAddress;
       },
     ),
-    GetPage(name: splashPage, page: () => SplashScreen()),
+    GetPage(name: splashPage, page: () => const SplashScreen()),
     GetPage(
         name: initial,
         page: () {
-          return HomePage();
+          return const HomePage();
         },
         transition: Transition.fade),
     GetPage(
       name: signIn,
       page: () {
-        return SignInPage();
+        return const SignInPage();
       },
       transition: Transition.fadeIn,
     ),
@@ -99,14 +98,14 @@ class RouteHelper {
     GetPage(
       name: cartPage,
       page: () {
-        return CartPage();
+        return const CartPage();
       },
       transition: Transition.fadeIn,
     ),
     GetPage(
       name: addAddress,
       page: () {
-        return AddAddressPage();
+        return const AddAddressPage();
       },
     ),
     GetPage(

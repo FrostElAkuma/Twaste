@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:twaste/base/custom_loader.dart';
 import 'package:twaste/utils/dimensions.dart';
@@ -36,7 +34,7 @@ class ViewOrder extends StatelessWidget {
                   itemBuilder: (context, index) {
                     //InkWell so we can click
                     return InkWell(
-                        onTap: () => null,
+                        onTap: () {},
                         child: Column(
                           children: [
                             Container(
@@ -80,7 +78,7 @@ class ViewOrder extends StatelessWidget {
                                         height: Dimensions.height10 / 2,
                                       ),
                                       InkWell(
-                                        onTap: () => null,
+                                        onTap: () {},
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
                                               horizontal: Dimensions.width10,
@@ -130,7 +128,7 @@ class ViewOrder extends StatelessWidget {
             ),
           );
         } else {
-          return CustomLoader();
+          return const CustomLoader();
         }
       }),
     );

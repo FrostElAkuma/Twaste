@@ -1,8 +1,5 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:twaste/utils/dimensions.dart';
 
 class InputField extends StatelessWidget {
@@ -33,7 +30,7 @@ class InputField extends StatelessWidget {
             BoxShadow(
               blurRadius: 3,
               spreadRadius: 1,
-              offset: Offset(1, 1),
+              offset: const Offset(1, 1),
               color: Colors.grey.withOpacity(0.2),
             )
           ]),
@@ -50,7 +47,7 @@ class InputField extends StatelessWidget {
           //focused border
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(Dimensions.radius15),
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               width: 1,
               color: Colors.white,
             ),
@@ -58,7 +55,7 @@ class InputField extends StatelessWidget {
           //enabled broder
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(Dimensions.radius15),
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               width: 1,
               color: Colors.white,
             ),

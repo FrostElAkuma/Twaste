@@ -56,16 +56,16 @@ class CartModel {
   //From object to Json (we are returning a map which is like json ?) key is String and value is dynamic
   Map<String, dynamic> toJson() {
     return {
-      "id": this.id,
-      "name": this.name,
-      "price": this.price,
-      "img": this.img,
-      "quantity": this.quantity,
-      "remaining": this.remaining,
-      "isExist": this.isExist,
-      "time": this.time,
+      "id": id,
+      "name": name,
+      "price": price,
+      "img": img,
+      "quantity": quantity,
+      "remaining": remaining,
+      "isExist": isExist,
+      "time": time,
       //Product we did a function for this in out meal_model
-      "product": this.product!.toJson(),
+      "product": product!.toJson(),
     };
   }
 }

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -12,7 +11,7 @@ import '../../utils/my_constants.dart';
 
 class PaymentPage extends StatefulWidget {
   final OrderModel orderModel;
-  PaymentPage({required this.orderModel});
+  const PaymentPage({super.key, required this.orderModel});
 
   @override
   _PaymentPageState createState() => _PaymentPageState();
@@ -47,15 +46,15 @@ class _PaymentPageState extends State<PaymentPage> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text("Payment"),
+          title: const Text("Payment"),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: const Icon(Icons.arrow_back_ios),
             onPressed: () => _exitApp(context),
           ),
           backgroundColor: Colors.blue,
         ),
         body: Center(
-          child: Container(
+          child: SizedBox(
             width: Dimensions.screenWidth,
             child: Stack(
               children: [
@@ -82,7 +81,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     setState(() {
                       _isLoading = true;
                     });
-                    print("printing urls " + url.toString());
+                    print("printing urls $url");
                     _redirect(url);
                   },
                   onPageFinished: (String url) {
@@ -99,7 +98,7 @@ class _PaymentPageState extends State<PaymentPage> {
                             valueColor: AlwaysStoppedAnimation<Color>(
                                 Theme.of(context).primaryColor)),
                       )
-                    : SizedBox.shrink(),
+                    : const SizedBox.shrink(),
               ],
             ),
           ),
@@ -111,19 +110,19 @@ class _PaymentPageState extends State<PaymentPage> {
   void _redirect(String url) {
     print("redirect");
     if (_canRedirect) {
-      bool _isSuccess =
+      bool isSuccess =
           url.contains('success') && url.contains(MyConstants.BASE_URL);
-      bool _isFailed =
+      bool isFailed =
           url.contains('fail') && url.contains(MyConstants.BASE_URL);
-      bool _isCancel =
+      bool isCancel =
           url.contains('cancel') && url.contains(MyConstants.BASE_URL);
-      if (_isSuccess || _isFailed || _isCancel) {
+      if (isSuccess || isFailed || isCancel) {
         _canRedirect = false;
       }
-      if (_isSuccess) {
+      if (isSuccess) {
         Get.offNamed(RouteHelper.getOrderSuccessPage(
             widget.orderModel.id.toString(), 'success'));
-      } else if (_isFailed || _isCancel) {
+      } else if (isFailed || isCancel) {
         Get.offNamed(RouteHelper.getOrderSuccessPage(
             widget.orderModel.id.toString(), 'fail'));
       } else {

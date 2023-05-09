@@ -6,19 +6,11 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:twaste/controllers/add_meal_controller.dart';
 import 'package:twaste/controllers/cart_controller.dart';
 import 'package:twaste/controllers/restaurant_controller.dart';
-import 'package:twaste/my_pages/address/add_address_page.dart';
-import 'package:twaste/my_pages/auth/sign_up_page.dart';
-import 'package:twaste/my_pages/home/main_page.dart';
 import 'package:get/get.dart';
-import 'package:twaste/my_pages/restaurant/meal_page.dart';
-import 'package:twaste/my_pages/splash/splash_page.dart';
 import 'package:twaste/routes/route_helper.dart';
 import 'controllers/meal_controller.dart';
 import 'controllers/recommended_meals_controller.dart';
 import 'helper/notification_helper.dart';
-import 'my_pages/auth/sign_in_page.dart';
-import 'my_pages/home/body_page.dart';
-import 'my_pages/restaurant/restaurant_page.dart';
 import 'helper/dependencies.dart' as dep;
 
 //If my app is running in the background

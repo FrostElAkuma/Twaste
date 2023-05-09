@@ -1,10 +1,6 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:twaste/base/custom_app_bar.dart';
 import 'package:twaste/base/custom_loader.dart';
 import 'package:twaste/controllers/auth_controller.dart';
@@ -22,10 +18,10 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
+    bool userLoggedIn = Get.find<AuthController>().userLoggedIn();
     //print("I am here 2");
-    print(_userLoggedIn);
-    if (_userLoggedIn) {
+    print(userLoggedIn);
+    if (userLoggedIn) {
       Get.find<UserController>().getUserInfo();
       //I had a bug where the address was empty every time the user logs in. Issue was that I only called getAddressList when the user pressed the save address button
       Get.find<LocationController>().getAddressList();
@@ -33,14 +29,14 @@ class AccountPage extends StatelessWidget {
 
     //We use Scaffold if we want an app bar
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: "Profile",
       ),
       //Do not forget we use get builder when we want to use data froma controller
       body: GetBuilder<UserController>(builder: (userController) {
-        return _userLoggedIn
+        return userLoggedIn
             ? (userController.isLoading
-                ? CustomLoader()
+                ? const CustomLoader()
                 : /*Container(
                         child: Center(
                           child: Text("You are logged in"),
@@ -117,9 +113,9 @@ class AccountPage extends StatelessWidget {
                                 GetBuilder<LocationController>(
                                     builder: (locationController) {
                                   if (locationController.loading) {
-                                    return CustomLoader();
+                                    return const CustomLoader();
                                   }
-                                  if (_userLoggedIn &&
+                                  if (userLoggedIn &&
                                       locationController.addressList.isEmpty) {
                                     return GestureDetector(
                                       onTap: () {
@@ -230,7 +226,7 @@ class AccountPage extends StatelessWidget {
                         decoration: BoxDecoration(
                             borderRadius:
                                 BorderRadius.circular(Dimensions.radius20),
-                            image: DecorationImage(
+                            image: const DecorationImage(
                                 fit: BoxFit.cover,
                                 image: AssetImage("assets/images/cat.jpg"))),
                       ),

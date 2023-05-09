@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../data/repository/meals_repo.dart';
 import '../data/repository/recommended_meals_repo.dart';
 import '../models/cart_model.dart';
 import '../models/meal_model.dart';
@@ -29,7 +28,7 @@ class RecommendedMealController extends GetxController {
   //int _quantity = 0;
   List get quantity => _quantity;
   int _inCartItems = 0;
-  int _remainigItems = 0;
+  final int _remainigItems = 0;
   //int get incCartItems => _inCartItems + _quantity;
 
   //This for meals remaning
@@ -44,7 +43,7 @@ class RecommendedMealController extends GetxController {
   List<dynamic> _originalRemaining = [];
 
   //Full meals list even with 0 meals
-  List<dynamic> _OriginalRecommendedMealList = [];
+  final List<dynamic> _OriginalRecommendedMealList = [];
   List<dynamic> get OriginalRecommendedMealList => _OriginalRecommendedMealList;
 
   //So here i will call my repository and my reposiory will return the data and i will put the data inside the list
@@ -88,7 +87,7 @@ class RecommendedMealController extends GetxController {
   void setQuantity(bool isIncrement, index) {
     var quantit = _quantity[index];
     if (isIncrement) {
-      print("increment" + quantit.toString());
+      print("increment$quantit");
       _quantity[index] = checkQuantity(quantit + 1, index);
     } else {
       _quantity[index] = checkQuantity(quantit - 1, index);

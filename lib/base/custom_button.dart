@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../utils/dimensions.dart';
 
@@ -15,7 +13,7 @@ class CustomButton extends StatelessWidget {
   final double? fontSize;
   final double radius;
   final IconData? icon;
-  CustomButton(
+  const CustomButton(
       {super.key,
       this.onPressed,
       required this.buttonText,
@@ -29,7 +27,7 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ButtonStyle _flatButton = TextButton.styleFrom(
+    final ButtonStyle flatButton = TextButton.styleFrom(
       backgroundColor: onPressed == null
           ? Theme.of(context).disabledColor
           : transparent
@@ -49,7 +47,7 @@ class CustomButton extends StatelessWidget {
         height: height ?? Dimensions.height30 + Dimensions.height20,
         child: TextButton(
           onPressed: onPressed,
-          style: _flatButton,
+          style: flatButton,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -61,7 +59,7 @@ class CustomButton extends StatelessWidget {
                               ? Theme.of(context).primaryColor
                               : Theme.of(context).cardColor),
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
               Text(
                 buttonText,
                 style: TextStyle(

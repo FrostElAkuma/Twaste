@@ -1,6 +1,6 @@
 class ResponseModel {
-  bool _isSuccess;
-  String _message;
+  final bool _isSuccess;
+  final String _message;
   //Private variables can't be wrapped around curly braces like we did in other models
   ResponseModel(this._isSuccess, this._message);
 

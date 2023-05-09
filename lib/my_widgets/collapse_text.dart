@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:twaste/my_widgets/my_text.dart';
 import 'package:twaste/utils/dimensions.dart';
 
@@ -42,17 +39,17 @@ class _CollapseTextState extends State<CollapseText> {
       child: secondHalf.isEmpty
           ? SmallText(
               height: 1.8,
-              color: Color.fromARGB(66, 219, 56, 56),
+              color: const Color.fromARGB(66, 219, 56, 56),
               size: Dimensions.font16,
               text: firstHalf)
           : Column(
               children: [
                 SmallText(
                     height: 1.8,
-                    color: Color.fromARGB(66, 209, 22, 22),
+                    color: const Color.fromARGB(66, 209, 22, 22),
                     size: Dimensions.font16,
                     text: hiddenText
-                        ? (firstHalf + "...")
+                        ? ("$firstHalf...")
                         : (firstHalf + secondHalf)),
                 InkWell(
                   onTap: () {

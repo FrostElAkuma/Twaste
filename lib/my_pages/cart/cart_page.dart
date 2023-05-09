@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:twaste/base/common_text_button.dart';
 import 'package:twaste/base/no_data_page.dart';
@@ -11,7 +9,6 @@ import 'package:twaste/controllers/location_controller.dart';
 import 'package:twaste/controllers/meal_controller.dart';
 import 'package:twaste/controllers/order_controller.dart';
 import 'package:twaste/controllers/user_controller.dart';
-import 'package:twaste/my_pages/home/main_page.dart';
 import 'package:twaste/my_pages/order/delivery_options.dart';
 import 'package:twaste/my_widgets/input_field.dart';
 import 'package:twaste/my_widgets/myIcons.dart';
@@ -30,7 +27,7 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _noteController = TextEditingController();
+    final TextEditingController noteController = TextEditingController();
     return Scaffold(
       body: Stack(
         children: [
@@ -72,8 +69,8 @@ class CartPage extends StatelessWidget {
                 ],
               )),
           //We using postiotned here cuz we want this section to be scrollable
-          GetBuilder<CartController>(builder: (_cartController) {
-            return _cartController.getItems.length > 0
+          GetBuilder<CartController>(builder: (cartController) {
+            return cartController.getItems.isNotEmpty
                 ? Positioned(
                     top: Dimensions.height20 * 5,
                     left: Dimensions.width20,
@@ -92,11 +89,11 @@ class CartPage extends StatelessWidget {
                             //So we can use the cart controlelr
                             GetBuilder<CartController>(
                                 builder: (cartController) {
-                          var _cartList = cartController.getItems;
+                          var cartList = cartController.getItems;
                           return ListView.builder(
-                              itemCount: _cartList.length,
+                              itemCount: cartList.length,
                               itemBuilder: (_, index) {
-                                return Container(
+                                return SizedBox(
                                   height: Dimensions.height20 * 5,
                                   //to take all available space
                                   width: double.maxFinite,
@@ -111,7 +108,7 @@ class CartPage extends StatelessWidget {
                                               Get.find<MealController>()
                                                   .mealList
                                                   .indexOf(
-                                                      _cartList[index].product);
+                                                      cartList[index].product);
                                           //if found the index of the item in our mealList
                                           if (mealIndex >= 0) {
                                             Get.toNamed(
@@ -126,7 +123,7 @@ class CartPage extends StatelessWidget {
                                                     RecommendedMealController>()
                                                 .recommendedMealList
                                                 .indexOf(
-                                                    _cartList[index].product);
+                                                    cartList[index].product);
                                             //If we can't find it in the recommended list
                                             if (recommendedIndex < 0) {
                                               Get.snackbar("Item not found",
@@ -169,7 +166,7 @@ class CartPage extends StatelessWidget {
                                       //Info of item
                                       //Container inside expanded widget takes all the available space of the parent widget so that is why we used expanded
                                       Expanded(
-                                          child: Container(
+                                          child: SizedBox(
                                         height: Dimensions.height20 * 5,
                                         child: Column(
                                           //So all our info start fromn the right
@@ -192,10 +189,8 @@ class CartPage extends StatelessWidget {
                                               children: [
                                                 //price of item
                                                 LargeText(
-                                                  text: "\$ " +
-                                                      cartController
-                                                          .getItems[index].price
-                                                          .toString(),
+                                                  text:
+                                                      "\$ ${cartController.getItems[index].price}",
                                                   color: Colors.redAccent,
                                                 ),
                                                 //add or remove item
@@ -241,12 +236,12 @@ class CartPage extends StatelessWidget {
                                                             GestureDetector(
                                                               onTap: () {
                                                                 cartController.addItem(
-                                                                    _cartList[
+                                                                    cartList[
                                                                             index]
                                                                         .product!,
                                                                     -1);
                                                               },
-                                                              child: Icon(
+                                                              child: const Icon(
                                                                 Icons.remove,
                                                                 color: Color
                                                                     .fromARGB(
@@ -262,7 +257,7 @@ class CartPage extends StatelessWidget {
                                                                   2,
                                                             ),
                                                             LargeText(
-                                                                text: _cartList[
+                                                                text: cartList[
                                                                         index]
                                                                     .quantity
                                                                     .toString()), //restaurantMeal.incCartItems.toString(),
@@ -274,12 +269,12 @@ class CartPage extends StatelessWidget {
                                                             GestureDetector(
                                                               onTap: () {
                                                                 cartController.addItem(
-                                                                    _cartList[
+                                                                    cartList[
                                                                             index]
                                                                         .product!,
                                                                     1);
                                                               },
-                                                              child: Icon(
+                                                              child: const Icon(
                                                                 Icons.add,
                                                                 color: Color
                                                                     .fromARGB(
@@ -305,14 +300,14 @@ class CartPage extends StatelessWidget {
                         }),
                       ),
                     ))
-                : NoDataPage(text: "Your cart is empty!");
+                : const NoDataPage(text: "Your cart is empty!");
           })
         ],
       ),
       //our bottom section
       bottomNavigationBar:
           GetBuilder<OrderController>(builder: (orderController) {
-        _noteController.text = orderController.orderNote;
+        noteController.text = orderController.orderNote;
         return GetBuilder<CartController>(
           builder: (cartController) {
             return Container(
@@ -324,13 +319,13 @@ class CartPage extends StatelessWidget {
                   left: Dimensions.width20,
                   right: Dimensions.width20),
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 240, 239, 239),
+                  color: const Color.fromARGB(255, 240, 239, 239),
                   borderRadius: BorderRadius.only(
                     //we sued *2 cuz i want 40
                     topLeft: Radius.circular(Dimensions.radius20 * 2),
                     topRight: Radius.circular(Dimensions.radius20 * 2),
                   )),
-              child: cartController.getItems.length > 0
+              child: cartController.getItems.isNotEmpty
                   ? Column(
                       children: [
                         //Inkwell for clickable button
@@ -379,7 +374,7 @@ class CartPage extends StatelessWidget {
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
-                                                        PaymentOptionButton(
+                                                        const PaymentOptionButton(
                                                           icon: Icons.money,
                                                           index: 0,
                                                           subTitle:
@@ -391,7 +386,7 @@ class CartPage extends StatelessWidget {
                                                           height: Dimensions
                                                               .height10,
                                                         ),
-                                                        PaymentOptionButton(
+                                                        const PaymentOptionButton(
                                                           icon:
                                                               Icons.credit_card,
                                                           index: 1,
@@ -447,7 +442,7 @@ class CartPage extends StatelessWidget {
                                                         ),
                                                         InputField(
                                                           textController:
-                                                              _noteController,
+                                                              noteController,
                                                           hintText: '',
                                                           icon: Icons.note,
                                                           maxLines: true,
@@ -464,9 +459,9 @@ class CartPage extends StatelessWidget {
                                     );
                                   })
                               .whenComplete(() => orderController.setFoodNote(
-                                  _noteController.text
+                                  noteController.text
                                       .trim())), //trim removes all empty spaces
-                          child: SizedBox(
+                          child: const SizedBox(
                             width: double.maxFinite,
                             child: CommonTextButton(text: "Payment Options"),
                           ),
@@ -552,7 +547,8 @@ class CartPage extends StatelessWidget {
                                     Get.toNamed(RouteHelper.getSignInPage());
                                   }
                                 },
-                                child: CommonTextButton(text: "Check Out"),
+                                child:
+                                    const CommonTextButton(text: "Check Out"),
                               )
                             ])
                       ],

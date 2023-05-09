@@ -15,7 +15,7 @@ class ApiClient extends GetConnect implements GetxService {
     //These 2 variables are related with Getx package managment system. It needs to know the base url
     baseUrl = appBaseUrl;
     //Each time you make a request, how long should the request try, and after that whether it continous or not (trying to get data from the server for 30 seconds otherwise stop)
-    timeout = Duration(seconds: 30);
+    timeout = const Duration(seconds: 30);
     //token = MyConstants.TOKEN;
     //Below the ?? "" is VIP took me 1 hour to debugg. I had a ! null checker there and it used to give me errors for ew device
     // ?? if token not found we set it to "". Usually "" for new devices but once they log in, it will be saved in cache i think

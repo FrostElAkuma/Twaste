@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../data/repository/cart_reop.dart';
-import '../data/repository/recommended_meals_repo.dart';
 import '../models/cart_model.dart';
 import '../models/meal_model.dart';
 
@@ -18,7 +17,7 @@ class CartController extends GetxController {
   //Only for storage and shared preferences
   List<CartModel> storageItems = [];
 
-  List<int> remaining = [];
+  //List<int> remaining = [];
 
   //This will be called when you press the add to cart button
   void addItem(ProductModel product, int quantity) {
@@ -227,9 +226,9 @@ class CartController extends GetxController {
   }
 
   //Clear for remove only diffirence from the above clear is that this one is without update
-  void clearRemove() {
+  /*void clearRemove() {
     _items = {};
-  }
+  }*/
 
   List<CartModel> getCartHistoryList() {
     return cartRepo.getCartHistoryList();

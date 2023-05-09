@@ -1,13 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:twaste/base/custom_app_bar.dart';
 import 'package:twaste/controllers/auth_controller.dart';
@@ -20,8 +14,6 @@ import 'package:twaste/my_widgets/my_text.dart';
 import 'package:twaste/routes/route_helper.dart';
 import 'package:twaste/utils/dimensions.dart';
 
-import '../../my_widgets/myIcons.dart';
-
 //We almost always used a stateless class in this app but this one is stateful cuz we want an init class
 class AddAddressPage extends StatefulWidget {
   const AddAddressPage({super.key});
@@ -32,14 +24,14 @@ class AddAddressPage extends StatefulWidget {
 
 class _AddAddressPageState extends State<AddAddressPage> {
   bool mapIsTapped = Get.find<LocationController>().updateAddressData;
-  TextEditingController _addressController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
   final TextEditingController _contactPersonName = TextEditingController();
   final TextEditingController _contactPersonNumber = TextEditingController();
   late bool _isLogged;
   //Camera view for the maps. It comes from the googlemaps package
   CameraPosition _cameraPosition =
       const CameraPosition(target: LatLng(45.5156, -122.677433), zoom: 17);
-  late LatLng _initialPosition = LatLng(45.5156, -122.677433);
+  late LatLng _initialPosition = const LatLng(45.5156, -122.677433);
 
   @override
   void initState() {
@@ -78,7 +70,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Adress"),
+      appBar: const CustomAppBar(title: "Adress"),
       body: GetBuilder<UserController>(builder: (userController) {
         if (userController.userModel != null &&
             _contactPersonName.text.isEmpty) {
@@ -96,8 +88,8 @@ class _AddAddressPageState extends State<AddAddressPage> {
               '${locationController.placemark.locality ?? ''}'
               '${locationController.placemark.postalCode ?? ''}'
               '${locationController.placemark.country ?? ''}';
-          print("line 94 addAddressPage address in my view is " +
-              _addressController.text);
+          print(
+              "line 94 addAddressPage address in my view is ${_addressController.text}");
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -267,7 +259,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                     left: Dimensions.width20,
                     right: Dimensions.width20),
                 decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 240, 239, 239),
+                    color: const Color.fromARGB(255, 240, 239, 239),
                     borderRadius: BorderRadius.only(
                       //we sued *2 cuz i want 40
                       topLeft: Radius.circular(Dimensions.radius20 * 2),
@@ -280,7 +272,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                       //Add to cart button
                       GestureDetector(
                         onTap: () {
-                          AddressModel _addressModel = AddressModel(
+                          AddressModel addressModel = AddressModel(
                             addressType: locationController.addressTypeList[
                                 locationController.addressTypeIndex],
                             contactPersonName: _contactPersonName.text,
@@ -292,7 +284,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                                 .toString(),
                           );
                           locationController
-                              .addAddress(_addressModel)
+                              .addAddress(addressModel)
                               .then((response) {
                             if (response.isSuccess) {
                               //We go back to the eralier page
@@ -309,15 +301,15 @@ class _AddAddressPageState extends State<AddAddressPage> {
                               bottom: Dimensions.height20,
                               left: Dimensions.width20,
                               right: Dimensions.width20),
-                          child: LargeText(
-                            text: "Save address",
-                            color: Colors.white,
-                            size: Dimensions.font26,
-                          ),
                           decoration: BoxDecoration(
                             borderRadius:
                                 BorderRadius.circular(Dimensions.radius20),
                             color: Colors.blue,
+                          ),
+                          child: LargeText(
+                            text: "Save address",
+                            color: Colors.white,
+                            size: Dimensions.font26,
                           ),
                         ),
                       )

@@ -1,11 +1,7 @@
-import 'dart:math';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:twaste/base/custom_loader.dart';
 import 'package:twaste/my_pages/auth/sign_up_page.dart';
 import 'package:twaste/my_widgets/input_field.dart';
@@ -67,20 +63,20 @@ class SignInPage extends StatelessWidget {
         body: GetBuilder<AuthController>(builder: (authController) {
           return !authController.isLoading
               ? SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   child: Column(children: [
                     SizedBox(
                       height: Dimensions.screenHeight * 0.05,
                     ),
                     //Our Logo
-                    Container(
+                    SizedBox(
                       height: Dimensions.screenHeight * 0.25,
                       child: Center(
                         child: CircleAvatar(
                           backgroundColor: Colors.white,
                           radius: Dimensions.radius20 * 4,
                           backgroundImage:
-                              AssetImage("assets/images/Twasty.png"),
+                              const AssetImage("assets/images/Twasty.png"),
                         ),
                       ),
                     ),
@@ -188,7 +184,7 @@ class SignInPage extends StatelessWidget {
                     //Don't have an account text. We use RichText here so we can use 2 diffirent and put them in the same line
                     RichText(
                       text: TextSpan(
-                          text: "Don\'t have an account?",
+                          text: "Don't have an account?",
                           style: TextStyle(
                             color: Colors.grey[500],
                             fontSize: Dimensions.font20,
@@ -196,7 +192,7 @@ class SignInPage extends StatelessWidget {
                           children: [
                             TextSpan(
                               recognizer: TapGestureRecognizer()
-                                ..onTap = () => Get.to(() => SignUpPage(),
+                                ..onTap = () => Get.to(() => const SignUpPage(),
                                     transition: Transition.fade),
                               text: " Create",
                               style: TextStyle(
@@ -209,7 +205,7 @@ class SignInPage extends StatelessWidget {
                     ),
                   ]),
                 )
-              : CustomLoader();
+              : const CustomLoader();
         }));
   }
 }

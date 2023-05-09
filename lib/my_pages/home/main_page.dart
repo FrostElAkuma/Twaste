@@ -1,11 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:twaste/controllers/restaurant_controller.dart';
-import 'package:twaste/models/restaurant_model.dart';
 import 'package:twaste/my_pages/home/body_page.dart';
 import 'package:twaste/utils/colors.dart';
 import 'package:twaste/utils/dimensions.dart';
@@ -34,6 +29,7 @@ class _MyMainPageState extends State<MainPage> {
     //print("current width is " + MediaQuery.of(context).size.width.toString());
 
     return RefreshIndicator(
+        onRefresh: _loadRescources,
         child: Column(
           children: [
             //header
@@ -56,7 +52,7 @@ class _MyMainPageState extends State<MainPage> {
                               text: "city",
                               color: Colors.black54,
                             ),
-                            Icon(Icons.arrow_drop_down_rounded),
+                            const Icon(Icons.arrow_drop_down_rounded),
                           ],
                         )
                       ],
@@ -65,14 +61,14 @@ class _MyMainPageState extends State<MainPage> {
                       child: Container(
                         width: Dimensions.width45,
                         height: Dimensions.height45,
-                        //default size for icon is 24
-                        child: Icon(Icons.search,
-                            color: Colors.white, size: Dimensions.iconSize24),
                         decoration: BoxDecoration(
                           borderRadius:
                               BorderRadius.circular(Dimensions.radius15),
                           color: MyTheme.mainColor,
                         ),
+                        //default size for icon is 24
+                        child: Icon(Icons.search,
+                            color: Colors.white, size: Dimensions.iconSize24),
                       ),
                     )
                   ],
@@ -81,12 +77,11 @@ class _MyMainPageState extends State<MainPage> {
             ),
             //showing the body
             //We had some page scrolling issues so we had to use expanded and SingleChildScrollView
-            Expanded(
+            const Expanded(
                 child: SingleChildScrollView(
               child: BodyPage(),
             )),
           ],
-        ),
-        onRefresh: _loadRescources);
+        ));
   }
 }

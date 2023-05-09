@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:twaste/base/custom_app_bar.dart';
 import 'package:twaste/controllers/auth_controller.dart';
@@ -35,11 +33,11 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: "My orders",
       ),
       body: Column(children: [
-        Container(
+        SizedBox(
           width: Dimensions.screenWidth,
           child: TabBar(
             indicatorColor: Theme.of(context).primaryColor,
@@ -47,7 +45,7 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
             labelColor: Theme.of(context).primaryColor,
             unselectedLabelColor: Theme.of(context).disabledColor,
             controller: _tabController,
-            tabs: [
+            tabs: const [
               Tab(
                 text: "Current",
               ),
@@ -59,7 +57,7 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
         ),
         //We had viewport error so we wrapped it inside expanded
         Expanded(
-          child: TabBarView(controller: _tabController, children: [
+          child: TabBarView(controller: _tabController, children: const [
             ViewOrder(isCurrent: true),
             ViewOrder(
               isCurrent: false,

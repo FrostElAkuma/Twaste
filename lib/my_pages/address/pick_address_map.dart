@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:twaste/base/custom_button.dart';
 import 'package:twaste/controllers/location_controller.dart';
@@ -39,7 +36,7 @@ class _PickAddressMapState extends State<PickAddressMap> {
     //Checking if user already has an address
     if (Get.find<LocationController>().addressList.isEmpty) {
       print("Line 40 in pickAddressMap, AddressList is empty");
-      _initialPosition = LatLng(45.521563, -122.677433);
+      _initialPosition = const LatLng(45.521563, -122.677433);
       _cameraPosition = CameraPosition(target: _initialPosition, zoom: 17);
     }
     //If addressLsit is not empty that means we can get the info from the serve
@@ -93,7 +90,7 @@ class _PickAddressMapState extends State<PickAddressMap> {
                           height: 50,
                           width: 50,
                         )
-                      : CircularProgressIndicator(),
+                      : const CircularProgressIndicator(),
                 ),
                 //The bar showing address
                 Positioned(
@@ -115,14 +112,14 @@ class _PickAddressMapState extends State<PickAddressMap> {
                       ),
                       child: Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.location_on,
                             size: 25,
                             color: Colors.yellow,
                           ),
                           Expanded(
                             child: Text(
-                              '${locationcController.pickPlacemark.name ?? ''}',
+                              locationcController.pickPlacemark.name ?? '',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: Dimensions.font16,
@@ -134,7 +131,7 @@ class _PickAddressMapState extends State<PickAddressMap> {
                           SizedBox(
                             width: Dimensions.width10,
                           ),
-                          Icon(
+                          const Icon(
                             Icons.search,
                             size: 25,
                             color: Colors.yellow,
@@ -150,7 +147,7 @@ class _PickAddressMapState extends State<PickAddressMap> {
                     left: Dimensions.width20,
                     right: Dimensions.width20,
                     child: locationcController.isLoading
-                        ? Center(
+                        ? const Center(
                             child: CircularProgressIndicator(),
                           )
                         : CustomButton(

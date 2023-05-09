@@ -1,7 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:twaste/utils/dimensions.dart';
 
 class MyIcons extends StatelessWidget {
   final IconData icon;
@@ -10,7 +7,7 @@ class MyIcons extends StatelessWidget {
   final double size;
   final double iconSize;
 
-  MyIcons({
+  const MyIcons({
     super.key,
     required this.icon,
     //colors must be const as a default value, so we can;t import any thing from our app colors

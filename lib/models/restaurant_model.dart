@@ -12,10 +12,10 @@ class Restaurant {
       //required typeId,
       //required offset,
       required restaurants}) {
-    this._totalSize = totalSize;
+    _totalSize = totalSize;
     //this._typeID = typeId;
     //this._offset = offset;
-    this._restaurants = restaurants;
+    _restaurants = restaurants;
   }
 
   Restaurant.fromJson(Map<String, dynamic> json) {
@@ -79,16 +79,16 @@ class RestaurantModel {
   //Converting object to a map or Json (cuz json is like a map)
   Map<String, dynamic> toJson() {
     return {
-      "id": this.id,
-      "name": this.name,
+      "id": id,
+      "name": name,
       //"price": this.price,
-      "img": this.img,
+      "img": img,
       //"location": this.location,
-      "createdAt": this.createdAt,
-      "updatedAt": this.updatedAt,
+      "createdAt": createdAt,
+      "updatedAt": updatedAt,
       //"typeId": this.typeId,
-      "latitude": this.latitude,
-      "longitude": this.longitude,
+      "latitude": latitude,
+      "longitude": longitude,
     };
   }
 }

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import '../utils/dimensions.dart';
 import 'distance_time.dart';
@@ -9,7 +7,7 @@ import 'my_text.dart';
 class infoRating extends StatelessWidget {
   final String text;
   final bool start;
-  infoRating({super.key, required this.text, this.start = true});
+  const infoRating({super.key, required this.text, this.start = true});
 
   @override
   Widget build(BuildContext context) {
@@ -29,29 +27,29 @@ class infoRating extends StatelessWidget {
               Wrap(
                 children: List.generate(
                     5,
-                    (index) => Icon(
+                    (index) => const Icon(
                           Icons.star,
                           color: Colors.yellow,
                           size: 15,
                         )),
               ),
               //We use sized box to add space between the stars and text
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               SmallText(text: "4.5"),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               SmallText(text: "123312"),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               SmallText(text: "comments")
             ],
           ),
           SizedBox(height: Dimensions.height20),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               DistanceTime(

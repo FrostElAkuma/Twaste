@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:twaste/base/no_data_page.dart';
@@ -19,7 +17,7 @@ class CartHistory extends StatelessWidget {
     var getCartHistoryList =
         Get.find<CartController>().getCartHistoryList().reversed.toList();
 
-    Map<String, int> cartItemsPerOrder = Map();
+    Map<String, int> cartItemsPerOrder = {};
 
     for (int i = 0; i < getCartHistoryList.length; i++) {
       if (cartItemsPerOrder.containsKey(getCartHistoryList[i].time)) {
@@ -70,7 +68,7 @@ class CartHistory extends StatelessWidget {
                   text: "Cart History",
                   color: Colors.white,
                 ),
-                MyIcons(
+                const MyIcons(
                   icon: Icons.shopping_cart_outlined,
                   iconColor: Colors.blue,
                   backgroundColor: Colors.yellow,
@@ -79,8 +77,8 @@ class CartHistory extends StatelessWidget {
             ),
           ),
           //Our main body
-          GetBuilder<CartController>(builder: (_cartController) {
-            return _cartController.getCartHistoryList().length > 0
+          GetBuilder<CartController>(builder: (cartController) {
+            return cartController.getCartHistoryList().isNotEmpty
                 ? Expanded(
                     child: Container(
                       margin: EdgeInsets.only(
@@ -159,7 +157,7 @@ class CartHistory extends StatelessWidget {
                                             }),
                                           ),
                                           //Info to the right of the images
-                                          Container(
+                                          SizedBox(
                                             height: Dimensions.height20 * 4,
                                             child: Column(
                                               mainAxisAlignment:
@@ -169,9 +167,8 @@ class CartHistory extends StatelessWidget {
                                               children: [
                                                 SmallText(text: "total"),
                                                 LargeText(
-                                                    text: itemsPerOrder[i]
-                                                            .toString() +
-                                                        " Items"),
+                                                    text:
+                                                        "${itemsPerOrder[i]} Items"),
                                                 Container(
                                                   padding: EdgeInsets.symmetric(
                                                       horizontal:

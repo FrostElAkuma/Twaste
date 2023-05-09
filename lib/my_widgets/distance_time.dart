@@ -1,6 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:twaste/utils/dimensions.dart';
 import 'package:twaste/my_widgets/my_text.dart';
 
@@ -23,7 +21,7 @@ class DistanceTime extends StatelessWidget {
           color: iconColor,
           size: Dimensions.iconSize24,
         ),
-        SizedBox(width: 5),
+        const SizedBox(width: 5),
         SmallText(
           text: text,
         )

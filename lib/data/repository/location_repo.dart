@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,7 +42,7 @@ class LocationRepo {
   }
 
   Future<Response> getZone(String lat, String lng) async {
-    print("We are here 5" + lat + " aa " + lng);
+    print("We are here 5$lat aa $lng");
     return await apiClient.getData('${MyConstants.ZONE_URI}?lat=$lat&lng=$lng');
   }
 

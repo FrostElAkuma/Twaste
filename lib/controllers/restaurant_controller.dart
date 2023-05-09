@@ -1,14 +1,8 @@
-import 'dart:math';
 
-import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:twaste/controllers/cart_controller.dart';
 import 'package:twaste/data/repository/restaurant_repo.dart';
-import 'package:twaste/models/cart_model.dart';
 import 'package:twaste/models/restaurant_model.dart';
 
-import 'location_controller.dart';
 
 //Notice how this time we used GetxController and not GetxService like we did in our repo and api client
 class RestaurantController extends GetxController {
@@ -24,7 +18,7 @@ class RestaurantController extends GetxController {
   //Getter jsut like c++
   bool get isLoaded => _isLoaded;
 
-  int _quantity = 0;
+  final int _quantity = 0;
   int get quantity => _quantity;
 
   //So here i will call my repository and my reposiory will return the data and i will put the data inside the list
@@ -40,7 +34,7 @@ class RestaurantController extends GetxController {
       //.restaurants so we get the list that is public
       //Get.find<LocationController>().getAddress["latitude"]
       _restaurantList.addAll(Restaurant.fromJson(response.body).restaurants);
-      print("we are in line 43 restController" + _restaurantList.toString());
+      print("we are in line 43 restController$_restaurantList");
       /*_restaurantList.removeWhere((element) => (Geolocator.distanceBetween(
             double.parse(element.latitude),
             double.parse(element.longitude),
