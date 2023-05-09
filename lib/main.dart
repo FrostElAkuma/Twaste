@@ -34,6 +34,7 @@ Future<void> main() async {
   try {
     if (GetPlatform.isMobile) {
       //Below line is important if my app is running in the background, we will get the messages from firebase console
+      // ignore: unused_local_variable
       final RemoteMessage? remoteMessage =
           await FirebaseMessaging.instance.getInitialMessage();
       await NotificationHelper.initialize(flutterLocalNotificationsPlugin);

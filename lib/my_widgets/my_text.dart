@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:twaste/utils/dimensions.dart';
 
+// ignore: must_be_immutable
 class LargeText extends StatelessWidget {
   // The question mark means that it is optional and not neccesary to be passed
   Color? color;
@@ -33,6 +34,7 @@ class LargeText extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class SmallText extends StatelessWidget {
   // The question mark means that it is optional and not neccesary to be passed
   Color? color;

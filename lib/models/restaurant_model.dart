@@ -1,4 +1,5 @@
 class Restaurant {
+  // ignore: unused_field
   int? _totalSize;
   //int? _typeID;
   //int? _offset;

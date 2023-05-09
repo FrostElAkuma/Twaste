@@ -3,6 +3,7 @@ import 'package:twaste/my_widgets/myIcons.dart';
 import 'package:twaste/my_widgets/my_text.dart';
 import 'package:twaste/utils/dimensions.dart';
 
+// ignore: must_be_immutable
 class AccountWidget extends StatelessWidget {
   MyIcons myIcons;
   LargeText largeText;

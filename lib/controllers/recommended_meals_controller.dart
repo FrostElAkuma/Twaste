@@ -120,7 +120,7 @@ class RecommendedMealController extends GetxController {
     _quantity = List<int>.filled(recoLength, 0, growable: true);
     _inCartItems = 0;
     _cart = cart;
-    var exist = false;
+    //var exist = false;
     //This to show how much of that certain item you have in caart. You can have it or leave it
     /*exist = _cart.existInCart(product);
     if (exist) {

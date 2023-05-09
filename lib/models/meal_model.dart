@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 class Product {
   int? _totalSize;
   int? _typeID;
