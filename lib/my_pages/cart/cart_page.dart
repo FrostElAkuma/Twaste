@@ -22,8 +22,30 @@ import '../../controllers/recommended_meals_controller.dart';
 import '../../models/place_order_model.dart';
 import '../../utils/dimensions.dart';
 
-class CartPage extends StatelessWidget {
+class CartPage extends StatefulWidget {
   const CartPage({super.key});
+
+  @override
+  State<CartPage> createState() => _CartPageState();
+}
+
+//Made this cart page to a sateful widget and added this initState so I show the snackbar once the whole page has been built
+class _CartPageState extends State<CartPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // do something
+      var removedItems = Get.find<CartController>().itemsRemoved;
+      for (var element in removedItems) {
+        Get.snackbar("Item count",
+            "Product ${element.name} is no longer available and was removed",
+            backgroundColor: Colors.orange, colorText: Colors.white);
+      }
+      Get.find<CartController>().itemsRemovedClear();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

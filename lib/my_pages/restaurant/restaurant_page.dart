@@ -133,7 +133,8 @@ class RestaurantDetails extends StatelessWidget {
                             color: Colors.purple.withOpacity(0.5),
                             spreadRadius: 5,
                             blurRadius: 7,
-                            offset: const Offset(0, 3), // changes position of shadow
+                            offset: const Offset(
+                                0, 3), // changes position of shadow
                           )
                         ]),
                   ),
@@ -173,7 +174,7 @@ class RestaurantDetails extends StatelessWidget {
                             for (var i = 0; i < cartList.length; i++) {
                               if (cartList[i].remaining! <= 0) {
                                 await cartController
-                                    .removeItem(cartList[i].product!);
+                                    .removeItemZero(cartList[i].product!);
                               }
                             }
                             Get.toNamed(RouteHelper.getCartPage());
@@ -693,8 +694,12 @@ class RestaurantDetails extends StatelessWidget {
                                                                     .radius20),
                                                       ),
                                                       //THis was origanlly white as well but trying to make it same figma desig, this for background of item
-                                                      color: const Color.fromARGB(
-                                                          255, 245, 243, 246),
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255,
+                                                              245,
+                                                              243,
+                                                              246),
                                                     ),
                                                     child: Padding(
                                                       padding: EdgeInsets.only(

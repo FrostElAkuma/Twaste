@@ -17,7 +17,9 @@ class CartController extends GetxController {
   //Only for storage and shared preferences
   List<CartModel> storageItems = [];
 
-  //List<int> remaining = [];
+  // ignore: prefer_final_fields
+  List<ProductModel> _itemsRemoved = [];
+  List<ProductModel> get itemsRemoved => _itemsRemoved;
 
   //This will be called when you press the add to cart button
   void addItem(ProductModel product, int quantity) {
@@ -107,6 +109,21 @@ class CartController extends GetxController {
           backgroundColor: Colors.yellow, colorText: Colors.white);*/
       _items.remove(product.id);
     }*/
+  }
+
+  Future<bool> removeItemZero(ProductModel product) async {
+    _itemsRemoved.add(product);
+    _items.remove(product.id);
+    cartRepo.addToCartList(getItems);
+
+    return true;
+  }
+
+  void itemsRemovedClear() {
+    print('Line 123 cartController ' + _itemsRemoved.toString());
+    _itemsRemoved = [];
+    print('Line 127 cartController ' + _itemsRemoved.toString());
+    //update();
   }
 
   bool existInCart(ProductModel product) {
