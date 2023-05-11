@@ -1,3 +1,4 @@
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:twaste/data/repository/order_repo.dart';
 import 'package:twaste/models/order_model.dart';
@@ -36,7 +37,8 @@ class OrderController extends GetxController implements GetxService {
       String orderId = response.body['order_id'].toString();
       callback(true, message, orderId);
     } else {
-      callback(false, response.statusText, '-1');
+      //print('line 39 ordercontroller ' + response.body['errors'][0]['message'].toString());
+      callback(false, response.body['errors'][0]['message'].toString(), '-1');
     }
   }
 
