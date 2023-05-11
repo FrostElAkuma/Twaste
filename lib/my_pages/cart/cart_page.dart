@@ -563,8 +563,8 @@ class _CartPageState extends State<CartPage> {
                                       //_callBack is a function that we will pass to our controller and then the controller will send us BACK the info that we need
                                       Get.find<OrderController>()
                                           .placeOrder(placeOrder, _callback);
+                                      cartController.addToHistory();
                                     }
-                                    cartController.addToHistory();
                                   } else {
                                     Get.toNamed(RouteHelper.getSignInPage());
                                   }
