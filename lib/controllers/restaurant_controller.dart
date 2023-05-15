@@ -1,8 +1,6 @@
-
 import 'package:get/get.dart';
 import 'package:twaste/data/repository/restaurant_repo.dart';
 import 'package:twaste/models/restaurant_model.dart';
-
 
 //Notice how this time we used GetxController and not GetxService like we did in our repo and api client
 class RestaurantController extends GetxController {
@@ -34,7 +32,7 @@ class RestaurantController extends GetxController {
       //.restaurants so we get the list that is public
       //Get.find<LocationController>().getAddress["latitude"]
       _restaurantList.addAll(Restaurant.fromJson(response.body).restaurants);
-      print("we are in line 43 restController$_restaurantList");
+      //print("we are in line 43 restController$_restaurantList");
       /*_restaurantList.removeWhere((element) => (Geolocator.distanceBetween(
             double.parse(element.latitude),
             double.parse(element.longitude),

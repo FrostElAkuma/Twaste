@@ -7,8 +7,10 @@ import 'package:twaste/utils/dimensions.dart';
 import 'package:get/get.dart';
 import 'package:twaste/utils/my_constants.dart';
 
+import '../../controllers/auth_controller.dart';
 import '../../controllers/cart_controller.dart';
 import '../../controllers/recommended_meals_controller.dart';
+import '../../controllers/user_controller.dart';
 import '../../my_widgets/my_text.dart';
 import '../../routes/route_helper.dart';
 
@@ -24,6 +26,12 @@ class RestaurantDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool userLoggedIn = Get.find<AuthController>().userLoggedIn();
+    if (userLoggedIn) {
+      ///print("Why is this called like 3 rimes");
+      Get.find<UserController>().getUserInfo();
+    }
+
     //I commented the below line because I added it to the body page
     //Get.find<RecommendedMealController>().getRecommendedMealList(pageId);
     //Have an error with this cuz if pageId (aka restaurant id) is larger than the amomunt of meals we have we get an error
@@ -272,44 +280,57 @@ class RestaurantDetails extends StatelessWidget {
                     /*infoRating(
                       text: restaurant.name,
                     ),*/
-                    GetBuilder<RecommendedMealController>(
-                        builder: (recommendedMeal) {
-                      return GestureDetector(
-                        onTap: () {
-                          recommendedMeal.isEditing(pageId);
-                        },
-                        child: Container(
-                          //Not a fan of using margin to center this button
-                          margin: EdgeInsets.only(
-                            left: Dimensions.width45 * 3.5,
+                    GetBuilder<UserController>(builder: (userController) {
+                      return GetBuilder<RecommendedMealController>(
+                          builder: (recommendedMeal) {
+                        bool vendor = false;
+                        if (userController.userModel?.vendor_id == pageId) {
+                          vendor = true;
+                        }
+                        return GestureDetector(
+                          onTap: () {
+                            if (vendor) {
+                              recommendedMeal.isEditing(pageId);
+                            }
+                          },
+                          child: Container(
+                            //Not a fan of using margin to center this button
+                            margin: EdgeInsets.only(
+                              left: Dimensions.width45 * 3.5,
+                            ),
+                            padding: EdgeInsets.only(
+                                top: Dimensions.height10,
+                                bottom: Dimensions.height10,
+                                left: Dimensions.width15,
+                                right: Dimensions.width15),
+                            //I don't like how this button is made, with the decoration seperect from the text insdie child
+                            decoration: vendor
+                                ? recommendedMeal.editing && userLoggedIn
+                                    ? BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                            Dimensions.radius20),
+                                        color: Colors.green,
+                                      )
+                                    : BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                            Dimensions.radius20),
+                                        color: Colors.blue,
+                                      )
+                                : BoxDecoration(),
+                            child: vendor
+                                ? recommendedMeal.editing
+                                    ? SmallText(
+                                        text: "Save Changes",
+                                        color: Colors.white,
+                                      )
+                                    : SmallText(
+                                        text: "Edit meals left",
+                                        color: Colors.white,
+                                      )
+                                : SizedBox(),
                           ),
-                          padding: EdgeInsets.only(
-                              top: Dimensions.height10,
-                              bottom: Dimensions.height10,
-                              left: Dimensions.width15,
-                              right: Dimensions.width15),
-                          decoration: recommendedMeal.editing
-                              ? BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                      Dimensions.radius20),
-                                  color: Colors.green,
-                                )
-                              : BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                      Dimensions.radius20),
-                                  color: Colors.blue,
-                                ),
-                          child: recommendedMeal.editing
-                              ? SmallText(
-                                  text: "Save Changes",
-                                  color: Colors.white,
-                                )
-                              : SmallText(
-                                  text: "Edit meals left",
-                                  color: Colors.white,
-                                ),
-                        ),
-                      );
+                        );
+                      });
                     }),
                     GetBuilder<RecommendedMealController>(
                         builder: (recommendedMeal) {

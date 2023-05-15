@@ -22,7 +22,7 @@ class UserController extends GetxController implements GetxService {
     //print("I am here");
     Response response = await userRepo.getUserInfo();
     late ResponseModel responseModel;
-    print("this is the response ${response.body}");
+    print("line 25 userController this is the response ${response.body}");
     //If it was a success server would give us 200 and a token as a response
     if (response.statusCode == 200) {
       _userModel = UserModel.fromJson(response.body);
