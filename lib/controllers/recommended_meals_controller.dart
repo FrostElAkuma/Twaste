@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -46,8 +45,13 @@ class RecommendedMealController extends GetxController {
   final List<dynamic> _OriginalRecommendedMealList = [];
   List<dynamic> get OriginalRecommendedMealList => _OriginalRecommendedMealList;
 
+  //The number of meals that are in stock
+  late int _stockItems;
+  int get stockItems => _stockItems;
+
   //So here i will call my repository and my reposiory will return the data and i will put the data inside the list
   Future<void> getRecommendedMealList(int restId) async {
+    _stockItems = 0;
     //We used await because getMealList is returning a future type. We also saved the data inside a response object cuz the data that will be returned from getMealList is Resposne type
     //I have 2 options either I get the restaurant ID and egt the meals of only that restaurant OR get all the meals and when presse on a restaurant I filter that huge list based on restaurant ID. I think the first option is more effecient.
     String restIdString = restId.toString();
@@ -67,6 +71,9 @@ class RecommendedMealController extends GetxController {
       //Not a big fan of this while loop but guess it does the job for now
       var i = 0;
       while (i < recoLength) {
+        if (_recommendedMealList[i].remaining != 0) {
+          _stockItems++;
+        }
         _remaining[i] = _recommendedMealList[i].remaining;
         _originalRemaining[i] = _recommendedMealList[i].remaining;
         i++;
@@ -162,6 +169,7 @@ class RecommendedMealController extends GetxController {
 
   //Security Concern Here. Need to add validation here to make sure it is the vendor of the restaurant0
   void isEditing(int restId) {
+    //print("line 172 recoMealController " + _stockItems.toString());
     //Done editing
     if (_editing) {
       _editing = false;
@@ -169,27 +177,31 @@ class RecommendedMealController extends GetxController {
       print("We are here recoMealController line 164" +
           _originalRemaining.toString());*/
       //To check if there was a change in the original list, if there wasn't no need to send a request to our backend
-      if (listEquals(_remaining, _originalRemaining) == true) {
-        //print("Line 165 recoMealController no change was made to the ramining list");
-      } else {
-        //Again not a fan of this while loop but it shall do the job for now
-        var recoLength = _recommendedMealList.length;
-        var i = 0;
-        //updating our original list with the new remaining items
-        while (i < recoLength) {
-          if (_remaining[i] == _originalRemaining[i]) {
-            //print("Line 167 recoMealController no change was made to this item" + _recommendedMealList[i].id.toString());
-          } else {
-            _recommendedMealList[i].remaining = _remaining[i];
-            //Sending post req. to server. Need more security on this to make sure that the vendor is updateing his meals and not other vendor's meals
-            //Think what is better is to send 1 request with all the meal Ids that need changing instead of sending a request for each one but guess wil do this later
-            recommendedMealRepo.updateRemaining(
-                _recommendedMealList[i].id.toString(),
-                _recommendedMealList[i].remaining.toString());
+
+      //Again not a fan of this while loop but it shall do the job for now
+      var recoLength = _recommendedMealList.length;
+      var i = 0;
+      //updating our original list with the new remaining items
+      while (i < recoLength) {
+        if (_remaining[i] == _recommendedMealList[i].remaining) {
+          print("Line 188 recoMealController no change was made to this item" +
+              _recommendedMealList[i].id.toString());
+        } else {
+          if (_remaining[i] == 0) {
+            _stockItems--;
+          } else if (_recommendedMealList[i].remaining == 0) {
+            _stockItems++;
           }
-          i++;
+          _recommendedMealList[i].remaining = _remaining[i];
+          //Sending post req. to server. Need more security on this to make sure that the vendor is updateing his meals and not other vendor's meals
+          //Think what is better is to send 1 request with all the meal Ids that need changing instead of sending a request for each one but guess wil do this later
+          recommendedMealRepo.updateRemaining(
+              _recommendedMealList[i].id.toString(),
+              _recommendedMealList[i].remaining.toString());
         }
+        i++;
       }
+      //print("line 208 recoMealController " + _stockItems.toString());
     }
     //Started editing
     else {

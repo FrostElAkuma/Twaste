@@ -10,6 +10,7 @@ import 'package:twaste/my_widgets/my_text.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:twaste/utils/my_constants.dart';
 
+import '../../controllers/recommended_meals_controller.dart';
 import '../../models/meal_model.dart';
 
 class BodyPage extends StatefulWidget {
@@ -124,7 +125,10 @@ class _BodyPageState extends State<BodyPage> {
                   itemCount: restaurant.restaurantList.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        await Get.find<RecommendedMealController>()
+                            .getRecommendedMealList(
+                                restaurant.restaurantList[index].id);
                         Get.toNamed(RouteHelper.getRestaurant(
                             restaurant.restaurantList[index].id,
                             index,

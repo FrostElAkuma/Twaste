@@ -521,7 +521,7 @@ class _CartPageState extends State<CartPage> {
                                   )),
                               //Checkout button
                               GestureDetector(
-                                onTap: () {
+                                onTap: () async {
                                   //Checking if user has logged in or not
                                   if (Get.find<AuthController>()
                                       .userLoggedIn()) {
@@ -561,7 +561,7 @@ class _CartPageState extends State<CartPage> {
                                       );
 
                                       //_callBack is a function that we will pass to our controller and then the controller will send us BACK the info that we need
-                                      Get.find<OrderController>()
+                                      await Get.find<OrderController>()
                                           .placeOrder(placeOrder, _callback);
                                       cartController.addToHistory();
                                     }

@@ -24,7 +24,8 @@ class RestaurantDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.find<RecommendedMealController>().getRecommendedMealList(pageId);
+    //I commented the below line because I added it to the body page
+    //Get.find<RecommendedMealController>().getRecommendedMealList(pageId);
     //Have an error with this cuz if pageId (aka restaurant id) is larger than the amomunt of meals we have we get an error
     /*var meal =
         Get.find<RecommendedMealController>().recommendedMealList[pageId];*/
@@ -46,12 +47,34 @@ class RestaurantDetails extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             //Co
-            Container(
-              //This is SOOO WRONG the height of the page should be dynamic... I need to change this later
-              height: Dimensions.height20 * 110,
-              //This adds a nice shade over the background img
-              color: Colors.black87,
-            ),
+            GetBuilder<RecommendedMealController>(builder: (recommendedMeal) {
+              double stock = 0;
+              if (recommendedMeal.stockItems > 2) {
+                stock = recommendedMeal.stockItems.toDouble();
+                if (stock > 6) {
+                  stock = stock - ((stock - 6) * 0.4);
+                }
+              }
+
+              double recoLength =
+                  recommendedMeal.recommendedMealList.length.toDouble();
+              if (recoLength > 6) {
+                recoLength = recoLength - ((recoLength - 6) * 0.4);
+              }
+              return recommendedMeal.editing
+                  ? Container(
+                      //This is SOOO WRONG the height of the page should be dynamic... I need to change this later
+                      height: ((Dimensions.height20 * 38) +
+                          (Dimensions.height20 * recoLength * recoLength)),
+                      //This adds a nice shade over the background img
+                      color: Colors.black87,
+                    )
+                  : Container(
+                      height: ((Dimensions.height20 * 38) +
+                          ((Dimensions.height20 * stock * stock))),
+                      color: Colors.black87,
+                    );
+            }),
             //Cover image
             Positioned(
                 //need to understand this positioned method more
@@ -950,7 +973,7 @@ class RestaurantDetails extends StatelessWidget {
                               color: Colors.red,
                             );
                     }),
-                    SizedBox(
+                    /*SizedBox(
                       height: Dimensions.height20,
                     ),
                     LargeText(text: "Information"),
@@ -964,7 +987,7 @@ class RestaurantDetails extends StatelessWidget {
                           text: "meal.description",
                         ),
                       ),
-                    )
+                    )*/
                   ],
                 ),
               ),
