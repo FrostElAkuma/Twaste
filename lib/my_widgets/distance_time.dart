@@ -21,7 +21,7 @@ class DistanceTime extends StatelessWidget {
           color: iconColor,
           size: Dimensions.iconSize24,
         ),
-        const SizedBox(width: 5),
+        SizedBox(width: Dimensions.width10 / 2),
         SmallText(
           text: text,
         )

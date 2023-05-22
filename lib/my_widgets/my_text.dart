@@ -59,6 +59,7 @@ class SmallText extends StatelessWidget {
         color: color,
         fontSize: size,
         height: height,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }

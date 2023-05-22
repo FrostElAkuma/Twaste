@@ -51,6 +51,10 @@ class _BodyPageState extends State<BodyPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = Get.context!.height;
+    double screenWidth = Get.context!.width;
+    print("Line 55 body page this is screen height " + screenHeight.toString());
+    print("Line 56 body page this is screen width " + screenWidth.toString());
     return Column(
       children: [
         //left right slide section
@@ -196,24 +200,26 @@ class _BodyPageState extends State<BodyPage> {
                                       SizedBox(
                                         height: Dimensions.height10,
                                       ),
-                                      const Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          DistanceTime(
-                                              icon: Icons.percent,
-                                              text: "50 off",
-                                              iconColor: Colors.orange),
-                                          DistanceTime(
-                                              icon: Icons.location_on,
-                                              text: "1.7km",
-                                              iconColor: Colors.blue),
-                                          DistanceTime(
-                                              icon: Icons
-                                                  .access_time_filled_rounded,
-                                              text: "7pm-9pm",
-                                              iconColor: Colors.red),
-                                        ],
+                                      const Expanded(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            DistanceTime(
+                                                icon: Icons.percent,
+                                                text: "50 off",
+                                                iconColor: Colors.orange),
+                                            DistanceTime(
+                                                icon: Icons.location_on,
+                                                text: "1.7km",
+                                                iconColor: Colors.blue),
+                                            DistanceTime(
+                                                icon: Icons
+                                                    .access_time_filled_rounded,
+                                                text: "7pm-9pm",
+                                                iconColor: Colors.red),
+                                          ],
+                                        ),
                                       )
                                     ]),
                               ),
@@ -437,7 +443,9 @@ class _BodyPageState extends State<BodyPage> {
                   ]),
               child: Container(
                 padding: EdgeInsets.only(
-                    top: Dimensions.height15, left: 15, right: 15),
+                    top: Dimensions.height15,
+                    left: Dimensions.width15,
+                    right: Dimensions.width10),
                 child: infoRating(
                   text: meal.name!,
                 ),

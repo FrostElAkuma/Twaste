@@ -6,6 +6,7 @@ class Dimensions {
 
   //731.4285714285714 / 220 = 3.325 // we got the 731.4 from the device width i was working on. so we are using the 3.235 as a scaling factors. we got 220 because that is the original size that we want
   //dynamic values for padding margin etc.
+  //Screen width =411.43
   static double pageVeiw = screenHeight / 2.28571;
   static double pageVeiwContainer = screenHeight / 3.325;
   static double pageVeiwTextContainer = screenHeight / 6.095;
@@ -18,9 +19,9 @@ class Dimensions {
   static double height45 = screenHeight / 16.25;
 
   //font
-  static double font12 = screenHeight / 60.9;
+  static double font12 = screenWidth / 34.3;
   static double font16 = screenHeight / 45.7;
-  static double font20 = screenHeight / 36.5;
+  static double font20 = screenWidth / 20.5715;
   static double font26 = screenHeight / 28.1;
 
   //radius
@@ -37,6 +38,7 @@ class Dimensions {
 
   //Icon size
   static double iconSize24 = screenHeight / 30.47;
+  static double iconSize20 = screenHeight / 36.5;
   static double iconSize16 = screenHeight / 45.7;
 
   //For our main restaurant cards

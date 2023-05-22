@@ -776,7 +776,8 @@ class RestaurantDetails extends StatelessWidget {
                                                             ),
                                                             SizedBox(
                                                               height: Dimensions
-                                                                  .height10,
+                                                                      .height10 /
+                                                                  2,
                                                             ),
                                                             //Meal price, and adding meal to cart
                                                             Row(
@@ -801,7 +802,8 @@ class RestaurantDetails extends StatelessWidget {
                                                                     LargeText(
                                                                       text:
                                                                           '6 AED',
-                                                                      size: 15,
+                                                                      size: Dimensions
+                                                                          .font12,
                                                                     ),
                                                                   ],
                                                                 ),
@@ -851,7 +853,7 @@ class RestaurantDetails extends StatelessWidget {
                                                                               SmallText(
                                                                                 //maybe bblack maybe red depnding on amount left
                                                                                 color: Colors.red,
-                                                                                size: Dimensions.font12 * 1.2,
+                                                                                size: Dimensions.font12 * 1,
                                                                                 text: "${recommendedMeal.remaining[index]} left",
                                                                               ),
                                                                             ],
@@ -860,13 +862,13 @@ class RestaurantDetails extends StatelessWidget {
                                                                     Container(
                                                                         padding: EdgeInsets.only(
                                                                             top: Dimensions.height10 /
-                                                                                2,
+                                                                                4,
                                                                             bottom: Dimensions.height10 /
-                                                                                2,
-                                                                            left: Dimensions
-                                                                                .width10,
-                                                                            right: Dimensions
-                                                                                .width10),
+                                                                                4,
+                                                                            left: Dimensions.width10 /
+                                                                                3,
+                                                                            right: Dimensions.width10 /
+                                                                                3),
                                                                         decoration:
                                                                             BoxDecoration(
                                                                           borderRadius:
