@@ -73,14 +73,17 @@ class AddMealController extends GetxController {
     return response;
   }
 
-  Future<ResponseModel> addMeal(String name, int price) async {
+  Future<ResponseModel> addMeal(
+      String name, String description, int price, int newPrice) async {
     //Data is being loaded, which means we are talking to the server
     bool imgGood = await upload();
     late ResponseModel responseModel;
     if (imgGood) {
       ProductModel productModel = ProductModel(
         name: name,
+        description: description,
         price: price,
+        newPrice: newPrice,
         img: imagePath,
       );
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twaste/controllers/restaurant_controller.dart';
 import 'package:twaste/my_widgets/myIcons.dart';
+// ignore: unused_import
 import 'package:twaste/my_widgets/collapse_text.dart';
 import 'package:twaste/my_widgets/info_and_rating.dart';
 import 'package:twaste/utils/dimensions.dart';
@@ -430,8 +431,10 @@ class RestaurantDetails extends StatelessWidget {
                                                               .height10,
                                                         ),
                                                         SmallText(
-                                                          text:
-                                                              "idk sone description goes here",
+                                                          text: recommendedMeal
+                                                              .recommendedMealList[
+                                                                  index]
+                                                              .description,
                                                         ),
                                                         SizedBox(
                                                           height: Dimensions
@@ -446,12 +449,18 @@ class RestaurantDetails extends StatelessWidget {
                                                             Column(
                                                               children: [
                                                                 //Might remove the %off later
-                                                                LargeText(
+                                                                /*LargeText(
                                                                   text:
                                                                       '60% off',
                                                                   size: 10,
-                                                                ),
-                                                                Text('15 AED',
+                                                                ),*/
+                                                                Text(
+                                                                    recommendedMeal
+                                                                            .recommendedMealList[
+                                                                                index]
+                                                                            .price
+                                                                            .toString() +
+                                                                        ' AED',
                                                                     style: TextStyle(
                                                                         decoration:
                                                                             TextDecoration
@@ -459,7 +468,12 @@ class RestaurantDetails extends StatelessWidget {
                                                                         fontSize:
                                                                             Dimensions.font12)),
                                                                 LargeText(
-                                                                  text: '6 AED',
+                                                                  text: recommendedMeal
+                                                                          .recommendedMealList[
+                                                                              index]
+                                                                          .newPrice
+                                                                          .toString() +
+                                                                      ' AED',
                                                                   size: 15,
                                                                 ),
                                                               ],
@@ -771,8 +785,10 @@ class RestaurantDetails extends StatelessWidget {
                                                                   .height10,
                                                             ),
                                                             SmallText(
-                                                              text:
-                                                                  "idk sone description goes here",
+                                                              text: recommendedMeal
+                                                                  .recommendedMealList[
+                                                                      index]
+                                                                  .description,
                                                             ),
                                                             SizedBox(
                                                               height: Dimensions

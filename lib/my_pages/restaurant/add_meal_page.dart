@@ -31,22 +31,31 @@ class _AddMealState extends State<AddMeal> {
   @override
   Widget build(BuildContext context) {
     var nameController = TextEditingController();
+    var descriptionController = TextEditingController();
     var priceController = TextEditingController();
+    var newPriceController = TextEditingController();
 
     Future<void> _validation(AddMealController mealController) async {
       //We removed the line below because we already passed an authcntroller object into this metod from our scaffold s
       //var authController = Get.find<AuthController>();
       String name = nameController.text.trim();
+      String description = nameController.text.trim();
       String price = priceController.text.trim();
       int price2 = int.parse(price);
+      String newPrice = priceController.text.trim();
+      int newPrice2 = int.parse(newPrice);
       //Getting the Image path
       //bool imgGood = await mealController.upload();
       //String img = await mealController.imagePath!;
 
       if (name.isEmpty) {
         showCusotmSnackBar("Name can't be empty", title: "Name");
+      } else if (description.isEmpty) {
+        showCusotmSnackBar("Description can't be empty", title: "Description");
       } else if (price.isEmpty) {
         showCusotmSnackBar("Price can't be empty", title: "Price");
+      } else if (newPrice.isEmpty) {
+        showCusotmSnackBar("New price can't be empty", title: "New price");
       } /*else if (imgGood) {
         showCusotmSnackBar("Failed to get image path", title: "Img");
       }*/
@@ -56,7 +65,9 @@ class _AddMealState extends State<AddMeal> {
           price: price2,
           img: mealController.imagePath,
         );*/
-        mealController.addMeal(name, price2).then((status) {
+        mealController
+            .addMeal(name, description, price2, newPrice2)
+            .then((status) {
           //Reminder we definded isSuccess in our response model
           if (status.isSuccess) {
             print("Success upload");
@@ -77,97 +88,134 @@ class _AddMealState extends State<AddMeal> {
         title: "Add New Item",
       ),
       body: GetBuilder<AddMealController>(builder: (addMealController) {
-        return SafeArea(
-          child: Padding(
-            padding: EdgeInsets.all(Dimensions.height30),
-            child: Column(
-              children: [
-                InputField(
-                    textController: nameController,
-                    hintText: "Name of Meal",
-                    icon: Icons.person),
-                SizedBox(
-                  height: Dimensions.height20,
-                ),
-                //phone
-                InputField(
-                    textController: priceController,
-                    hintText: "Price of Meal",
-                    icon: Icons.phone),
-                SizedBox(
-                  height: Dimensions.height20,
-                ),
-                Center(
-                  child: GestureDetector(
-                    child: const Text('Select An Image'),
-                    onTap: () => addMealController.pickImage(),
+        return SingleChildScrollView(
+          child: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.all(Dimensions.height30),
+              child: Column(
+                children: [
+                  //Name
+                  InputField(
+                      textController: nameController,
+                      hintText: "Name of Meal",
+                      icon: Icons.title),
+                  SizedBox(
+                    height: Dimensions.height20,
                   ),
-                ),
-                SizedBox(
-                  height: Dimensions.height30,
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  width: double.infinity,
-                  height: Dimensions.height20 * 10,
-                  color: Colors.grey[300],
-                  child: addMealController.pickedFile != null
-                      ? Image.file(
-                          File(addMealController.pickedFile!.path),
-                          width: Dimensions.width10 * 10,
-                          height: Dimensions.height10 * 10,
-                          fit: BoxFit.cover,
-                        )
-                      : const Text('Please select an image'),
-                ),
-                SizedBox(
-                  height: Dimensions.height30,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _validation(addMealController);
-                  },
-                  child: Container(
-                    width: Dimensions.screenWidth / 3,
-                    height: Dimensions.screenHeight / 19,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(Dimensions.radius30),
-                      color: Colors.blue,
-                    ),
-                    child: Center(
-                      child: LargeText(
-                        text: "add meal",
-                        size: Dimensions.font20,
-                        color: Colors.white,
+                  //Description
+                  InputField(
+                      textController: descriptionController,
+                      hintText: "Description of Meal",
+                      icon: Icons.text_fields),
+                  SizedBox(
+                    height: Dimensions.height20,
+                  ),
+                  //price
+                  InputField(
+                      textController: priceController,
+                      hintText: "Old price of Meal",
+                      icon: Icons.money),
+                  SizedBox(
+                    height: Dimensions.height20,
+                  ),
+                  //new price
+                  InputField(
+                      textController: newPriceController,
+                      hintText: "New price of Meal",
+                      icon: Icons.attach_money),
+                  SizedBox(
+                    height: Dimensions.height20,
+                  ),
+
+                  GestureDetector(
+                    onTap: () {
+                      addMealController.pickImage();
+                    },
+                    child: Container(
+                      width: Dimensions.screenWidth / 2,
+                      height: Dimensions.screenHeight / 19,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.radius30),
+                        color: Colors.blue,
+                      ),
+                      child: Center(
+                        child: LargeText(
+                          text: "Select an Image",
+                          size: Dimensions.font20,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                //This server upload section
-                /*Center(
-                  child: GestureDetector(
-                    child: Text('Server upload'),
-                    onTap: () => addMealController.upload(),
+
+                  SizedBox(
+                    height: Dimensions.height30,
                   ),
-                ),
-                SizedBox(
-                  height: Dimensions.height30,
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  width: double.infinity,
-                  height: Dimensions.height20 * 10,
-                  color: Colors.grey[300],
-                  child: addMealController.imagePath != null
-                      ? Image.network(
-                          MyConstants.BASE_URL + addMealController.imagePath!,
-                          width: Dimensions.width10 * 10,
-                          height: Dimensions.height10 * 10,
-                          fit: BoxFit.cover,
-                        )
-                      : const Text('Please select an image'),
-                ),*/
-              ],
+                  Container(
+                    alignment: Alignment.center,
+                    width: double.infinity,
+                    height: Dimensions.height20 * 10,
+                    color: Colors.grey[300],
+                    child: addMealController.pickedFile != null
+                        ? Image.file(
+                            File(addMealController.pickedFile!.path),
+                            width: Dimensions.width10 * 10,
+                            height: Dimensions.height10 * 10,
+                            fit: BoxFit.cover,
+                          )
+                        : const Text('Please select an image'),
+                  ),
+                  SizedBox(
+                    height: Dimensions.height30,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      _validation(addMealController);
+                    },
+                    child: Container(
+                      width: Dimensions.screenWidth / 3,
+                      height: Dimensions.screenHeight / 19,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.radius30),
+                        color: Colors.green,
+                      ),
+                      child: Center(
+                        child: LargeText(
+                          text: "add meal",
+                          size: Dimensions.font20,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  //This server upload section
+                  /*Center(
+                    child: GestureDetector(
+                      child: Text('Server upload'),
+                      onTap: () => addMealController.upload(),
+                    ),
+                  ),
+                  SizedBox(
+                    height: Dimensions.height30,
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    width: double.infinity,
+                    height: Dimensions.height20 * 10,
+                    color: Colors.grey[300],
+                    child: addMealController.imagePath != null
+                        ? Image.network(
+                            MyConstants.BASE_URL + addMealController.imagePath!,
+                            width: Dimensions.width10 * 10,
+                            height: Dimensions.height10 * 10,
+                            fit: BoxFit.cover,
+                          )
+                        : const Text('Please select an image'),
+                  ),*/
+                ],
+              ),
             ),
           ),
         );

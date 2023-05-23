@@ -37,6 +37,7 @@ class ProductModel {
   String? name;
   String? description;
   int? price;
+  int? newPrice;
   int? remaining;
   int? stars;
   String? img;
@@ -50,6 +51,7 @@ class ProductModel {
     this.name,
     this.description,
     this.price,
+    this.newPrice,
     this.remaining,
     this.stars,
     this.img,
@@ -64,6 +66,7 @@ class ProductModel {
     name = json['name'];
     description = json['description'];
     price = json['price'];
+    newPrice = json['new_price'];
     remaining = json['remaining'];
     stars = json['stars'];
     img = json['img'];
@@ -78,12 +81,14 @@ class ProductModel {
     return {
       "id": id,
       "name": name,
+      "description": description,
       "price": price,
+      "new_price": newPrice,
       "remaining": remaining,
       "img": img,
       "location": location,
-      "createdAt": createdAt,
-      "updatedAt": updatedAt,
+      "created_at": createdAt,
+      "updated_at": updatedAt,
       "typeId": typeId,
     };
   }
