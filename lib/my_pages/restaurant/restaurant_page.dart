@@ -108,8 +108,9 @@ class RestaurantDetails extends StatelessWidget {
                 )),
             //Restaruant info. I added this to make it look like hte figma design
             Positioned(
-              top: 100,
-              left: 60,
+              top: Dimensions.height10 * 10,
+              left: Dimensions.width10 * 5,
+              right: Dimensions.width10 * 5,
               child: Container(
                 padding: EdgeInsets.only(
                   left: Dimensions.width45,
@@ -138,15 +139,15 @@ class RestaurantDetails extends StatelessWidget {
             ),
             //Restaurant logo
             Positioned(
-              top: 40,
+              top: Dimensions.height10 * 4,
               left: 0,
               right: 0,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: 100,
-                    height: 100,
+                    width: Dimensions.width10 * 10,
+                    height: Dimensions.height10 * 10,
                     decoration: BoxDecoration(
                         //size/2 to make it a circle
                         borderRadius: BorderRadius.circular(100 / 2),
@@ -191,7 +192,11 @@ class RestaurantDetails extends StatelessWidget {
                             Get.toNamed(RouteHelper.getInitial());
                           }
                         },
-                        child: const MyIcons(icon: Icons.arrow_back_ios)),
+                        child: MyIcons(
+                          icon: Icons.arrow_back_ios,
+                          size: Dimensions.width10 * 4,
+                          iconSize: Dimensions.font16,
+                        )),
                     //Showing the number of items in cart
                     GetBuilder<RecommendedMealController>(
                         builder: (controller) {
@@ -215,16 +220,21 @@ class RestaurantDetails extends StatelessWidget {
                           child: Stack(
                             children: [
                               //The blue background for the number of items
-                              const MyIcons(icon: Icons.shopping_cart_outlined),
+                              MyIcons(
+                                icon: Icons.shopping_cart_outlined,
+                                size: Dimensions.width10 * 4,
+                                iconSize: Dimensions.font16,
+                              ),
                               Get.find<RecommendedMealController>()
                                           .totalItems >=
                                       1
-                                  ? const Positioned(
+                                  ? Positioned(
                                       right: 0,
                                       top: 0,
                                       child: MyIcons(
                                         icon: Icons.circle,
-                                        size: 20,
+                                        size: Dimensions.width20,
+                                        iconSize: Dimensions.font16,
                                         iconColor: Colors.transparent,
                                         backgroundColor: Colors.blue,
                                       ),
@@ -233,14 +243,14 @@ class RestaurantDetails extends StatelessWidget {
                               //The number of items
                               controller.totalItems >= 1
                                   ? Positioned(
-                                      right: 3,
-                                      top: 3,
+                                      right: Dimensions.width15 / 5,
+                                      top: Dimensions.height15 / 5,
                                       child: LargeText(
                                         text: Get.find<
                                                 RecommendedMealController>()
                                             .totalItems
                                             .toString(),
-                                        size: 12,
+                                        size: Dimensions.font12,
                                         color: Colors.white,
                                       ),
                                     )
@@ -438,7 +448,8 @@ class RestaurantDetails extends StatelessWidget {
                                                         ),
                                                         SizedBox(
                                                           height: Dimensions
-                                                              .height10,
+                                                                  .height10 /
+                                                              2,
                                                         ),
                                                         //Meal price, and adding meal to cart
                                                         Row(
@@ -545,14 +556,14 @@ class RestaurantDetails extends StatelessWidget {
                                                                 Container(
                                                                     padding: EdgeInsets.only(
                                                                         top: Dimensions.height10 /
-                                                                            2,
+                                                                            4,
                                                                         bottom:
                                                                             Dimensions.height10 /
-                                                                                2,
-                                                                        left: Dimensions
-                                                                            .width10,
-                                                                        right: Dimensions
-                                                                            .width10),
+                                                                                4,
+                                                                        left: Dimensions.width10 /
+                                                                            3,
+                                                                        right: Dimensions.width10 /
+                                                                            3),
                                                                     decoration:
                                                                         BoxDecoration(
                                                                       borderRadius:

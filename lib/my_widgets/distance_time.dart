@@ -24,6 +24,7 @@ class DistanceTime extends StatelessWidget {
         SizedBox(width: Dimensions.width10 / 2),
         SmallText(
           text: text,
+          size: Dimensions.font12,
         )
       ],
     );

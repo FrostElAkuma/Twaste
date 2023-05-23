@@ -27,25 +27,34 @@ class infoRating extends StatelessWidget {
               Wrap(
                 children: List.generate(
                     5,
-                    (index) => const Icon(
+                    (index) => Icon(
                           Icons.star,
                           color: Colors.yellow,
-                          size: 15,
+                          size: Dimensions.font12,
                         )),
               ),
               //We use sized box to add space between the stars and text
-              const SizedBox(
-                width: 10,
+              SizedBox(
+                width: Dimensions.width10,
               ),
-              SmallText(text: "4.5"),
-              const SizedBox(
-                width: 10,
+              SmallText(
+                text: "4.5",
+                size: Dimensions.font12,
               ),
-              SmallText(text: "123312"),
-              const SizedBox(
-                width: 10,
+              SizedBox(
+                width: Dimensions.width10,
               ),
-              SmallText(text: "comments")
+              SmallText(
+                text: "123312",
+                size: Dimensions.font12,
+              ),
+              SizedBox(
+                width: Dimensions.width10,
+              ),
+              SmallText(
+                text: "comments",
+                size: Dimensions.font12,
+              )
             ],
           ),
           SizedBox(height: Dimensions.height20),
@@ -53,9 +62,10 @@ class infoRating extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               DistanceTime(
-                  icon: Icons.percent,
-                  text: "50 off",
-                  iconColor: Colors.orange),
+                icon: Icons.percent,
+                text: "50 off",
+                iconColor: Colors.orange,
+              ),
               DistanceTime(
                   icon: Icons.location_on,
                   text: "1.7km",

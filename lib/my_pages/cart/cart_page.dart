@@ -61,11 +61,17 @@ class _CartPageState extends State<CartPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  MyIcons(
-                    icon: Icons.arrow_back_ios,
-                    iconColor: Colors.white,
-                    backgroundColor: Colors.blue,
-                    iconSize: Dimensions.iconSize24,
+                  GestureDetector(
+                    onTap: () {
+                      Get.back(result: 'hello');
+                    },
+                    child: MyIcons(
+                      icon: Icons.arrow_back_ios,
+                      iconColor: Colors.white,
+                      backgroundColor: Colors.blue,
+                      size: Dimensions.width10 * 4,
+                      iconSize: Dimensions.iconSize24,
+                    ),
                   ),
                   SizedBox(
                     width: Dimensions.width20 * 5,
@@ -79,14 +85,9 @@ class _CartPageState extends State<CartPage> {
                       icon: Icons.home_outlined,
                       iconColor: Colors.white,
                       backgroundColor: Colors.blue,
+                      size: Dimensions.width10 * 4,
                       iconSize: Dimensions.iconSize24,
                     ),
-                  ),
-                  MyIcons(
-                    icon: Icons.shopping_cart,
-                    iconColor: Colors.white,
-                    backgroundColor: Colors.blue,
-                    iconSize: Dimensions.iconSize24,
                   ),
                 ],
               )),
@@ -263,7 +264,7 @@ class _CartPageState extends State<CartPage> {
                                                                         .product!,
                                                                     -1);
                                                               },
-                                                              child: const Icon(
+                                                              child: Icon(
                                                                 Icons.remove,
                                                                 color: Color
                                                                     .fromARGB(
@@ -271,6 +272,8 @@ class _CartPageState extends State<CartPage> {
                                                                         224,
                                                                         224,
                                                                         224),
+                                                                size: Dimensions
+                                                                    .width30,
                                                               ),
                                                             ),
                                                             SizedBox(
@@ -296,7 +299,7 @@ class _CartPageState extends State<CartPage> {
                                                                         .product!,
                                                                     1);
                                                               },
-                                                              child: const Icon(
+                                                              child: Icon(
                                                                 Icons.add,
                                                                 color: Color
                                                                     .fromARGB(
@@ -304,6 +307,8 @@ class _CartPageState extends State<CartPage> {
                                                                         224,
                                                                         224,
                                                                         224),
+                                                                size: Dimensions
+                                                                    .width30,
                                                               ),
                                                             ),
                                                           ],
