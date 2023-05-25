@@ -11,6 +11,7 @@ import 'package:twaste/utils/my_constants.dart';
 
 import '../../controllers/auth_controller.dart';
 import '../../controllers/cart_controller.dart';
+import '../../controllers/location_controller.dart';
 import '../../controllers/recommended_meals_controller.dart';
 import '../../controllers/user_controller.dart';
 import '../../my_widgets/my_text.dart';
@@ -32,6 +33,9 @@ class RestaurantDetails extends StatelessWidget {
     if (userLoggedIn) {
       ///print("Why is this called like 3 rimes");
       Get.find<UserController>().getUserInfo();
+    }
+    if (Get.find<LocationController>().addressList.isEmpty) {
+      Get.find<LocationController>().getAddressList();
     }
 
     //I commented the below line because I added it to the body page

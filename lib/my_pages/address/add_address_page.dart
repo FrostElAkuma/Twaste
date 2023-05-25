@@ -39,6 +39,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
     _isLogged = Get.find<AuthController>().userLoggedIn();
     //if user model is null that means it has not yet been imported from the DB so we get it
     if (_isLogged && Get.find<UserController>().userModel == null) {
+      print("We are here line 42 adress page");
       Get.find<LocationController>().getAddressList();
       Get.find<UserController>().getUserInfo();
     }
@@ -48,9 +49,9 @@ class _AddAddressPageState extends State<AddAddressPage> {
       if (Get.find<LocationController>().getUserAddressFromLocalStorage() ==
           "") {
         print("I am here line 53 addAddressPage no local storage");
-        //.last cuz we want last saved address
+        //.last cuz we want last saved address (that was the initial plan but apparent;y last saved address is first now)
         Get.find<LocationController>()
-            .saveUserAddress(Get.find<LocationController>().addressList.last);
+            .saveUserAddress(Get.find<LocationController>().addressList.first);
       }
       //Line of code below is  important so .getAddress below gets initialized
       Get.find<LocationController>().getUserAddress();

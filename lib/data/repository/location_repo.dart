@@ -41,6 +41,10 @@ class LocationRepo {
     return await sharedPreferences.setString(MyConstants.USER_ADDRESS, address);
   }
 
+  void clearAddressHistory() {
+    sharedPreferences.remove(MyConstants.USER_ADDRESS);
+  }
+
   Future<Response> getZone(String lat, String lng) async {
     print("We are here 5$lat aa $lng");
     return await apiClient.getData('${MyConstants.ZONE_URI}?lat=$lat&lng=$lng');

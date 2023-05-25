@@ -150,7 +150,7 @@ class LocationController extends GetxController implements GetxService {
     if (response.body["status"] == 'OK') {
       address = response.body["results"][0]['formatted_address'].toString();
       //for debugging purposes
-      print("printing address line 135 in location controller$address");
+      print("printing address line 135 in location controller $address");
     } else {
       print("Error getting the google api ${response.body}");
     }
@@ -207,11 +207,10 @@ class LocationController extends GetxController implements GetxService {
   //To save thee address in the memory ?
   Future<void> getAddressList() async {
     _loading = true;
-    print(
-        "Are we loading ? Line 197 location controller $_loading");
+    print("Are we loading ? Line 211 location controller $_loading");
     Response response = await locationRepo.getAllAddress();
     if (response.statusCode == 200) {
-      print("I am here 5 at line 193 location controller");
+      print("I am here 5 at line 214 location controller");
       //Making sure that they are empty just in case some one changes their account ID
       _addressList = [];
       _allAddressList = [];
@@ -228,8 +227,7 @@ class LocationController extends GetxController implements GetxService {
       _allAddressList = [];
     }
 
-    print(
-        "Are we loading ? Line 212 location controller $_loading");
+    print("Are we loading ? Line 212 location controller $_loading");
     update();
   }
 
@@ -244,6 +242,8 @@ class LocationController extends GetxController implements GetxService {
   void clearAddressList() {
     _addressList = [];
     _allAddressList = [];
+    locationRepo.clearAddressHistory();
+    _placemark = Placemark();
     update();
   }
 
