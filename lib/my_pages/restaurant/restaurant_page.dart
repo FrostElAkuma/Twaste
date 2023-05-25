@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twaste/controllers/restaurant_controller.dart';
+import 'package:twaste/my_pages/restaurant/add_meal_page.dart';
 import 'package:twaste/my_widgets/myIcons.dart';
 // ignore: unused_import
 import 'package:twaste/my_widgets/collapse_text.dart';
@@ -291,58 +292,98 @@ class RestaurantDetails extends StatelessWidget {
                     /*infoRating(
                       text: restaurant.name,
                     ),*/
-                    GetBuilder<UserController>(builder: (userController) {
-                      return GetBuilder<RecommendedMealController>(
-                          builder: (recommendedMeal) {
-                        bool vendor = false;
-                        if (userController.userModel?.vendor_id == pageId) {
-                          vendor = true;
-                        }
-                        return GestureDetector(
-                          onTap: () {
-                            if (vendor) {
-                              recommendedMeal.isEditing(pageId);
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GetBuilder<UserController>(builder: (userController) {
+                          return GetBuilder<RecommendedMealController>(
+                              builder: (recommendedMeal) {
+                            bool vendor = false;
+                            if (userController.userModel?.vendor_id == pageId) {
+                              vendor = true;
                             }
-                          },
-                          child: Container(
-                            //Not a fan of using margin to center this button
-                            margin: EdgeInsets.only(
-                              left: Dimensions.width45 * 3.5,
+                            return GestureDetector(
+                              onTap: () {
+                                if (vendor) {
+                                  recommendedMeal.isEditing(pageId);
+                                }
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: Dimensions.height10,
+                                    bottom: Dimensions.height10,
+                                    left: Dimensions.width15,
+                                    right: Dimensions.width15),
+                                //I don't like how this button is made, with the decoration seperect from the text insdie child
+                                decoration: vendor
+                                    ? recommendedMeal.editing && userLoggedIn
+                                        ? BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                                Dimensions.radius20),
+                                            color: Colors.green,
+                                          )
+                                        : BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                                Dimensions.radius20),
+                                            color: Colors.blue,
+                                          )
+                                    : BoxDecoration(),
+                                child: vendor
+                                    ? recommendedMeal.editing
+                                        ? SmallText(
+                                            text: "Save Changes",
+                                            color: Colors.white,
+                                          )
+                                        : SmallText(
+                                            text: "Edit meals left",
+                                            color: Colors.white,
+                                          )
+                                    : SizedBox(),
+                              ),
+                            );
+                          });
+                        }),
+                        //Space between the buttons
+                        SizedBox(
+                          width: Dimensions.width10,
+                        ),
+                        //Add meal button
+                        GetBuilder<UserController>(builder: (userController) {
+                          bool vendor = false;
+                          if (userController.userModel?.vendor_id == pageId) {
+                            vendor = true;
+                          }
+                          return GestureDetector(
+                            onTap: () {
+                              if (vendor) {
+                                Get.to(() => AddMeal());
+                              }
+                            },
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  top: Dimensions.height10,
+                                  bottom: Dimensions.height10,
+                                  left: Dimensions.width15,
+                                  right: Dimensions.width15),
+                              //I don't like how this button is made, with the decoration seperect from the text insdie child
+                              decoration: vendor && userLoggedIn
+                                  ? BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                          Dimensions.radius20),
+                                      color: Colors.blue,
+                                    )
+                                  : BoxDecoration(),
+                              child: vendor && userLoggedIn
+                                  ? SmallText(
+                                      text: "Add meal",
+                                      color: Colors.white,
+                                    )
+                                  : SizedBox(),
                             ),
-                            padding: EdgeInsets.only(
-                                top: Dimensions.height10,
-                                bottom: Dimensions.height10,
-                                left: Dimensions.width15,
-                                right: Dimensions.width15),
-                            //I don't like how this button is made, with the decoration seperect from the text insdie child
-                            decoration: vendor
-                                ? recommendedMeal.editing && userLoggedIn
-                                    ? BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                            Dimensions.radius20),
-                                        color: Colors.green,
-                                      )
-                                    : BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                            Dimensions.radius20),
-                                        color: Colors.blue,
-                                      )
-                                : BoxDecoration(),
-                            child: vendor
-                                ? recommendedMeal.editing
-                                    ? SmallText(
-                                        text: "Save Changes",
-                                        color: Colors.white,
-                                      )
-                                    : SmallText(
-                                        text: "Edit meals left",
-                                        color: Colors.white,
-                                      )
-                                : SizedBox(),
-                          ),
-                        );
-                      });
-                    }),
+                          );
+                        }),
+                      ],
+                    ),
                     GetBuilder<RecommendedMealController>(
                         builder: (recommendedMeal) {
                       return recommendedMeal.isLoaded

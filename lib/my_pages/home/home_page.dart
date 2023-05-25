@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:twaste/my_pages/account/account_page.dart';
 import 'package:twaste/my_pages/cart/cart_history_page.dart';
 import 'package:twaste/my_pages/home/main_page.dart';
-import 'package:twaste/my_pages/restaurant/add_meal_page.dart';
 
+import '../order/order_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,8 +16,9 @@ class _HomePageState extends State<HomePage> {
   int _index = 0;
   List pages = [
     const MainPage(),
-    //OrderPage(),
-    const AddMeal(),
+    const OrderPage(),
+
+    ///const AddMeal(),
     const CartHistory(),
     const AccountPage(),
   ];
