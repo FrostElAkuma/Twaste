@@ -594,7 +594,7 @@ class RestaurantDetails extends StatelessWidget {
                                                                         ],
                                                                       ),
                                                                 //Here is the adding item to cart button
-                                                                Container(
+                                                                /*Container(
                                                                     padding: EdgeInsets.only(
                                                                         top: Dimensions.height10 /
                                                                             4,
@@ -690,45 +690,26 @@ class RestaurantDetails extends StatelessWidget {
                                                                           ),
                                                                         ),
                                                                       ],
-                                                                    )),
+                                                                    )),*/
                                                               ],
                                                             ),
                                                             //Here it should end
                                                             GestureDetector(
                                                               onTap: () {
-                                                                recommendedMeal.addItem(
+                                                                recommendedMeal.removeItem(
                                                                     recommendedMeal
-                                                                            .recommendedMealList[
-                                                                        index],
-                                                                    index);
+                                                                        .recommendedMealList[
+                                                                            index]
+                                                                        .id);
                                                               },
-                                                              child: Container(
-                                                                padding: EdgeInsets.only(
-                                                                    top: Dimensions
-                                                                        .height10,
-                                                                    bottom: Dimensions
-                                                                        .height10,
-                                                                    left: Dimensions
-                                                                        .width15,
-                                                                    right: Dimensions
-                                                                        .width15),
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius.circular(
-                                                                          Dimensions
-                                                                              .radius20),
-                                                                  color: Colors
-                                                                      .blue,
-                                                                ),
-                                                                child:
-                                                                    SmallText(
-                                                                  text: "Add",
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
+                                                              child: Icon(
+                                                                Icons.delete,
+                                                                color:
+                                                                    Colors.red,
+                                                                size: Dimensions
+                                                                    .iconSize24,
                                                               ),
-                                                            )
+                                                            ),
                                                           ],
                                                         )
                                                       ]),

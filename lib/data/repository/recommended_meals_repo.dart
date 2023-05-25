@@ -18,4 +18,9 @@ class RecommendedMealRepo extends GetxService {
     return await apiClient.postData(
         MyConstants.UPDATE_REMAINING_URI, {"id": mealID, "remaining": rem});
   }
+
+  Future<Response> removeItem(String mealID) async {
+    return await apiClient
+        .postData(MyConstants.REMOVE_ITEM_URI, {"id": mealID});
+  }
 }

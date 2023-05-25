@@ -8,6 +8,7 @@ class MyConstants {
   static const String POPULAR_PRODUCT_URI = "/api/v1/products/popular";
   static const String RECOMMENDED_PRODUCT_URI = "/api/v1/products/recommended";
   static const String UPDATE_REMAINING_URI = "/api/v1/products/updateRemaining";
+  static const String REMOVE_ITEM_URI = "/api/v1/products/removeItem";
   static const String CART_REMAINING_URI = "/api/v1/products/cartRemaining";
   //static const String DRINKS_URI = "/api/v1/products/drinks";
   static const String UPLOAD_URL = "/uploads/";

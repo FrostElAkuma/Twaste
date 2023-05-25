@@ -242,4 +242,21 @@ class RecommendedMealController extends GetxController {
       return quantity;
     }
   }
+
+  void removeItem(int itemId) async {
+    //final url = 'http://your-laravel-api.com/items/$itemId';
+    //final response = await http.delete(url);
+    Response response = await recommendedMealRepo.removeItem(itemId.toString());
+
+    if (response.statusCode == 200) {
+      Get.snackbar("Removed", "Item removed succesfully",
+          backgroundColor: Colors.green, colorText: Colors.white);
+      //Cat Jam
+      recommendedMealList.removeWhere((item) => item.id == itemId);
+    } else {
+      Get.snackbar("Not Removed", "Item was not removed ",
+          backgroundColor: Colors.red, colorText: Colors.white);
+    }
+    update();
+  }
 }
