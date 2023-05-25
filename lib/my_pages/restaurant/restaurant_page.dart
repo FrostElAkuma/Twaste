@@ -526,7 +526,8 @@ class RestaurantDetails extends StatelessWidget {
                                                                           .newPrice
                                                                           .toString() +
                                                                       ' AED',
-                                                                  size: 15,
+                                                                  size: Dimensions
+                                                                      .font16,
                                                                 ),
                                                               ],
                                                             ),
@@ -837,22 +838,26 @@ class RestaurantDetails extends StatelessWidget {
                                                                 Column(
                                                                   children: [
                                                                     //Might remove the %off later
-                                                                    LargeText(
+                                                                    /*LargeText(
                                                                       text:
                                                                           '60% off',
                                                                       size: 10,
-                                                                    ),
+                                                                    ),*/
                                                                     Text(
-                                                                        '15 AED',
+                                                                        recommendedMeal.recommendedMealList[index].price.toString() +
+                                                                            ' AED',
                                                                         style: TextStyle(
                                                                             decoration:
                                                                                 TextDecoration.lineThrough,
                                                                             fontSize: Dimensions.font12)),
                                                                     LargeText(
-                                                                      text:
-                                                                          '6 AED',
+                                                                      text: recommendedMeal
+                                                                              .recommendedMealList[index]
+                                                                              .newPrice
+                                                                              .toString() +
+                                                                          ' AED',
                                                                       size: Dimensions
-                                                                          .font12,
+                                                                          .font16,
                                                                     ),
                                                                   ],
                                                                 ),
