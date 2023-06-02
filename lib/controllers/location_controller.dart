@@ -204,6 +204,29 @@ class LocationController extends GetxController implements GetxService {
     return responseModel;
   }
 
+  Future<ResponseModel> updateAddress(AddressModel addressModel) async {
+    _loading = true;
+    update();
+    Response response = await locationRepo.updateAddress(addressModel);
+    ResponseModel responseModel;
+    if (response.statusCode == 200) {
+      //To save them in the memory
+      print("I am here 4 at line 173 Location controller");
+      await getAddressList();
+      print("I am here 7 at line 175 lcoation controller");
+      //This message comes from our api
+      String message = response.body["message"];
+      responseModel = ResponseModel(true, message);
+      //Reminder Any Future function we better have await when calling it
+      await saveUserAddress(addressModel);
+    } else {
+      print("could not save the address");
+      responseModel = ResponseModel(false, response.statusText!);
+    }
+    update();
+    return responseModel;
+  }
+
   //To save thee address in the memory ?
   Future<void> getAddressList() async {
     _loading = true;

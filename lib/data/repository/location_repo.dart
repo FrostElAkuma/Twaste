@@ -30,13 +30,19 @@ class LocationRepo {
         MyConstants.ADD_USER_ADDRESS, addressModel.toJson());
   }
 
+  Future<Response> updateAddress(AddressModel addressModel) async {
+    print("We are here 2 line 34 in location repo");
+    return await apiClient.postData(
+        MyConstants.UPDATE_USER_ADDRESS, addressModel.toJson());
+  }
+
   Future<Response> getAllAddress() async {
-    print("We are here 3 line 34 in location repo");
+    print("We are here 3 line 40 in location repo");
     return await apiClient.getData(MyConstants.ADDRESS_LIST_URI);
   }
 
   Future<bool> saveUserAddress(String address) async {
-    print("We are here 4 line 39 in location repo");
+    print("We are here 4 line 45 in location repo");
     apiClient.updateHeader(sharedPreferences.getString(MyConstants.TOKEN)!);
     return await sharedPreferences.setString(MyConstants.USER_ADDRESS, address);
   }

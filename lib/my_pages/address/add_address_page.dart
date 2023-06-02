@@ -284,17 +284,39 @@ class _AddAddressPageState extends State<AddAddressPage> {
                             longitude: locationController.position.longitude
                                 .toString(),
                           );
-                          locationController
-                              .addAddress(addressModel)
-                              .then((response) {
-                            if (response.isSuccess) {
-                              //We go back to the eralier page
-                              Get.toNamed(RouteHelper.getInitial());
-                              Get.snackbar("Address", "Added Successfully");
-                            } else {
-                              Get.snackbar("Address", "Couldn't save address");
-                            }
-                          });
+                          //If user already has a lcoation saved in his account, we update it
+                          if (Get.find<LocationController>()
+                              .addressList
+                              .isNotEmpty) {
+                            locationController
+                                .updateAddress(addressModel)
+                                .then((response) {
+                              if (response.isSuccess) {
+                                //We go back to the eralier page
+                                Get.toNamed(RouteHelper.getInitial());
+                                Get.snackbar("Address", "Added Successfully");
+                              } else {
+                                Get.snackbar(
+                                    "Address", "Couldn't save address");
+                              }
+                            });
+                          }
+
+                          ///else if no location saved, we add a new one
+                          else {
+                            locationController
+                                .addAddress(addressModel)
+                                .then((response) {
+                              if (response.isSuccess) {
+                                //We go back to the eralier page
+                                Get.toNamed(RouteHelper.getInitial());
+                                Get.snackbar("Address", "Added Successfully");
+                              } else {
+                                Get.snackbar(
+                                    "Address", "Couldn't save address");
+                              }
+                            });
+                          }
                         },
                         child: Container(
                           padding: EdgeInsets.only(

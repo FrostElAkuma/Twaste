@@ -4,7 +4,7 @@ class MyConstants {
 
   //10.0.2.2:8000 127.0.0.1:8000 mvs.bslmeiyu.com ngrok http 127.0.0.1:8000
   //Since I am developing on android. When trying on IOS make sure that everything thing is ok. I need to add some specific code for IOS later
-  static const String BASE_URL = "https://b733-2-49-197-102.ngrok-free.app";
+  static const String BASE_URL = "https://6d1c-2-49-197-102.ngrok-free.app";
   static const String POPULAR_PRODUCT_URI = "/api/v1/products/popular";
   static const String RECOMMENDED_PRODUCT_URI = "/api/v1/products/recommended";
   static const String UPDATE_REMAINING_URI = "/api/v1/products/updateRemaining";
@@ -26,6 +26,7 @@ class MyConstants {
   static const String USER_ADDRESS = "user_address";
   static const String GEOCODE_URI = '/api/v1/config/geocode-api';
   static const String ADD_USER_ADDRESS = "/api/v1/customer/address/add";
+  static const String UPDATE_USER_ADDRESS = "/api/v1/customer/address/update";
   static const String ADDRESS_LIST_URI = "/api/v1/customer/address/list";
 
   static const String ZONE_URI = "/api/v1/config/get-zone-id";
