@@ -27,7 +27,8 @@ class AuthRepo {
   bool userLoggedIn() {
     //We used .contains key here cuz it returns bool
     //I added this line for debugging
-    print("Getting token now ${sharedPreferences.getString(MyConstants.TOKEN)}");
+    print(
+        "Getting token now ${sharedPreferences.getString(MyConstants.TOKEN)}");
     return sharedPreferences.containsKey(MyConstants.TOKEN);
   }
 
@@ -92,11 +93,11 @@ class AuthRepo {
         deviceToken = await _saveDeviceToken();
         print("Line 86 authrepo. My token is 1 ${deviceToken!}");
       }
-      //This for Android
-      else {
-        deviceToken = await _saveDeviceToken();
-        print("Line 86 authrepo. My token is 2 ${deviceToken!}");
-      }
+    }
+    //This for Android
+    else {
+      deviceToken = await _saveDeviceToken();
+      print("Line 86 authrepo. My token is 2 ${deviceToken!}");
     }
     if (!GetPlatform.isWeb) {
       //FirebaseMessaging.instance.subscribeToTopic(AppConstants.topic)

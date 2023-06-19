@@ -238,9 +238,10 @@ class LocationController extends GetxController implements GetxService {
       _addressList = [];
       _allAddressList = [];
       response.body.forEach((address) {
-        print("Location contreoller line 198$address");
+        print("Location contreoller line 198 $address");
         _addressList.add(AddressModel.fromJson(address));
         _allAddressList.add(AddressModel.fromJson(address));
+        saveUserAddress(AddressModel.fromJson(address));
       });
       _loading = false;
       update();

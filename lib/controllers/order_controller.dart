@@ -37,8 +37,8 @@ class OrderController extends GetxController implements GetxService {
       String orderId = response.body['order_id'].toString();
       callback(true, message, orderId);
     } else {
-      //print('line 39 ordercontroller ' + response.body['errors'][0]['message'].toString());
-      callback(false, response.body['errors'][0]['message'].toString(), '-1');
+      print('line 39 ordercontroller ' + response.body.toString());
+      callback(false, response.body.toString(), '-1');
     }
   }
 
