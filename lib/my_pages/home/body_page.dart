@@ -51,10 +51,10 @@ class _BodyPageState extends State<BodyPage> {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = Get.context!.height;
-    double screenWidth = Get.context!.width;
-    print("Line 55 body page this is screen height " + screenHeight.toString());
-    print("Line 56 body page this is screen width " + screenWidth.toString());
+    //double screenHeight = Get.context!.height;
+    //double screenWidth = Get.context!.width;
+    //print("Line 55 body page this is screen height " + screenHeight.toString());
+    //print("Line 56 body page this is screen width " + screenWidth.toString());
     return Column(
       children: [
         //left right slide section

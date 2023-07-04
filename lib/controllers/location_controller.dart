@@ -118,15 +118,24 @@ class LocationController extends GetxController implements GetxService {
         _buttonDisabled = false;
         if (_changeAddress) {
           //Grabbing the this String from the google server
-          String address = await getADdressfromGeocode(
+          Response r = await getADdressfromGeocode(
             LatLng(position.target.latitude, position.target.longitude),
           );
+          String address = r.body["results"][0]['formatted_address'].toString();
+          String city = r.body["results"][1]['address_components'][3]
+                  ['short_name']
+              .toString();
+          String neighbour = r.body["results"][1]['address_components'][2]
+                  ['short_name']
+              .toString();
           //If we are coming from address page
           fromAddress
-              ? _placemark = Placemark(name: address)
-              : _pickPlacemark = Placemark(name: address);
+              ? _placemark =
+                  Placemark(name: address, street: neighbour, locality: city)
+              : _pickPlacemark =
+                  Placemark(name: address, street: neighbour, locality: city);
           //Good for debugging
-          //print(_placemark.)
+          print("We are here line 138 location controller ${neighbour}");
         }
         //Added this else so after we chose a location from the search and hten move the map the position gets updated when moved
         else {
@@ -143,7 +152,7 @@ class LocationController extends GetxController implements GetxService {
     }
   }
 
-  Future<String> getADdressfromGeocode(LatLng latLng) async {
+  Future<Response> getADdressfromGeocode(LatLng latLng) async {
     String address = "Unkown Location Found";
     //talking to our server then our server will talk to the google server
     Response response = await locationRepo.getADdressfromGeocode(latLng);
@@ -155,7 +164,7 @@ class LocationController extends GetxController implements GetxService {
       print("Error getting the google api ${response.body}");
     }
     update();
-    return address;
+    return response;
   }
 
   //This will be coming from DB
@@ -230,7 +239,7 @@ class LocationController extends GetxController implements GetxService {
   //To save thee address in the memory ?
   Future<void> getAddressList() async {
     _loading = true;
-    print("Are we loading ? Line 211 location controller $_loading");
+    //print("Are we loading ? Line 233 location controller $_loading");
     Response response = await locationRepo.getAllAddress();
     if (response.statusCode == 200) {
       print("I am here 5 at line 214 location controller");

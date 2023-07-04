@@ -8,6 +8,7 @@ import 'package:twaste/my_widgets/my_text.dart';
 import 'package:twaste/routes/route_helper.dart';
 import 'package:twaste/utils/dimensions.dart';
 
+import '../../controllers/location_controller.dart';
 import '../../controllers/meal_controller.dart';
 import '../../controllers/recommended_meals_controller.dart';
 
@@ -31,6 +32,8 @@ class _SplashScreenState extends State<SplashScreen>
     await Get.find<MealController>().getMealList();
     await Get.find<RecommendedMealController>().getRecommendedMealList(2);
     await Get.find<RestaurantController>().getRestaurantList();
+    //I added this so I can use the city and nieghbour in the body page
+    await Get.find<LocationController>().getAddressList();
   }
 
   @override
@@ -45,7 +48,8 @@ class _SplashScreenState extends State<SplashScreen>
           ..forward();
     animation = CurvedAnimation(parent: controller, curve: Curves.linear);
     //So after 3 seconds go to the main page. But we need a route for our splash screen
-    Timer(const Duration(seconds: 3), () => Get.offNamed(RouteHelper.getInitial()));
+    Timer(const Duration(seconds: 3),
+        () => Get.offNamed(RouteHelper.getInitial()));
   }
 
   @override

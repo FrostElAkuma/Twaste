@@ -32,6 +32,8 @@ class _AddAddressPageState extends State<AddAddressPage> {
   CameraPosition _cameraPosition =
       const CameraPosition(target: LatLng(45.5156, -122.677433), zoom: 17);
   late LatLng _initialPosition = const LatLng(45.5156, -122.677433);
+  late String city1 = "default";
+  late String neighbour1;
 
   @override
   void initState() {
@@ -71,7 +73,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Adress"),
+      appBar: const CustomAppBar(title: "Address"),
       body: GetBuilder<UserController>(builder: (userController) {
         if (userController.userModel != null &&
             _contactPersonName.text.isEmpty) {
@@ -82,6 +84,9 @@ class _AddAddressPageState extends State<AddAddressPage> {
             print("line 86 in addAddresspage !!!!!!!!!!");
             _addressController.text =
                 Get.find<LocationController>().getUserAddress().address;
+            city1 = Get.find<LocationController>().getUserAddress().city;
+            neighbour1 =
+                Get.find<LocationController>().getUserAddress().neighbour;
           }
         }
         return GetBuilder<LocationController>(builder: (locationController) {
@@ -89,6 +94,8 @@ class _AddAddressPageState extends State<AddAddressPage> {
               '${locationController.placemark.locality ?? ''}'
               '${locationController.placemark.postalCode ?? ''}'
               '${locationController.placemark.country ?? ''}';
+          city1 = '${locationController.placemark.locality ?? ''}';
+          neighbour1 = '${locationController.placemark.street ?? ''}';
           print(
               "line 94 addAddressPage address in my view is ${_addressController.text}");
           return SingleChildScrollView(
@@ -270,15 +277,19 @@ class _AddAddressPageState extends State<AddAddressPage> {
                     //comment for formatting purposes
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      //Add to cart button
+                      //Save adress button ?
                       GestureDetector(
                         onTap: () {
+                          print("We are here line 2833333333 $city1");
+                          print("We are here line 2844444444 $neighbour1");
                           AddressModel addressModel = AddressModel(
                             addressType: locationController.addressTypeList[
                                 locationController.addressTypeIndex],
                             contactPersonName: _contactPersonName.text,
                             contactPersonNumber: _contactPersonNumber.text,
                             address: _addressController.text,
+                            city: city1,
+                            neighbour: neighbour1,
                             latitude:
                                 locationController.position.latitude.toString(),
                             longitude: locationController.position.longitude

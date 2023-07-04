@@ -5,6 +5,8 @@ class AddressModel {
   late String? _contactPersonName;
   late String? _contactPersonNumber;
   late String _address;
+  late String _city;
+  late String _neighbour;
   late String _latitude;
   late String _longitude;
 
@@ -15,6 +17,8 @@ class AddressModel {
     contactPersonName,
     contactPersonNumber,
     required address,
+    city,
+    neighbour,
     required latitude,
     required longitude,
   }) {
@@ -23,12 +27,16 @@ class AddressModel {
     _contactPersonName = contactPersonName;
     _contactPersonNumber = contactPersonNumber;
     _address = address;
+    _city = city;
+    _neighbour = neighbour;
     _latitude = latitude;
     _longitude = longitude;
   }
 
   //setters and getters (since they are private) just like C++
   String get address => _address;
+  String get city => _city;
+  String get neighbour => _neighbour;
   String get addressType => _addressType;
   String? get contactPersonName => _contactPersonName;
   String? get contactPersonNumber => _contactPersonNumber;
@@ -44,6 +52,8 @@ class AddressModel {
     _contactPersonName = json["contact_person_name"] ?? "";
     _contactPersonNumber = json["contact_person_number"] ?? "";
     _address = json["address"];
+    _city = json["city"] ?? "";
+    _neighbour = json["neighbour"] ?? "";
     _latitude = json["latitude"] ?? "";
     _longitude = json["longitude"] ?? "";
   }
@@ -56,6 +66,8 @@ class AddressModel {
     data['contact_person_number'] = _contactPersonNumber;
     data['contact_person_name'] = _contactPersonName;
     data['address'] = _address;
+    data['city'] = _city;
+    data['neighbour'] = _neighbour;
     data['longitude'] = _longitude;
     data['latitude'] = _latitude;
     return data;
