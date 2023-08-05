@@ -89,6 +89,7 @@ class _BodyPageState extends State<BodyPage> {
           );
         }),
         //Popular restaurants text section
+
         SizedBox(
           height: Dimensions.height30,
         ),
@@ -138,7 +139,105 @@ class _BodyPageState extends State<BodyPage> {
                             index,
                             "home"));
                       },
-                      child: Container(
+                      child: Stack(
+                        children: [
+                          Container(
+                            //The child container will take the whole sapce of the parent container s one of teh ways we can fix it is to use stack
+                            height: Dimensions.pageVeiwContainer,
+                            margin: EdgeInsets.only(
+                              left: Dimensions.width30,
+                              right: Dimensions.width30,
+                            ),
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(Dimensions.radius30),
+                                color: const Color(0xFF696969),
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  //VIP if you get an error like type string don't match type strng just use ! to tell the compiler that this value won't be null
+                                  image: NetworkImage(MyConstants.BASE_URL +
+                                      MyConstants.UPLOAD_URL +
+                                      restaurant.restaurantList[index].img!),
+                                )),
+                          ),
+
+                          //This is the container on top of the iamge
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                              //The child container will take the whole sapce of the parent container s one of teh ways we can fix it is to use stack
+                              height: Dimensions.height45 + Dimensions.height15,
+                              margin: EdgeInsets.only(
+                                  top: Dimensions.height45 * 4,
+                                  left: Dimensions.width30 +
+                                      Dimensions.width10 / 2,
+                                  right: Dimensions.width30 +
+                                      Dimensions.width10 / 2,
+                                  bottom: Dimensions.height45),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft:
+                                        Radius.circular(Dimensions.radius20),
+                                    bottomRight:
+                                        Radius.circular(Dimensions.radius20),
+                                  ),
+                                  color: Colors.white,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Color(0xFFe8e8e8),
+                                      blurRadius: 5.0,
+                                      offset: Offset(0, 5),
+                                    ),
+                                    //This second box shadow is to cover the grey shadow to the left and right of the box
+                                    BoxShadow(
+                                      color: Colors.white,
+                                      offset: Offset(-5, 0),
+                                    ),
+                                    BoxShadow(
+                                      color: Colors.white,
+                                      offset: Offset(5, 0),
+                                    )
+                                  ]),
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: Dimensions.height10,
+                                    left: Dimensions.width10,
+                                    right: Dimensions.width10),
+                                child: //infoRating( text: meal.name!,),
+                                    Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        LargeText(
+                                          text: restaurant
+                                              .restaurantList[index].name,
+                                        ),
+                                        SmallText(text: "4.8")
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        SmallText(
+                                          text: "Today 11:00pm - 12:00pm",
+                                        ),
+                                        SmallText(text: "~55% off")
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+
+                      //Original box view
+                      /*child: Container(
                         margin: EdgeInsets.only(
                             left: Dimensions.width20,
                             right: Dimensions.width20,
@@ -226,13 +325,14 @@ class _BodyPageState extends State<BodyPage> {
                             ),
                           )
                         ]),
-                      ),
+                      ),*/
                     );
                   })
               : const CircularProgressIndicator(
                   color: Colors.red,
                 );
         }),
+        //This commented lines below are good since they show foods. We can use them as the recommended later
         //List of recommended restaurants or foods (i will decide later)
         //Every builder in flutter takes a function in their item builder, first is context and second is index which is the number of items
         /*GetBuilder<RecommendedMealController>(builder: (recommendedMeal) {
@@ -417,13 +517,16 @@ class _BodyPageState extends State<BodyPage> {
             alignment: Alignment.bottomCenter,
             child: Container(
               //The child container will take the whole sapce of the parent container s one of teh ways we can fix it is to use stack
-              height: Dimensions.pageVeiwTextContainer,
+              height: Dimensions.height45 + Dimensions.height15,
               margin: EdgeInsets.only(
-                  left: Dimensions.width30,
-                  right: Dimensions.width30,
-                  bottom: Dimensions.height30),
+                  left: Dimensions.width15,
+                  right: Dimensions.width15,
+                  bottom: Dimensions.height45 * 1.9),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Dimensions.radius20),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(Dimensions.radius20),
+                    bottomRight: Radius.circular(Dimensions.radius20),
+                  ),
                   color: Colors.white,
                   boxShadow: const [
                     BoxShadow(
@@ -443,11 +546,32 @@ class _BodyPageState extends State<BodyPage> {
                   ]),
               child: Container(
                 padding: EdgeInsets.only(
-                    top: Dimensions.height15,
-                    left: Dimensions.width15,
+                    top: Dimensions.height10,
+                    left: Dimensions.width10,
                     right: Dimensions.width10),
-                child: infoRating(
-                  text: meal.name!,
+                child: //infoRating( text: meal.name!,),
+                    Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        LargeText(
+                          text: meal.name!,
+                        ),
+                        SmallText(text: "4.8")
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SmallText(
+                          text: "Today 11:00pm - 12:00pm",
+                        ),
+                        SmallText(text: "~55% off")
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
